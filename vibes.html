@@ -19,49 +19,104 @@
     }
 
     .vibe-page {
-      padding: 60px 20px;
+      padding: 55px 20px 80px;
     }
 
     h1 {
       font-size: 48px;
-      margin-bottom: 10px;
+      margin: 0 0 10px;
+      color: #e75480;
     }
 
     .subtitle {
       font-size: 20px;
       color: #b85c7a;
-      margin-bottom: 40px;
+      margin-bottom: 42px;
     }
 
     .vibe-cards {
-      display: flex;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(200px, 260px));
       justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
+      gap: 24px;
     }
 
     .vibe-card {
-      width: 180px;
-      padding: 30px 20px;
-      background: rgba(255, 255, 255, 0.55);
-      border: 1px solid rgba(255, 255, 255, 0.8);
-      border-radius: 25px;
-      box-shadow: 0 8px 25px rgba(231, 84, 128, 0.15);
-      transition: 0.3s;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      border-radius: 28px;
+      padding: 14px 14px 22px;
+      box-sizing: border-box;
+      box-shadow: 0 10px 30px rgba(231, 84, 128, 0.16);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      overflow: hidden;
     }
 
     .vibe-card:hover {
-      transform: translateY(-6px);
+      transform: translateY(-8px);
+      box-shadow: 0 16px 36px rgba(231, 84, 128, 0.24);
+    }
+
+    .vibe-card img {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      border-radius: 20px;
+      display: block;
     }
 
     .vibe-card h2 {
-      margin: 0 0 10px;
-      font-size: 25px;
+      font-size: 28px;
+      margin: 18px 0 8px;
     }
 
     .vibe-card p {
       margin: 0;
       color: #b85c7a;
+      font-size: 15px;
+    }
+
+    .tags {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 14px;
+    }
+
+    .tag {
+      padding: 6px 11px;
+      background: rgba(255, 225, 236, 0.75);
+      border: 1px solid rgba(231, 84, 128, 0.22);
+      border-radius: 999px;
+      font-size: 13px;
+      color: #c9587f;
+    }
+
+    @media (max-width: 1000px) {
+      .vibe-cards {
+        grid-template-columns: repeat(2, minmax(200px, 280px));
+      }
+    }
+
+    @media (max-width: 560px) {
+      .vibe-page {
+        padding: 40px 16px 60px;
+      }
+
+      h1 {
+        font-size: 36px;
+      }
+
+      .subtitle {
+        font-size: 17px;
+      }
+
+      .vibe-cards {
+        grid-template-columns: 1fr;
+        max-width: 340px;
+        margin: 0 auto;
+      }
     }
   </style>
 </head>
@@ -69,32 +124,58 @@
 <body>
 
   <main class="vibe-page">
+
     <h1>What's your vibe today? ♡</h1>
-    <p class="subtitle">Find the aesthetic that feels like you ✦</p>
+    <p class="subtitle">A little taste of the Pretty Mind universe ✦</p>
 
     <div class="vibe-cards">
 
       <div class="vibe-card">
+        <img src="coquette.png" alt="Coquette aesthetic moodboard">
         <h2>Coquette ♡</h2>
         <p>Romantic · Soft · Girly</p>
+        <div class="tags">
+          <span class="tag">Romantic</span>
+          <span class="tag">Soft</span>
+          <span class="tag">Girly</span>
+        </div>
       </div>
 
       <div class="vibe-card">
+        <img src="gyaru.png" alt="Gyaru aesthetic moodboard">
         <h2>Gyaru ✦</h2>
         <p>Glam · Confident · Bold</p>
+        <div class="tags">
+          <span class="tag">Glam</span>
+          <span class="tag">Confident</span>
+          <span class="tag">Bold</span>
+        </div>
       </div>
 
       <div class="vibe-card">
+        <img src="clean-girl.png" alt="Clean Girl aesthetic moodboard">
         <h2>Clean Girl ♡</h2>
         <p>Minimal · Natural · Fresh</p>
+        <div class="tags">
+          <span class="tag">Minimal</span>
+          <span class="tag">Natural</span>
+          <span class="tag">Fresh</span>
+        </div>
       </div>
 
       <div class="vibe-card">
+        <img src="jirai-kei.png" alt="Jirai Kei aesthetic moodboard">
         <h2>Jirai Kei ✦</h2>
         <p>Dark · Cute · Yami</p>
+        <div class="tags">
+          <span class="tag">Dark</span>
+          <span class="tag">Cute</span>
+          <span class="tag">Yami</span>
+        </div>
       </div>
 
     </div>
+
   </main>
 
 </body>
