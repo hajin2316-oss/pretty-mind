@@ -94,4 +94,31 @@ text-shadow: 0 2px 8px rgba(231, 84, 128, 0.18);
   right: 55px;
   font-size: 25px;
 }
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 0.35;
+    transform: scale(0.85);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+
+.sparkle {
+  animation: twinkle 2.4s ease-in-out infinite;
+}
+
+.sparkle2 {
+  animation-delay: 0.5s;
+}
+
+.sparkle3 {
+  animation-delay: 1s;
+}
+
+.sparkle4 {
+  animation-delay: 1.5s;
+}
 </style>
