@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Pretty Mind | Aesthetic Detail</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+
+      background:
+        radial-gradient(circle at 20% 15%, rgba(255,255,255,0.8), transparent 35%),
+        linear-gradient(135deg, #fce4ec 0%, #f8cddd 50%, #fce7ef 100%);
+
+      font-family: Georgia, "Times New Roman", serif;
+      color: #b85c7a;
+    }
+
+    .page {
+      width: min(1050px, 92%);
+      margin: 0 auto;
+      padding: 40px 0 80px;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-bottom: 25px;
+      color: #b85c7a;
+      text-decoration: none;
+    }
+
+    .back-link:hover {
+      color: #e75480;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .emoji {
+      font-size: 52px;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 50px;
+      color: #e75480;
+    }
+
+    .keyword-line {
+      margin-top: 12px;
+      color: #b85c7a;
+      font-size: 17px;
+    }
+
+    .detail-layout {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    .visual-card,
+    .info-card {
+      background: rgba(255,255,255,0.7);
+      border: 1px solid rgba(255,255,255,0.9);
+      border-radius: 30px;
+      box-shadow: 0 10px 30px rgba(231,84,128,0.15);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .visual-card {
+      padding: 16px;
+      text-align: center;
+    }
+
+    .visual-card img {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      border-radius: 22px;
+      display: none;
+    }
+
+    .placeholder {
+      min-height: 390px;
+      border-radius: 22px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(255,255,255,0.85),
+          rgba(255,224,235,0.75)
+        );
+
+      font-size: 70px;
+    }
+
+    .info-card {
+      padding: 30px;
+    }
+
+    .section {
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(231,84,128,0.13);
+    }
+
+    .section:first-child {
+      padding-top: 0;
+    }
+
+    .section:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .section h2 {
+      margin: 0 0 10px;
+      color: #d94f87;
+      font-size: 22px;
+    }
+
+    .section p {
+      margin: 0;
+      line-height: 1.8;
+      font-size: 16px;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin-top: 18px;
+    }
+
+    .tag {
+      padding: 7px 12px;
+      border-radius: 999px;
+
+      background: rgba(255,225,236,0.8);
+      border: 1px solid rgba(231,84,128,0.2);
+
+      color: #c9587f;
+      font-size: 13px;
+    }
+
+    .not-found {
+      display: none;
+      text-align: center;
+      padding: 80px 20px;
+      font-size: 22px;
+    }
+
+    @media (max-width: 760px) {
+      .detail-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .visual-card {
+        max-width: 360px;
+        width: 100%;
+        margin: 0 auto;
+      }
+
+      h1 {
+        font-size: 38px;
+      }
+    }
+  </style>
+</head>
+
+
+<body>
+
+  <main class="page">
+
+    <a class="back-link" href="aesthetics.html">
+      ← Back to all aesthetics
+    </a>
+
+
+    <section id="detailContent">
+
+      <div class="hero">
+
+        <div id="emoji" class="emoji"></div>
+
+        <h1 id="name"></h1>
+
+        <p id="keywordLine" class="keyword-line"></p>
+
+      </div>
+
+
+      <div class="detail-layout">
+
+        <div class="visual-card">
+
+          <img id="moodImage" alt="Aesthetic moodboard">
+
+          <div id="placeholder" class="placeholder"></div>
+
+          <div id="tags" class="tags"></div>
+
+        </div>
+
+
+        <div class="info-card">
+
+          <div class="section">
+            <h2>🎨 Colors</h2>
+            <p id="colors"></p>
+          </div>
+
+          <div class="section">
+            <h2>💄 Makeup</h2>
+            <p id="makeup"></p>
+          </div>
+
+          <div class="section">
+            <h2>💇 Hair</h2>
+            <p id="hair"></p>
+          </div>
+
+          <div class="section">
+            <h2>👗 Outfit</h2>
+            <p id="outfit"></p>
+          </div>
+
+          <div class="section">
+            <h2>💎 Accessories</h2>
+            <p id="accessories"></p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <div id="notFound" class="not-found">
+      This aesthetic could not be found ♡
+    </div>
+
+  </main>
+
+
+  <script>
+
+    const aesthetics = {
+
+      "Gyaru": {
+        emoji: "💋",
+        colors: "핑크 · 브라운 · 골드 · 화이트",
+        makeup: "또렷한 아이라인 · 풍성한 속눈썹 · 밝은 언더아이 · 글로시 립 · 블러셔",
+        hair: "볼륨 웨이브 · 하이 포니테일 · 밝은 브라운/블론드 계열",
+        outfit: "미니스커트 · 핏되는 탑 · 부츠 · 데님",
+        accessories: "큰 귀걸이 · 반짝이는 주얼리 · 헤어핀 · 롱네일",
+        keywords: ["glamorous", "confident", "playful", "bold"],
+        image: "gyaru.png"
+      },
+
+      "Hime Gyaru": {
+        emoji: "👑",
+        colors: "베이비핑크 · 화이트 · 크림 · 골드",
+        makeup: "큰 눈매 · 긴 속눈썹 · 핑크 치크 · 글로시 핑크 립",
+        hair: "풍성한 공주 웨이브 · 리본 · 볼륨 헤어",
+        outfit: "프릴 · 레이스 · 리본 · 공주풍 원피스",
+        accessories: "진주 · 하트 · 티아라 모티프 · 리본",
+        keywords: ["princess", "sweet", "glamorous", "doll"]
+      },
+
+      "Agejo Gyaru": {
+        emoji: "💎",
+        colors: "블랙 · 핫핑크 · 와인 · 골드",
+        makeup: "스모키 아이 · 긴 속눈썹 · 컨투어링 · 글로시 누드/핑크 립",
+        hair: "큰 웨이브 · 볼륨 업스타일",
+        outfit: "바디라인 드레스 · 퍼 · 레이스 · 힐",
+        accessories: "큼직한 주얼리 · 클러치 · 화려한 네일",
+        keywords: ["mature", "glamorous", "sexy", "nightlife"]
+      },
+
+      "Coquette": {
+        emoji: "🎀",
+        colors: "핑크 · 아이보리 · 레드 · 크림",
+        makeup: "핑크 블러셔 · 얇은 아이라인 · 은은한 펄 · 로즈 립",
+        hair: "소프트 컬 · 반묶음 · 리본",
+        outfit: "레이스 탑 · 미니스커트 · 가디건 · 리본 디테일",
+        accessories: "진주 · 리본 · 로켓 목걸이",
+        keywords: ["romantic", "delicate", "feminine", "ribbon"],
+        image: "coquette.png"
+      },
+
+      "Balletcore": {
+        emoji: "🩰",
+        colors: "발레핑크 · 화이트 · 그레이 · 크림",
+        makeup: "투명한 베이스 · 로지 치크 · 은은한 하이라이트",
+        hair: "발레 번 · 리본 포니테일",
+        outfit: "랩 가디건 · 레그워머 · 플리츠/쉬폰 스커트",
+        accessories: "리본 · 진주 · 발레 플랫",
+        keywords: ["graceful", "soft", "delicate", "elegant"]
+      },
+
+      "Y2K": {
+        emoji: "💿",
+        colors: "실버 · 핑크 · 데님블루 · 라임",
+        makeup: "글로시 립 · 실버/파스텔 섀도 · 얇은 눈썹 느낌",
+        hair: "집게핀 · 미니 브레이드 · 스트레이트",
+        outfit: "베이비티 · 카고팬츠 · 데님 · 미니스커트",
+        accessories: "미니백 · 틴티드 선글라스 · 메탈릭 액세서리",
+        keywords: ["2000s", "pop", "playful", "futuristic"]
+      },
+
+      "McBling": {
+        emoji: "💖",
+        colors: "핫핑크 · 골드 · 화이트 · 레오파드",
+        makeup: "글리터 아이 · 브론저 · 글로시 립",
+        hair: "큰 웨이브 · 블론드 하이라이트",
+        outfit: "벨루어 · 로우라이즈 · 크롭탑 · 퍼",
+        accessories: "라인스톤 · 큰 선글라스 · 블링백",
+        keywords: ["flashy", "celebrity", "luxe", "2000s"]
+      },
+
+      "Clean Girl": {
+        emoji: "🤍",
+        colors: "화이트 · 베이지 · 크림 · 세이지",
+        makeup: "윤광 피부 · 정돈된 눈썹 · 자연스러운 치크 · 누드립",
+        hair: "슬릭 번 · 깔끔한 포니테일",
+        outfit: "기본 티 · 셔츠 · 스트레이트 팬츠",
+        accessories: "작은 골드 후프 · 심플 백",
+        keywords: ["minimal", "fresh", "polished", "effortless"],
+        image: "clean-girl.png"
+      },
+
+      "Acubi": {
+        emoji: "🩶",
+        colors: "그레이 · 블랙 · 화이트 · 뮤트블루",
+        makeup: "차분한 음영 · 얇은 아이라인 · 뮤트 립",
+        hair: "자연스러운 스트레이트 · 레이어드",
+        outfit: "슬림 탑 · 루즈 팬츠 · 볼레로 · 레이어드",
+        accessories: "실버 주얼리 · 헤드폰 · 미니 숄더백",
+        keywords: ["Korean", "minimal", "street", "futuristic"]
+      },
+
+      "Soft Girl": {
+        emoji: "🍓",
+        colors: "파스텔핑크 · 라일락 · 민트 · 화이트",
+        makeup: "핑크 치크 · 반짝이는 눈 · 틴티드 립",
+        hair: "소프트 웨이브 · 귀여운 핀",
+        outfit: "가디건 · 테니스스커트 · 오버핏 니트",
+        accessories: "하트핀 · 비즈 주얼리",
+        keywords: ["pastel", "cute", "sweet", "dreamy"]
+      },
+
+      "Girly": {
+        emoji: "🌸",
+        colors: "핑크 · 화이트 · 피치 · 레드",
+        makeup: "로지 치크 · 자연스러운 속눈썹 · 핑크립",
+        hair: "컬 · 반묶음 · 포니테일",
+        outfit: "스커트 · 블라우스 · 가디건 · 원피스",
+        accessories: "작은 리본 · 진주 · 미니백",
+        keywords: ["feminine", "lovely", "everyday", "sweet"]
+      },
+
+      "Romantic Feminine": {
+        emoji: "💐",
+        colors: "로즈 · 크림 · 버건디 · 더스티핑크",
+        makeup: "로즈 섀도 · 부드러운 아이라인 · MLBB 립",
+        hair: "느슨한 웨이브 · 로우번",
+        outfit: "드레이프 · 플로럴 원피스 · 실키 블라우스",
+        accessories: "진주 · 섬세한 목걸이",
+        keywords: ["romantic", "mature", "elegant", "soft"]
+      },
+
+      "Dark Feminine": {
+        emoji: "🖤",
+        colors: "블랙 · 버건디 · 딥레드 · 골드",
+        makeup: "캣아이 · 음영 아이 · 레드/베리 립",
+        hair: "윤기 있는 웨이브 · 슬릭 헤어",
+        outfit: "블랙 드레스 · 롱코트 · 레이스",
+        accessories: "골드 주얼리 · 구조적인 백",
+        keywords: ["mysterious", "powerful", "elegant", "seductive"]
+      },
+
+      "Dark Academia": {
+        emoji: "📚",
+        colors: "브라운 · 버건디 · 포레스트그린 · 크림",
+        makeup: "브라운 음영 · 자연스러운 피부 · 뮤트립",
+        hair: "자연스러운 웨이브 · 로우 포니",
+        outfit: "블레이저 · 체크스커트 · 니트 · 셔츠",
+        accessories: "로퍼 · 가죽가방 · 빈티지 시계",
+        keywords: ["scholarly", "classic", "literary", "autumn"]
+      },
+
+      "Light Academia": {
+        emoji: "☕",
+        colors: "아이보리 · 베이지 · 카멜 · 세이지",
+        makeup: "피치 치크 · 브라운 마스카라 · 누드립",
+        hair: "자연스러운 웨이브 · 느슨한 묶음",
+        outfit: "크림 니트 · 셔츠 · 플리츠스커트",
+        accessories: "로퍼 · 캔버스백 · 얇은 안경",
+        keywords: ["scholarly", "warm", "gentle", "classic"]
+      },
+
+      "Old Money / Preppy": {
+        emoji: "💰",
+        colors: "네이비 · 크림 · 베이지 · 버건디",
+        makeup: "깨끗한 피부 · 정돈된 눈썹 · 클래식 로즈립",
+        hair: "블로우아웃 · 로우번",
+        outfit: "셔츠 · 케이블니트 · 블레이저 · 플리츠",
+        accessories: "진주 · 로퍼 · 구조적인 백",
+        keywords: ["classic", "polished", "timeless", "preppy"]
+      },
+
+      "Cottagecore": {
+        emoji: "🌷",
+        colors: "세이지 · 크림 · 플로럴핑크 · 브라운",
+        makeup: "자연스러운 피부 · 피치치크 · 립밤",
+        hair: "브레이드 · 느슨한 웨이브",
+        outfit: "플로럴 원피스 · 퍼프소매 · 에이프런 느낌",
+        accessories: "꽃 · 바구니백 · 레이스",
+        keywords: ["countryside", "floral", "cozy", "nature"]
+      },
+
+      "Fairycore": {
+        emoji: "🧚",
+        colors: "라일락 · 세이지 · 펄화이트 · 핑크",
+        makeup: "쉬머 · 홀로그램 포인트 · 핑크/라일락 아이",
+        hair: "웨이브 · 작은 브레이드 · 꽃 장식",
+        outfit: "쉬폰 · 시스루 레이어 · 흐르는 스커트",
+        accessories: "크리스털 · 꽃 · 나비",
+        keywords: ["magical", "ethereal", "nature", "whimsical"]
+      },
+
+      "Whimsigoth": {
+        emoji: "🌙",
+        colors: "퍼플 · 블랙 · 네이비 · 골드",
+        makeup: "퍼플/브라운 스모키 · 딥립",
+        hair: "자연스러운 볼륨 컬",
+        outfit: "벨벳 · 맥시스커트 · 레이스 · 벨슬리브",
+        accessories: "달 · 별 · 빈티지 펜던트",
+        keywords: ["celestial", "witchy", "90s", "mystical"]
+      },
+
+      "Angelcore": {
+        emoji: "👼",
+        colors: "화이트 · 실버 · 베이비블루 · 펄",
+        makeup: "펄 하이라이트 · 실버 쉬머 · 투명한 립",
+        hair: "부드러운 컬 · 브레이드",
+        outfit: "화이트 쉬폰 · 레이스 · 흐르는 실루엣",
+        accessories: "진주 · 실버 · 날개/별 모티프",
+        keywords: ["heavenly", "airy", "pure", "ethereal"]
+      },
+
+      "Cutecore / Kawaii": {
+        emoji: "🧸",
+        colors: "핑크 · 민트 · 옐로 · 라일락",
+        makeup: "동그란 눈매 · 핑크 치크 · 글로시 립",
+        hair: "트윈테일 · 컬러핀",
+        outfit: "오버핏 니트 · 귀여운 스커트 · 컬러풀 레이어링",
+        accessories: "캐릭터 느낌 참 · 비즈 · 헤어클립",
+        keywords: ["adorable", "colorful", "playful", "kawaii"]
+      },
+
+      "Lolita-inspired": {
+        emoji: "🍰",
+        colors: "핑크 · 크림 · 블랙 · 와인",
+        makeup: "인형 같은 치크 · 또렷한 속눈썹 · 로즈립",
+        hair: "컬 · 트윈테일 · 보닛 스타일 액세서리",
+        outfit: "볼륨 스커트 · 프릴 · 블라우스 · 레이스",
+        accessories: "리본 · 카메오 · 진주",
+        keywords: ["doll", "ornate", "Victorian-inspired", "elegant"]
+      },
+
+      "Mori Kei": {
+        emoji: "🍃",
+        colors: "오트밀 · 브라운 · 모스그린 · 크림",
+        makeup: "아주 자연스러운 피부 · 피치/베이지",
+        hair: "흐트러진 듯한 웨이브 · 브레이드",
+        outfit: "여러 겹의 원피스 · 니트 · 레이스 · 루즈핏",
+        accessories: "나무 · 가죽 · 빈티지 레이스",
+        keywords: ["forest", "layered", "natural", "cozy"]
+      },
+
+      "Jirai Kei": {
+        emoji: "🖤🎀",
+        colors: "블랙 · 핑크 · 화이트 · 와인",
+        makeup: "또렷한 눈매 · 핑크/레드 언더아이 · 창백한 베이스 느낌",
+        hair: "트윈테일 · 컬 · 리본",
+        outfit: "블랙×핑크 블라우스 · 프릴스커트 · 레이스",
+        accessories: "큰 리본 · 하트 · 플랫폼 슈즈",
+        keywords: ["dark-cute", "Japanese", "ribbon", "dramatic"],
+        image: "jirai-kei.png"
+      },
+
+      "Himekaji": {
+        emoji: "🌸",
+        colors: "핑크 · 크림 · 베이지 · 플로럴",
+        makeup: "부드러운 브라운 아이 · 핑크치크 · 글로시립",
+        hair: "큰 소프트 컬 · 반묶음",
+        outfit: "플로럴 원피스 · 가디건 · 프릴 · 데님",
+        accessories: "리본 · 진주 · 귀여운 백",
+        keywords: ["princess-casual", "sweet", "feminine", "Japanese"]
+      },
+
+      "Grunge": {
+        emoji: "🎸",
+        colors: "블랙 · 차콜 · 올리브 · 다크레드",
+        makeup: "번진 듯한 아이라인 · 스모키 아이 · 뮤트립",
+        hair: "자연스럽고 약간 흐트러진 질감",
+        outfit: "밴드티 · 찢어진 데님 · 체크 · 오버핏",
+        accessories: "체인 · 초커 · 부츠",
+        keywords: ["rebellious", "messy", "alternative", "90s"]
+      },
+
+      "Indie Sleaze": {
+        emoji: "📸",
+        colors: "블랙 · 실버 · 레드 · 일렉트릭블루",
+        makeup: "번진 블랙라이너 · 글리터 · 일부러 완벽하지 않은 느낌",
+        hair: "흐트러진 웨이브 · 베드헤어",
+        outfit: "스키니진 · 미니드레스 · 가죽재킷 · 밴드티",
+        accessories: "플래시 카메라 느낌 · 체인 · 빈티지백",
+        keywords: ["nightlife", "messy", "flash", "indie"]
+      },
+
+      "Office Siren": {
+        emoji: "🕶️",
+        colors: "차콜 · 블랙 · 화이트 · 버건디",
+        makeup: "얇고 날카로운 아이라인 · 뉴트럴 립 · 정돈된 베이스",
+        hair: "스트레이트 · 슬릭번",
+        outfit: "핏되는 셔츠 · 펜슬스커트 · 슬림 팬츠",
+        accessories: "얇은 안경 · 실버 주얼리 · 숄더백",
+        keywords: ["sleek", "corporate", "sensual", "2000s"]
+      },
+
+      "Boho Chic": {
+        emoji: "🦋",
+        colors: "브라운 · 터키석 · 크림 · 러스트",
+        makeup: "브론즈 피부 · 웜 아이 · 자연스러운 립",
+        hair: "긴 웨이브 · 브레이드",
+        outfit: "맥시스커트 · 크로셰 · 프린트 · 스웨이드",
+        accessories: "레이어드 목걸이 · 뱅글 · 프린지백",
+        keywords: ["free-spirited", "earthy", "layered", "festival"]
+      },
+
+      "Cyber Y2K": {
+        emoji: "🖤💿",
+        colors: "실버 · 블랙 · 네온블루 · 화이트",
+        makeup: "메탈릭 섀도 · 그래픽 라이너 · 글로시립",
+        hair: "스트레이트 · 컬러 포인트 · 스파이키 스타일",
+        outfit: "메탈릭 · 테크웨어 · 크롭탑 · 카고",
+        accessories: "실버 체인 · 고글형 안경 · 헤드폰",
+        keywords: ["futuristic", "digital", "metallic", "tech"]
+      },
+
+      "Vintage": {
+        emoji: "📻",
+        colors: "크림 · 브라운 · 머스타드 · 더스티로즈",
+        makeup: "시대에 따라 달라지지만 레드/로즈 립 · 클래식 라이너 · 부드러운 치크",
+        hair: "핀컬 · 빈티지 웨이브 · 스카프 스타일링",
+        outfit: "시대별 원피스 · 하이웨이스트 · 카디건 · 클래식 블라우스",
+        accessories: "진주 · 스카프 · 빈티지백 · 브로치",
+        keywords: ["nostalgic", "timeless", "retro", "classic"]
+      }
+
+    };
+
+
+    const params =
+      new URLSearchParams(window.location.search);
+
+    const aestheticName =
+      params.get("name");
+
+    const aesthetic =
+      aesthetics[aestheticName];
+
+
+    if (aesthetic) {
+
+      document.getElementById("name").textContent =
+        aestheticName;
+
+      document.getElementById("emoji").textContent =
+        aesthetic.emoji;
+
+      document.getElementById("colors").textContent =
+        aesthetic.colors;
+
+      document.getElementById("makeup").textContent =
+        aesthetic.makeup;
+
+      document.getElementById("hair").textContent =
+        aesthetic.hair;
+
+      document.getElementById("outfit").textContent =
+        aesthetic.outfit;
+
+      document.getElementById("accessories").textContent =
+        aesthetic.accessories;
+
+
+      document.getElementById("keywordLine").textContent =
+        aesthetic.keywords.join(" · ");
+
+
+      const tags =
+        document.getElementById("tags");
+
+      tags.innerHTML =
+        aesthetic.keywords
+          .map(keyword =>
+            `<span class="tag">${keyword}</span>`
+          )
+          .join("");
+
+
+      const image =
+        document.getElementById("moodImage");
+
+      const placeholder =
+        document.getElementById("placeholder");
+
+
+      if (aesthetic.image) {
+
+        image.src =
+          aesthetic.image;
+
+        image.style.display =
+          "block";
+
+        placeholder.style.display =
+          "none";
+
+      } else {
+
+        placeholder.textContent =
+          aesthetic.emoji;
+
+      }
+
+
+      document.title =
+        "Pretty Mind | " + aestheticName;
+
+    } else {
+
+      document.getElementById("detailContent").style.display =
+        "none";
+
+      document.getElementById("notFound").style.display =
+        "block";
+
+    }
+
+  </script>
+
+</body>
+</html>
