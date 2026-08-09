@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pretty Mind | Vibe Roulette</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Georgia, "Times New Roman", serif;
+      background:
+        radial-gradient(circle at 20% 15%, rgba(255,255,255,0.8), transparent 35%),
+        linear-gradient(135deg, #fce4ec 0%, #f8cddd 50%, #fce7ef 100%);
+      color: #b85c7a;
+      text-align: center;
+      padding: 30px;
+    }
+
+    .roulette-card {
+      width: min(600px, 95%);
+      padding: 45px 30px;
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.55);
+      border: 1px solid rgba(184, 92, 122, 0.25);
+      box-shadow: 0 15px 40px rgba(184, 92, 122, 0.15);
+      backdrop-filter: blur(10px);
+    }
+
+    h1 {
+      margin-top: 0;
+      font-size: 2.8rem;
+      color: #c85f83;
+    }
+
+    .subtitle {
+      margin-bottom: 30px;
+      font-size: 1.05rem;
+    }
+
+    .result {
+      min-height: 140px;
+      margin: 25px 0;
+      padding: 25px;
+      border-radius: 22px;
+      background: rgba(255,255,255,0.55);
+      border: 1px solid rgba(184, 92, 122, 0.2);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .result-emoji {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    .result-name {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #b84d75;
+    }
+
+    .result-keywords {
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    button,
+    .explore-link {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 14px 24px;
+      border-radius: 999px;
+      border: none;
+      font-family: inherit;
+      font-size: 1rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: 0.25s ease;
+    }
+
+    button {
+      background: #d96b92;
+      color: white;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      background: #c95c83;
+    }
+
+    .explore-link {
+      display: none;
+      background: rgba(255,255,255,0.7);
+      color: #b84d75;
+      border: 1px solid rgba(184, 92, 122, 0.25);
+    }
+
+    .explore-link:hover {
+      transform: translateY(-2px);
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 25px;
+      color: #b85c7a;
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="roulette-card">
+    <h1>Vibe Roulette 🎡</h1>
+
+    <p class="subtitle">
+      Not sure what aesthetic fits today? Let fate choose your vibe ♡
+    </p>
+
+    <div class="result">
+      <div id="resultEmoji" class="result-emoji">✨</div>
+      <div id="resultName" class="result-name">Your vibe is waiting...</div>
+      <div id="resultKeywords" class="result-keywords">
+        Tap the button and discover your aesthetic for today ♡
+      </div>
+    </div>
+
+    <button id="spinButton">Spin My Vibe ♡</button>
+
+    <br />
+
+    <a id="exploreLink" class="explore-link" href="#">
+      Explore This Vibe →
+    </a>
+
+    <br />
+
+    <a class="back-link" href="aesthetics.html">
+      ← Back to all aesthetics
+    </a>
+  </main>
+
+  <script>
+    const vibes = [
+      { name: "Coquette", emoji: "🎀", keywords: "romantic · delicate · dreamy · feminine" },
+      { name: "Gyaru", emoji: "💋", keywords: "glamorous · confident · playful · bold" },
+      { name: "Hime Gyaru", emoji: "👑", keywords: "princess · sweet · glamorous · doll" },
+      { name: "Clean Girl", emoji: "🤍", keywords: "minimal · fresh · polished · effortless" },
+      { name: "Jirai Kei", emoji: "🖤", keywords: "dark · cute · dramatic · emotional" },
+      { name: "Old Money / Preppy", emoji: "👜", keywords: "classic · polished · elegant · timeless" },
+      { name: "Cutecore / Kawaii", emoji: "🍓", keywords: "cute · colorful · playful · sweet" },
+      { name: "Lolita-inspired", emoji: "🫖", keywords: "ornate · feminine · vintage · dreamy" }
+    ];
+
+    const spinButton = document.getElementById("spinButton");
+    const resultEmoji = document.getElementById("resultEmoji");
+    const resultName = document.getElementById("resultName");
+    const resultKeywords = document.getElementById("resultKeywords");
+    const exploreLink = document.getElementById("exploreLink");
+
+    spinButton.addEventListener("click", function () {
+      const randomIndex = Math.floor(Math.random() * vibes.length);
+      const selectedVibe = vibes[randomIndex];
+
+      resultEmoji.textContent = selectedVibe.emoji;
+      resultName.textContent = selectedVibe.name;
+      resultKeywords.textContent = selectedVibe.keywords;
+
+      exploreLink.href =
+        "aesthetic-detail.html?name=" +
+        encodeURIComponent(selectedVibe.name);
+
+      exploreLink.style.display = "inline-block";
+    });
+  </script>
+</body>
+</html>
