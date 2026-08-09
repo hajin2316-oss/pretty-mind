@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Pretty Mind | Explore Aesthetics</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+
+      background:
+        radial-gradient(
+          circle at 20% 15%,
+          rgba(255, 255, 255, 0.8),
+          transparent 35%
+        ),
+        linear-gradient(
+          135deg,
+          #fce4ec 0%,
+          #f8cddd 50%,
+          #fce7ef 100%
+        );
+
+      color: #d94f87;
+
+      font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+    }
+
+    .page {
+      width: min(1200px, 92%);
+      margin: 0 auto;
+      padding: 45px 0 80px;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-bottom: 25px;
+
+      color: #b85c7a;
+
+      text-decoration: none;
+
+      font-size: 15px;
+    }
+
+    .back-link:hover {
+      color: #e75480;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .header h1 {
+      margin: 0;
+
+      font-size: 48px;
+
+      color: #e75480;
+    }
+
+    .header p {
+      margin: 12px 0 0;
+
+      font-size: 18px;
+
+      color: #b85c7a;
+    }
+
+    .search-wrap {
+      display: flex;
+      justify-content: center;
+
+      margin: 30px 0 40px;
+    }
+
+    #searchInput {
+      width: min(520px, 100%);
+
+      padding: 14px 20px;
+
+      border:
+        1px solid rgba(231, 84, 128, 0.25);
+
+      border-radius: 30px;
+
+      outline: none;
+
+      background:
+        rgba(255, 255, 255, 0.7);
+
+      color: #b85c7a;
+
+      font-size: 16px;
+
+      box-shadow:
+        0 6px 18px rgba(231, 84, 128, 0.12);
+    }
+
+    #searchInput:focus {
+      border-color: #e75480;
+    }
+
+    .aesthetic-grid {
+      display: grid;
+
+      grid-template-columns:
+        repeat(auto-fit, minmax(220px, 1fr));
+
+      gap: 22px;
+    }
+
+    .aesthetic-card {
+      background:
+        rgba(255, 255, 255, 0.68);
+
+      border:
+        1px solid rgba(255, 255, 255, 0.9);
+
+      border-radius: 28px;
+
+      padding: 28px 22px;
+
+      text-align: center;
+
+      box-shadow:
+        0 8px 28px rgba(231, 84, 128, 0.14);
+
+      transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .aesthetic-card:hover {
+      transform: translateY(-7px);
+
+      box-shadow:
+        0 15px 35px rgba(231, 84, 128, 0.22);
+    }
+
+    .emoji {
+      font-size: 35px;
+
+      margin-bottom: 12px;
+    }
+
+    .aesthetic-card h2 {
+      margin: 0 0 12px;
+
+      font-size: 23px;
+
+      color: #d94f87;
+    }
+
+    .keywords {
+      display: flex;
+
+      flex-wrap: wrap;
+
+      justify-content: center;
+
+      gap: 7px;
+    }
+
+    .keyword {
+      padding: 6px 10px;
+
+      border-radius: 999px;
+
+      background:
+        rgba(255, 224, 235, 0.8);
+
+      border:
+        1px solid rgba(231, 84, 128, 0.18);
+
+      color: #b85c7a;
+
+      font-size: 12px;
+    }
+
+    .empty-message {
+      display: none;
+
+      text-align: center;
+
+      margin-top: 40px;
+
+      color: #b85c7a;
+
+      font-size: 18px;
+    }
+
+    .footer-note {
+      text-align: center;
+
+      margin-top: 55px;
+
+      color: #b85c7a;
+
+      font-size: 14px;
+    }
+
+    @media (max-width: 600px) {
+
+      .page {
+        padding-top: 30px;
+      }
+
+      .header h1 {
+        font-size: 36px;
+      }
+
+      .header p {
+        font-size: 16px;
+      }
+
+      .aesthetic-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+
+<body>
+
+  <main class="page">
+
+    <a
+      class="back-link"
+      href="vibes.html"
+    >
+      ← Back to Pretty Mind
+    </a>
+
+
+    <header class="header">
+
+      <h1>
+        Find Your Aesthetic ♡
+      </h1>
+
+      <p>
+        Explore 31 different vibes
+        and discover what feels like you ✦
+      </p>
+
+    </header>
+
+
+    <div class="search-wrap">
+
+      <input
+        id="searchInput"
+        type="text"
+        placeholder="Search an aesthetic... ♡"
+      >
+
+    </div>
+
+
+    <section
+      id="aestheticGrid"
+      class="aesthetic-grid"
+    >
+    </section>
+
+
+    <p
+      id="emptyMessage"
+      class="empty-message"
+    >
+      No aesthetic found ♡
+    </p>
+
+
+    <p class="footer-note">
+      Explore freely — your vibe can be more than one thing ♡
+    </p>
+
+  </main>
+
+
+  <script>
+
+    const aesthetics = [
+
+      {
+        emoji: "💋",
+        name: "Gyaru",
+        keywords:
+          ["glamorous", "confident", "playful", "bold"]
+      },
+
+      {
+        emoji: "👑",
+        name: "Hime Gyaru",
+        keywords:
+          ["princess", "sweet", "glamorous", "doll"]
+      },
+
+      {
+        emoji: "💎",
+        name: "Agejo Gyaru",
+        keywords:
+          ["mature", "glamorous", "sexy", "nightlife"]
+      },
+
+      {
+        emoji: "🎀",
+        name: "Coquette",
+        keywords:
+          ["romantic", "delicate", "feminine", "ribbon"]
+      },
+
+      {
+        emoji: "🩰",
+        name: "Balletcore",
+        keywords:
+          ["graceful", "soft", "delicate", "elegant"]
+      },
+
+      {
+        emoji: "💿",
+        name: "Y2K",
+        keywords:
+          ["2000s", "pop", "playful", "futuristic"]
+      },
+
+      {
+        emoji: "💖",
+        name: "McBling",
+        keywords:
+          ["flashy", "celebrity", "luxe", "2000s"]
+      },
+
+      {
+        emoji: "🤍",
+        name: "Clean Girl",
+        keywords:
+          ["minimal", "fresh", "polished", "effortless"]
+      },
+
+      {
+        emoji: "🩶",
+        name: "Acubi",
+        keywords:
+          ["Korean", "minimal", "street", "futuristic"]
+      },
+
+      {
+        emoji: "🍓",
+        name: "Soft Girl",
+        keywords:
+          ["pastel", "cute", "sweet", "dreamy"]
+      },
+
+      {
+        emoji: "🌸",
+        name: "Girly",
+        keywords:
+          ["feminine", "lovely", "everyday", "sweet"]
+      },
+
+      {
+        emoji: "💐",
+        name: "Romantic Feminine",
+        keywords:
+          ["romantic", "mature", "elegant", "soft"]
+      },
+
+      {
+        emoji: "🖤",
+        name: "Dark Feminine",
+        keywords:
+          ["mysterious", "powerful", "elegant", "seductive"]
+      },
+
+      {
+        emoji: "📚",
+        name: "Dark Academia",
+        keywords:
+          ["scholarly", "classic", "literary", "autumn"]
+      },
+
+      {
+        emoji: "☕",
+        name: "Light Academia",
+        keywords:
+          ["scholarly", "warm", "gentle", "classic"]
+      },
+
+      {
+        emoji: "💰",
+        name: "Old Money / Preppy",
+        keywords:
+          ["classic", "polished", "timeless", "preppy"]
+      },
+
+      {
+        emoji: "🌷",
+        name: "Cottagecore",
+        keywords:
+          ["countryside", "floral", "cozy", "nature"]
+      },
+
+      {
+        emoji: "🧚",
+        name: "Fairycore",
+        keywords:
+          ["magical", "ethereal", "nature", "whimsical"]
+      },
+
+      {
+        emoji: "🌙",
+        name: "Whimsigoth",
+        keywords:
+          ["celestial", "witchy", "90s", "mystical"]
+      },
+
+      {
+        emoji: "👼",
+        name: "Angelcore",
+        keywords:
+          ["heavenly", "airy", "pure", "ethereal"]
+      },
+
+      {
+        emoji: "🧸",
+        name: "Cutecore / Kawaii",
+        keywords:
+          ["adorable", "colorful", "playful", "kawaii"]
+      },
+
+      {
+        emoji: "🍰",
+        name: "Lolita-inspired",
+        keywords:
+          ["doll", "ornate", "Victorian-inspired", "elegant"]
+      },
+
+      {
+        emoji: "🍃",
+        name: "Mori Kei",
+        keywords:
+          ["forest", "layered", "natural", "cozy"]
+      },
+
+      {
+        emoji: "🖤🎀",
+        name: "Jirai Kei",
+        keywords:
+          ["dark-cute", "Japanese", "ribbon", "dramatic"]
+      },
+
+      {
+        emoji: "🌸",
+        name: "Himekaji",
+        keywords:
+          ["princess-casual", "sweet", "feminine", "Japanese"]
+      },
+
+      {
+        emoji: "🎸",
+        name: "Grunge",
+        keywords:
+          ["rebellious", "messy", "alternative", "90s"]
+      },
+
+      {
+        emoji: "📸",
+        name: "Indie Sleaze",
+        keywords:
+          ["nightlife", "messy", "flash", "indie"]
+      },
+
+      {
+        emoji: "🕶️",
+        name: "Office Siren",
+        keywords:
+          ["sleek", "corporate", "sensual", "2000s"]
+      },
+
+      {
+        emoji: "🦋",
+        name: "Boho Chic",
+        keywords:
+          ["free-spirited", "earthy", "layered", "festival"]
+      },
+
+      {
+        emoji: "🖤💿",
+        name: "Cyber Y2K",
+        keywords:
+          ["futuristic", "digital", "metallic", "tech"]
+      },
+
+      {
+        emoji: "📻",
+        name: "Vintage",
+        keywords:
+          ["nostalgic", "timeless", "retro", "classic"]
+      }
+
+    ];
+
+
+    const grid =
+      document.getElementById("aestheticGrid");
+
+    const searchInput =
+      document.getElementById("searchInput");
+
+    const emptyMessage =
+      document.getElementById("emptyMessage");
+
+
+    function showAesthetics(list) {
+
+      grid.innerHTML =
+        list.map(aesthetic => {
+
+          const tags =
+            aesthetic.keywords
+              .map(keyword =>
+                `<span class="keyword">${keyword}</span>`
+              )
+              .join("");
+
+
+          return `
+
+            <article class="aesthetic-card">
+
+              <div class="emoji">
+                ${aesthetic.emoji}
+              </div>
+
+              <h2>
+                ${aesthetic.name}
+              </h2>
+
+              <div class="keywords">
+                ${tags}
+              </div>
+
+            </article>
+
+          `;
+
+        }).join("");
+
+
+      emptyMessage.style.display =
+        list.length === 0
+          ? "block"
+          : "none";
+    }
+
+
+    showAesthetics(aesthetics);
+
+
+    searchInput.addEventListener(
+      "input",
+      function () {
+
+        const search =
+          searchInput.value
+            .toLowerCase()
+            .trim();
+
+
+        const filtered =
+          aesthetics.filter(aesthetic => {
+
+            const text =
+              (
+                aesthetic.name
+                + " "
+                + aesthetic.keywords.join(" ")
+              ).toLowerCase();
+
+
+            return text.includes(search);
+
+          });
+
+
+        showAesthetics(filtered);
+
+      }
+    );
+
+  </script>
+
+</body>
+
+</html>
