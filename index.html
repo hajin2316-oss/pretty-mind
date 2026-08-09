@@ -1,7 +1,14 @@
+<div class="language-switcher">
+  <button onclick="setLanguage('en')">EN</button>
+  <span>·</span>
+  <button onclick="setLanguage('ko')">한국어</button>
+  <span>·</span>
+  <button onclick="setLanguage('ja')">日本語</button>
+</div>
 <div class="hero">
 <h1>Pretty Mind ♡</h1>
-<p>Dress your vibe, Doll up your mind. ♡</p>
-<button onclick="location.href='vibes.html'">Start MY Vibe ♡</button>
+<p id="tagline">Dress your vibe, Doll up your mind. ♡</p>
+<button id="startButton" onclick="location.href='vibes.html'">Start MY Vibe ♡</button>
 <span class="sparkle sparkle1">✦</span>
 <span class="sparkle sparkle2">♡</span>
 <span class="sparkle sparkle3">✦</span>
@@ -32,6 +39,43 @@ box-shadow: 0 4px 10px rgba(231, 84, 128, 0.25);
 button:hover {
 background-color: #d94f78;
 transform: translateY(-3px);
+}
+.language-switcher {
+  position: fixed;
+  top: 20px;
+  right: 25px;
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  font-family: Georgia, "Times New Roman", serif;
+  color: #b85c7a;
+
+  background: rgba(255, 255, 255, 0.45);
+  padding: 7px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(184, 92, 122, 0.25);
+  backdrop-filter: blur(8px);
+}
+
+.language-switcher button {
+  background: transparent;
+  color: #b85c7a;
+  border: none;
+  padding: 2px 4px;
+
+  font-family: inherit;
+  font-size: 13px;
+  box-shadow: none;
+  cursor: pointer;
+}
+
+.language-switcher button:hover {
+  background: transparent;
+  color: #d94f78;
+  transform: none;
 }
 p {
 color: #b85c7a;
@@ -123,10 +167,10 @@ text-shadow: 0 2px 8px rgba(231, 84, 128, 0.18);
 }
 </style>
 <footer class="site-footer">
-  <a href="contact.html">Contact ♡</a>
+  <a id="contactLink" href="contact.html">Contact ♡</a>
   <span> · </span>
   <span>© 2026 Pretty Mind</span>
-  <div class="copyright-notice">
+  <div id="copyrightNotice" class="copyright-notice">
   All rights reserved. Unauthorized copying, reproduction, or distribution of Pretty Mind content is strictly prohibited and may result in legal action.
 </div>
 </footer>
@@ -155,3 +199,48 @@ text-shadow: 0 2px 8px rgba(231, 84, 128, 0.18);
   line-height: 1.5;
 }
 </style>
+<script>
+function setLanguage(lang) {
+  const translations = {
+    en: {
+      tagline: "Dress your vibe, Doll up your mind. ♡",
+      startButton: "Start MY Vibe ♡",
+      contactLink: "Contact ♡",
+      copyrightNotice: "All rights reserved. Unauthorized copying, reproduction, or distribution of Pretty Mind content is strictly prohibited and may result in legal action."
+    },
+
+    ko: {
+      tagline: "오늘의 무드를 입고, 마음까지 예쁘게. ♡",
+      startButton: "나의 Vibe 찾기 ♡",
+      contactLink: "문의하기 ♡",
+      copyrightNotice: "모든 권리는 Pretty Mind에 있습니다. Pretty Mind 콘텐츠의 무단 복제, 재생산 또는 배포는 엄격히 금지되며 법적 조치로 이어질 수 있습니다."
+    },
+
+    ja: {
+      tagline: "今日のムードをまとって、心まで可愛く。♡",
+      startButton: "私のVibeを見つける ♡",
+      contactLink: "お問い合わせ ♡",
+      copyrightNotice: "すべての権利はPretty Mindに帰属します。Pretty Mindのコンテンツの無断複製、転載、配布は固く禁止されており、法的措置の対象となる場合があります。"
+    }
+  };
+
+  document.getElementById("tagline").textContent =
+    translations[lang].tagline;
+
+  document.getElementById("startButton").textContent =
+    translations[lang].startButton;
+
+  document.getElementById("contactLink").textContent =
+    translations[lang].contactLink;
+
+  document.getElementById("copyrightNotice").textContent =
+    translations[lang].copyrightNotice;
+
+  localStorage.setItem("prettyMindLanguage", lang);
+}
+
+const savedLanguage =
+  localStorage.getItem("prettyMindLanguage") || "en";
+
+setLanguage(savedLanguage);
+</script>
