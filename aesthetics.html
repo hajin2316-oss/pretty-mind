@@ -544,23 +544,24 @@
 
 
           return `
+<article
+    class="aesthetic-card"
+    onclick="window.location.href='aesthetic-detail.html?name=' + encodeURIComponent('${aesthetic.name}')"
+>
 
-            <article class="aesthetic-card">
+    <div class="emoji">
+        ${aesthetic.emoji}
+    </div>
 
-              <div class="emoji">
-                ${aesthetic.emoji}
-              </div>
+    <h2>
+        ${aesthetic.name}
+    </h2>
 
-              <h2>
-                ${aesthetic.name}
-              </h2>
+    <div class="keywords">
+        ${tags}
+    </div>
 
-              <div class="keywords">
-                ${tags}
-              </div>
-
-            </article>
-
+</article>
           `;
 
         }).join("");
