@@ -142,11 +142,43 @@
   color: #d96b92;
   text-shadow: 0 3px 8px rgba(184, 92, 122, 0.25);
 }
+  .language-switcher {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+  color: #b85c7a;
+}
+
+.language-switcher button {
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: none;
+  color: #b85c7a;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+}
+
+.language-switcher button:hover {
+  color: #d96b92;
+  transform: none;
+}
   </style>
 </head>
 
 <body>
   <main class="roulette-card">
+  <div class="language-switcher">
+  <button type="button" onclick="setLanguage('en')">EN</button>
+  <span>·</span>
+  <button type="button" onclick="setLanguage('ko')">한국어</button>
+  <span>·</span>
+  <button type="button" onclick="setLanguage('ja')">日本語</button>
+</div>
     <h1 id="rouletteTitle">Vibe Roulette 🎡</h1>
 
     <p id="rouletteSubtitle" class="subtitle">
@@ -213,6 +245,37 @@
   { name: "Cyber Y2K", emoji: "🖤💿", keywords: "futuristic · digital · metallic · tech" },
   { name: "Vintage", emoji: "📻", keywords: "nostalgic · timeless · retro · classic" }
 ];
+ const translations = {
+  en: {
+    title: "Vibe Roulette 🎡",
+    subtitle: "Not sure what aesthetic fits today? Let fate choose your vibe ♡",
+    waiting: "Your vibe is waiting...",
+    waitingText: "Tap the button and discover your aesthetic for today ♡",
+    spinButton: "Spin My Vibe ♡",
+    explore: "Explore This Vibe →",
+    back: "← Back to all aesthetics"
+  },
+
+  ko: {
+    title: "바이브 룰렛 🎡",
+    subtitle: "오늘 어떤 무드가 어울릴지 모르겠어? 운명에게 맡겨봐 ♡",
+    waiting: "오늘의 바이브가 기다리고 있어...",
+    waitingText: "버튼을 눌러 오늘의 에스테틱을 발견해봐 ♡",
+    spinButton: "오늘의 바이브 돌리기 ♡",
+    explore: "이 바이브 둘러보기 →",
+    back: "← 모든 에스테틱 보기"
+  },
+
+  ja: {
+    title: "Vibeルーレット 🎡",
+    subtitle: "今日どんな雰囲気にする？運命にVibeを選んでもらおう ♡",
+    waiting: "今日のVibeは何かな…",
+    waitingText: "ボタンを押して今日のAestheticを見つけよう ♡",
+    spinButton: "Vibeを回す ♡",
+    explore: "このVibeを見る →",
+    back: "← すべてのAestheticを見る"
+  }
+};
 const canvas = document.getElementById("rouletteWheel");
 const ctx = canvas.getContext("2d");
 
