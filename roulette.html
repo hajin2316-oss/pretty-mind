@@ -381,16 +381,21 @@ spinButton.addEventListener("click", function () {
   if (isSpinning) return;
 
   isSpinning = true;
-  let tickCount = 0;
+  let tickDelay = 70;
+let tickElapsed = 0;
 
-const tickInterval = setInterval(() => {
+function spinTick() {
   playTickSound();
-  tickCount++;
 
-  if (tickCount > 28) {
-    clearInterval(tickInterval);
+  tickElapsed += tickDelay;
+
+  if (tickElapsed < 4400) {
+    tickDelay = 70 + Math.pow(tickElapsed / 4400, 2) * 350;
+    setTimeout(spinTick, tickDelay);
   }
-}, 140);
+}
+
+spinTick();
   spinButton.disabled = true;
   exploreLink.style.display = "none";
 
