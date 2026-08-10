@@ -119,7 +119,7 @@
     }
     .wheel-wrap {
   position: relative;
-  width: min(520px, 90vw);
+  width: min(520px, 100%);
   aspect-ratio: 1 / 1;
   margin: 25px auto 35px;
 }
@@ -131,7 +131,18 @@
   border-radius: 50%;
   box-shadow: 0 12px 35px rgba(184, 92, 122, 0.25);
 }
+@media (max-width: 560px) {
+  .wheel-wrap {
+    width: 100%;
+    max-width: 420px;
+    margin: 22px auto 30px;
+  }
 
+  #rouletteWheel {
+    width: 100%;
+    height: auto;
+  }
+}
 .pointer {
   position: absolute;
   top: -22px;
