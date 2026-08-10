@@ -357,11 +357,40 @@ drawWheel();
     const exploreLink = document.getElementById("exploreLink");
 let currentRotation = 0;
 let isSpinning = false;
+function playTickSound() {
+  const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  const oscillator = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
 
+  oscillator.connect(gain);
+  gain.connect(audioCtx.destination);
+
+  oscillator.type = "square";
+  oscillator.frequency.value = 180;
+
+  gain.gain.setValueAtTime(0.035, audioCtx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(
+    0.001,
+    audioCtx.currentTime + 0.025
+  );
+
+  oscillator.start();
+  oscillator.stop(audioCtx.currentTime + 0.025);
+}
 spinButton.addEventListener("click", function () {
   if (isSpinning) return;
 
   isSpinning = true;
+  let tickCount = 0;
+
+const tickInterval = setInterval(() => {
+  playTickSound();
+  tickCount++;
+
+  if (tickCount > 28) {
+    clearInterval(tickInterval);
+  }
+}, 140);
   spinButton.disabled = true;
   exploreLink.style.display = "none";
 
@@ -392,6 +421,9 @@ spinButton.addEventListener("click", function () {
     `rotate(${currentRotation}deg)`;
 
   setTimeout(function () {
+    if ("vibrate" in navigator) {
+  navigator.vibrate([80, 40, 120]);
+}
     resultEmoji.textContent = selectedVibe.emoji;
     resultName.textContent = selectedVibe.name;
     resultKeywords.textContent = selectedVibe.keywords;
