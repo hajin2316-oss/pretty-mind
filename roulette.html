@@ -287,6 +287,21 @@
     back: "← すべてのAestheticを見る"
   }
 };
+    function setLanguage(lang) {
+  const t = translations[lang];
+
+  document.getElementById("rouletteTitle").textContent = t.title;
+  document.getElementById("rouletteSubtitle").textContent = t.subtitle;
+  document.getElementById("resultName").textContent = t.waiting;
+  document.getElementById("resultKeywords").textContent = t.waitingText;
+  document.getElementById("spinButton").textContent = t.spinButton;
+  document.getElementById("exploreLink").textContent = t.explore;
+  document.getElementById("backLink").textContent = t.back;
+
+  localStorage.setItem("prettyMindLanguage", lang);
+}
+    const savedLanguage = localStorage.getItem("prettyMindLanguage") || "en";
+setLanguage(savedLanguage);
 const canvas = document.getElementById("rouletteWheel");
 const ctx = canvas.getContext("2d");
 
