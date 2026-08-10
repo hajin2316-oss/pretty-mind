@@ -214,7 +214,30 @@
 
       font-size: 14px;
     }
+.language-switcher {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 18px;
+  font-size: 0.9rem;
+  color: #b85c7a;
+}
 
+.language-switcher button {
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: none;
+  color: #b85c7a;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+}
+
+.language-switcher button:hover {
+  color: #e75480;
+}
     @media (max-width: 600px) {
 
       .page {
@@ -240,27 +263,40 @@
 <body>
 
   <main class="page">
-
+<div class="language-switcher">
+  <button type="button" onclick="setLanguage('en')">EN</button>
+  <span>·</span>
+  <button type="button" onclick="setLanguage('ko')">한국어</button>
+  <span>·</span>
+  <button type="button" onclick="setLanguage('ja')">日本語</button>
+</div>
     <a
       class="back-link"
       href="vibes.html"
     >
+      <a
+  id="backLink"
+  class="back-link"
+  href="vibes.html"
+>
+  ← Back to Pretty Mind
+</a>
       ← Back to Pretty Mind
     </a>
 
 
     <header class="header">
 
-      <h1>
-        Find Your Aesthetic ♡
-      </h1>
+  <h1 id="pageTitle">
+    Find Your Aesthetic ♡
+  </h1>
 
-      <p>
-        Explore 31 different vibes
-        and discover what feels like you ✦
-      </p>
+  <p id="pageSubtitle">
+    Explore 31 different vibes
+    and discover what feels like you ✦
+  </p>
 
-    </header>
+</header>
 
 
     <div class="search-wrap">
@@ -289,15 +325,60 @@
     </p>
 
 
-    <p class="footer-note">
-      Explore freely — your vibe can be more than one thing ♡
-    </p>
+    <p id="footerNote" class="footer-note">
+  Explore freely — your vibe can be more than one thing ♡
+</p>
 
   </main>
 
 
   <script>
+const translations = {
+  en: {
+    back: "← Back to Pretty Mind",
+    title: "Find Your Aesthetic ♡",
+    subtitle: "Explore 31 different vibes and discover what feels like you ✦",
+    search: "Search an aesthetic... ♡",
+    empty: "No aesthetic found ♡",
+    footer: "Explore freely — your vibe can be more than one thing ♡"
+  },
 
+  ko: {
+    back: "← Pretty Mind로 돌아가기",
+    title: "나의 Aesthetic 찾기 ♡",
+    subtitle: "31가지 다양한 무드를 둘러보고 나다운 스타일을 찾아봐 ✦",
+    search: "Aesthetic 검색하기... ♡",
+    empty: "검색된 Aesthetic이 없어 ♡",
+    footer: "자유롭게 둘러봐 — 너의 바이브는 하나만일 필요 없어 ♡"
+  },
+
+  ja: {
+    back: "← Pretty Mindに戻る",
+    title: "自分のAestheticを見つけよう ♡",
+    subtitle: "31種類のVibeを見て、自分らしいスタイルを見つけよう ✦",
+    search: "Aestheticを検索... ♡",
+    empty: "Aestheticが見つかりません ♡",
+    footer: "自由に見てみよう — あなたのVibeはひとつじゃなくていい ♡"
+  }
+};
+
+function setLanguage(lang) {
+  const t = translations[lang];
+
+  document.getElementById("backLink").textContent = t.back;
+  document.getElementById("pageTitle").textContent = t.title;
+  document.getElementById("pageSubtitle").textContent = t.subtitle;
+  document.getElementById("searchInput").placeholder = t.search;
+  document.getElementById("emptyMessage").textContent = t.empty;
+  document.getElementById("footerNote").textContent = t.footer;
+
+  localStorage.setItem("prettyMindLanguage", lang);
+}
+
+const savedLanguage =
+  localStorage.getItem("prettyMindLanguage") || "en";
+
+setLanguage(savedLanguage);
     const aesthetics = [
 
       {
