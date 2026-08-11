@@ -373,21 +373,32 @@ function setLanguage(lang) {
   document.getElementById("footerNote").textContent = t.footer;
 
   localStorage.setItem("prettyMindLanguage", lang);
+  if (typeof aesthetics !== "undefined") {
+  showAesthetics(aesthetics);
+}
 }
 
 const savedLanguage =
   localStorage.getItem("prettyMindLanguage") || "en";
 
-setLanguage(savedLanguage);
     const aesthetics = [
 
       {
-        emoji: "💋",
-        name: "Gyaru",
-        keywords:
-          ["glamorous", "confident", "playful", "bold"]
-      },
+  id: "Gyaru",
+  emoji: "💋",
 
+  names: {
+    en: "Gyaru",
+    ko: "갸루",
+    ja: "ギャル"
+  },
+
+  keywords: {
+    en: ["glamorous", "confident", "playful", "bold"],
+    ko: ["화려한", "자신감", "발랄한", "대담한"],
+    ja: ["華やか", "自信", "遊び心", "大胆"]
+  }
+},
       {
         emoji: "👑",
         name: "Hime Gyaru",
@@ -611,23 +622,38 @@ setLanguage(savedLanguage);
       document.getElementById("emptyMessage");
 
 
-    function showAesthetics(list) {
+  function showAesthetics(list) {
 
-      grid.innerHTML =
-        list.map(aesthetic => {
+  const lang =
+    localStorage.getItem("prettyMindLanguage") || "en";
 
-          const tags =
-            aesthetic.keywords
-              .map(keyword =>
-                `<span class="keyword">${keyword}</span>`
-              )
-              .join("");
+  grid.innerHTML =
+    list.map(aesthetic => {
 
+      const displayName =
+        aesthetic.names
+          ? aesthetic.names[lang]
+          : aesthetic.name;
 
-          return `
+      const displayKeywords =
+        aesthetic.keywords[lang]
+          ? aesthetic.keywords[lang]
+          : aesthetic.keywords;
+
+      const detailName =
+        aesthetic.id || aesthetic.name;
+
+      const tags =
+        displayKeywords
+          .map(keyword =>
+            `<span class="keyword">${keyword}</span>`
+          )
+          .join("");
+
+      return `
 <article
     class="aesthetic-card"
-    onclick="window.location.href='aesthetic-detail.html?name=' + encodeURIComponent('${aesthetic.name}')"
+    onclick="window.location.href='aesthetic-detail.html?name=' + encodeURIComponent('${detailName}')"
 >
 
     <div class="emoji">
@@ -635,7 +661,7 @@ setLanguage(savedLanguage);
     </div>
 
     <h2>
-        ${aesthetic.name}
+        ${displayName}
     </h2>
 
     <div class="keywords">
@@ -643,18 +669,16 @@ setLanguage(savedLanguage);
     </div>
 
 </article>
-          `;
+      `;
 
-        }).join("");
+    }).join("");
 
-
-      emptyMessage.style.display =
-        list.length === 0
-          ? "block"
-          : "none";
-    }
-
-
+  emptyMessage.style.display =
+    list.length === 0
+      ? "block"
+      : "none";
+}
+setLanguage(savedLanguage);
     showAesthetics(aesthetics);
 
 
