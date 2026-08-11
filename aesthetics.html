@@ -280,9 +280,13 @@
   href="vibes.html"
 >
   ← Back to Pretty Mind
+<a
+  id="backLink"
+  class="back-link"
+  href="vibes.html"
+>
+  ← Back to Pretty Mind
 </a>
-      ← Back to Pretty Mind
-    </a>
 
 
     <header class="header">
@@ -380,234 +384,471 @@ function setLanguage(lang) {
 
 const savedLanguage =
   localStorage.getItem("prettyMindLanguage") || "en";
-
-    const aesthetics = [
-
-      {
+const aesthetics = [
+    {
   id: "Gyaru",
   emoji: "💋",
-
   names: {
     en: "Gyaru",
     ko: "갸루",
     ja: "ギャル"
   },
-
   keywords: {
     en: ["glamorous", "confident", "playful", "bold"],
     ko: ["화려한", "자신감", "발랄한", "대담한"],
     ja: ["華やか", "自信", "遊び心", "大胆"]
   }
 },
-      {
-        emoji: "👑",
-        name: "Hime Gyaru",
-        keywords:
-          ["princess", "sweet", "glamorous", "doll"]
-      },
 
-      {
-        emoji: "💎",
-        name: "Agejo Gyaru",
-        keywords:
-          ["mature", "glamorous", "sexy", "nightlife"]
-      },
+{
+  id: "Hime Gyaru",
+  emoji: "👑",
+  names: {
+    en: "Hime Gyaru",
+    ko: "히메 갸루",
+    ja: "姫ギャル"
+  },
+  keywords: {
+    en: ["princess", "sweet", "glamorous", "doll"],
+    ko: ["공주", "러블리", "화려한", "인형"],
+    ja: ["お姫様", "スイート", "華やか", "ドール"]
+  }
+},
 
-      {
-        emoji: "🎀",
-        name: "Coquette",
-        keywords:
-          ["romantic", "delicate", "feminine", "ribbon"]
-      },
+{
+  id: "Agejo Gyaru",
+  emoji: "💎",
+  names: {
+    en: "Agejo Gyaru",
+    ko: "아게조 갸루",
+    ja: "アゲ嬢ギャル"
+  },
+  keywords: {
+    en: ["mature", "glamorous", "sexy", "nightlife"],
+    ko: ["성숙한", "화려한", "섹시한", "나이트라이프"],
+    ja: ["大人っぽい", "華やか", "セクシー", "ナイトライフ"]
+  }
+},
 
-      {
-        emoji: "🩰",
-        name: "Balletcore",
-        keywords:
-          ["graceful", "soft", "delicate", "elegant"]
-      },
+{
+  id: "Coquette",
+  emoji: "🎀",
+  names: {
+    en: "Coquette",
+    ko: "코케트",
+    ja: "コケット"
+  },
+  keywords: {
+    en: ["romantic", "delicate", "feminine", "ribbon"],
+    ko: ["로맨틱", "섬세한", "여성스러운", "리본"],
+    ja: ["ロマンティック", "繊細", "フェミニン", "リボン"]
+  }
+},
 
-      {
-        emoji: "💿",
-        name: "Y2K",
-        keywords:
-          ["2000s", "pop", "playful", "futuristic"]
-      },
+{
+  id: "Balletcore",
+  emoji: "🩰",
+  names: {
+    en: "Balletcore",
+    ko: "발레코어",
+    ja: "バレエコア"
+  },
+  keywords: {
+    en: ["graceful", "soft", "delicate", "elegant"],
+    ko: ["우아한", "부드러운", "섬세한", "고급스러운"],
+    ja: ["優雅", "柔らかい", "繊細", "エレガント"]
+  }
+},
 
-      {
-        emoji: "💖",
-        name: "McBling",
-        keywords:
-          ["flashy", "celebrity", "luxe", "2000s"]
-      },
+{
+  id: "Y2K",
+  emoji: "💿",
+  names: {
+    en: "Y2K",
+    ko: "Y2K",
+    ja: "Y2K"
+  },
+  keywords: {
+    en: ["2000s", "pop", "playful", "futuristic"],
+    ko: ["2000년대", "팝", "발랄한", "미래적인"],
+    ja: ["2000年代", "ポップ", "遊び心", "近未来的"]
+  }
+},
 
-      {
-        emoji: "🤍",
-        name: "Clean Girl",
-        keywords:
-          ["minimal", "fresh", "polished", "effortless"]
-      },
+{
+  id: "McBling",
+  emoji: "💖",
+  names: {
+    en: "McBling",
+    ko: "맥블링",
+    ja: "マックブリング"
+  },
+  keywords: {
+    en: ["flashy", "celebrity", "luxe", "2000s"],
+    ko: ["화려한", "셀럽", "럭셔리", "2000년대"],
+    ja: ["派手", "セレブ", "ラグジュアリー", "2000年代"]
+  }
+},
 
-      {
-        emoji: "🩶",
-        name: "Acubi",
-        keywords:
-          ["Korean", "minimal", "street", "futuristic"]
-      },
+{
+  id: "Clean Girl",
+  emoji: "🤍",
+  names: {
+    en: "Clean Girl",
+    ko: "클린 걸",
+    ja: "クリーンガール"
+  },
+  keywords: {
+    en: ["minimal", "fresh", "polished", "effortless"],
+    ko: ["미니멀", "산뜻한", "깔끔한", "꾸안꾸"],
+    ja: ["ミニマル", "爽やか", "洗練", "自然体"]
+  }
+},
 
-      {
-        emoji: "🍓",
-        name: "Soft Girl",
-        keywords:
-          ["pastel", "cute", "sweet", "dreamy"]
-      },
+{
+  id: "Acubi",
+  emoji: "🩶",
+  names: {
+    en: "Acubi",
+    ko: "아쿠비",
+    ja: "アクビ"
+  },
+  keywords: {
+    en: ["Korean", "minimal", "street", "futuristic"],
+    ko: ["한국", "미니멀", "스트리트", "미래적인"],
+    ja: ["韓国", "ミニマル", "ストリート", "近未来的"]
+  }
+},
 
-      {
-        emoji: "🌸",
-        name: "Girly",
-        keywords:
-          ["feminine", "lovely", "everyday", "sweet"]
-      },
+{
+  id: "Soft Girl",
+  emoji: "🍓",
+  names: {
+    en: "Soft Girl",
+    ko: "소프트 걸",
+    ja: "ソフトガール"
+  },
+  keywords: {
+    en: ["pastel", "cute", "sweet", "dreamy"],
+    ko: ["파스텔", "귀여운", "사랑스러운", "몽환적인"],
+    ja: ["パステル", "可愛い", "甘い", "夢かわいい"]
+  }
+},
 
-      {
-        emoji: "💐",
-        name: "Romantic Feminine",
-        keywords:
-          ["romantic", "mature", "elegant", "soft"]
-      },
+{
+  id: "Girly",
+  emoji: "🌸",
+  names: {
+    en: "Girly",
+    ko: "걸리",
+    ja: "ガーリー"
+  },
+  keywords: {
+    en: ["feminine", "lovely", "everyday", "sweet"],
+    ko: ["여성스러운", "러블리", "데일리", "사랑스러운"],
+    ja: ["フェミニン", "ラブリー", "日常", "スイート"]
+  }
+},
 
-      {
-        emoji: "🖤",
-        name: "Dark Feminine",
-        keywords:
-          ["mysterious", "powerful", "elegant", "seductive"]
-      },
+{
+  id: "Romantic Feminine",
+  emoji: "💐",
+  names: {
+    en: "Romantic Feminine",
+    ko: "로맨틱 페미닌",
+    ja: "ロマンティックフェミニン"
+  },
+  keywords: {
+    en: ["romantic", "mature", "elegant", "soft"],
+    ko: ["로맨틱", "성숙한", "우아한", "부드러운"],
+    ja: ["ロマンティック", "大人っぽい", "エレガント", "柔らかい"]
+  }
+},
 
-      {
-        emoji: "📚",
-        name: "Dark Academia",
-        keywords:
-          ["scholarly", "classic", "literary", "autumn"]
-      },
+{
+  id: "Dark Feminine",
+  emoji: "🖤",
+  names: {
+    en: "Dark Feminine",
+    ko: "다크 페미닌",
+    ja: "ダークフェミニン"
+  },
+  keywords: {
+    en: ["mysterious", "powerful", "elegant", "seductive"],
+    ko: ["신비로운", "강렬한", "우아한", "매혹적인"],
+    ja: ["ミステリアス", "力強い", "エレガント", "魅惑的"]
+  }
+},
 
-      {
-        emoji: "☕",
-        name: "Light Academia",
-        keywords:
-          ["scholarly", "warm", "gentle", "classic"]
-      },
+{
+  id: "Dark Academia",
+  emoji: "📚",
+  names: {
+    en: "Dark Academia",
+    ko: "다크 아카데미아",
+    ja: "ダークアカデミア"
+  },
+  keywords: {
+    en: ["scholarly", "classic", "literary", "autumn"],
+    ko: ["학구적인", "클래식", "문학적인", "가을"],
+    ja: ["知的", "クラシック", "文学的", "秋"]
+  }
+},
 
-      {
-        emoji: "💰",
-        name: "Old Money / Preppy",
-        keywords:
-          ["classic", "polished", "timeless", "preppy"]
-      },
+{
+  id: "Light Academia",
+  emoji: "☕",
+  names: {
+    en: "Light Academia",
+    ko: "라이트 아카데미아",
+    ja: "ライトアカデミア"
+  },
+  keywords: {
+    en: ["scholarly", "warm", "gentle", "classic"],
+    ko: ["학구적인", "따뜻한", "부드러운", "클래식"],
+    ja: ["知的", "温かい", "優しい", "クラシック"]
+  }
+},
 
-      {
-        emoji: "🌷",
-        name: "Cottagecore",
-        keywords:
-          ["countryside", "floral", "cozy", "nature"]
-      },
+{
+  id: "Old Money / Preppy",
+  emoji: "💰",
+  names: {
+    en: "Old Money / Preppy",
+    ko: "올드머니 / 프레피",
+    ja: "オールドマネー / プレッピー"
+  },
+  keywords: {
+    en: ["classic", "polished", "timeless", "preppy"],
+    ko: ["클래식", "세련된", "유행을 타지 않는", "프레피"],
+    ja: ["クラシック", "洗練", "タイムレス", "プレッピー"]
+  }
+},
 
-      {
-        emoji: "🧚",
-        name: "Fairycore",
-        keywords:
-          ["magical", "ethereal", "nature", "whimsical"]
-      },
+{
+  id: "Cottagecore",
+  emoji: "🌷",
+  names: {
+    en: "Cottagecore",
+    ko: "코티지코어",
+    ja: "コテージコア"
+  },
+  keywords: {
+    en: ["countryside", "floral", "cozy", "nature"],
+    ko: ["전원", "플로럴", "포근한", "자연"],
+    ja: ["田園", "花柄", "居心地のいい", "自然"]
+  }
+},
 
-      {
-        emoji: "🌙",
-        name: "Whimsigoth",
-        keywords:
-          ["celestial", "witchy", "90s", "mystical"]
-      },
+{
+  id: "Fairycore",
+  emoji: "🧚",
+  names: {
+    en: "Fairycore",
+    ko: "페어리코어",
+    ja: "フェアリーコア"
+  },
+  keywords: {
+    en: ["magical", "ethereal", "nature", "whimsical"],
+    ko: ["마법 같은", "신비로운", "자연", "동화적인"],
+    ja: ["魔法のよう", "幻想的", "自然", "ファンタジック"]
+  }
+},
 
-      {
-        emoji: "👼",
-        name: "Angelcore",
-        keywords:
-          ["heavenly", "airy", "pure", "ethereal"]
-      },
+{
+  id: "Whimsigoth",
+  emoji: "🌙",
+  names: {
+    en: "Whimsigoth",
+    ko: "윔지갓",
+    ja: "ウィムジゴス"
+  },
+  keywords: {
+    en: ["celestial", "witchy", "90s", "mystical"],
+    ko: ["천체", "마녀풍", "90년대", "신비로운"],
+    ja: ["星空", "魔女風", "90年代", "神秘的"]
+  }
+},
 
-      {
-        emoji: "🧸",
-        name: "Cutecore / Kawaii",
-        keywords:
-          ["adorable", "colorful", "playful", "kawaii"]
-      },
+{
+  id: "Angelcore",
+  emoji: "👼",
+  names: {
+    en: "Angelcore",
+    ko: "엔젤코어",
+    ja: "エンジェルコア"
+  },
+  keywords: {
+    en: ["heavenly", "airy", "pure", "ethereal"],
+    ko: ["천상적인", "가벼운", "순수한", "몽환적인"],
+    ja: ["天使的", "軽やか", "純粋", "幻想的"]
+  }
+},
 
-      {
-        emoji: "🍰",
-        name: "Lolita-inspired",
-        keywords:
-          ["doll", "ornate", "Victorian-inspired", "elegant"]
-      },
+{
+  id: "Cutecore / Kawaii",
+  emoji: "🧸",
+  names: {
+    en: "Cutecore / Kawaii",
+    ko: "큐트코어 / 카와이",
+    ja: "キュートコア / かわいい"
+  },
+  keywords: {
+    en: ["adorable", "colorful", "playful", "kawaii"],
+    ko: ["귀여운", "컬러풀", "발랄한", "카와이"],
+    ja: ["可愛い", "カラフル", "遊び心", "かわいい"]
+  }
+},
 
-      {
-        emoji: "🍃",
-        name: "Mori Kei",
-        keywords:
-          ["forest", "layered", "natural", "cozy"]
-      },
+{
+  id: "Lolita-inspired",
+  emoji: "🍰",
+  names: {
+    en: "Lolita-inspired",
+    ko: "로리타 인스파이어드",
+    ja: "ロリータ風"
+  },
+  keywords: {
+    en: ["doll", "ornate", "Victorian-inspired", "elegant"],
+    ko: ["인형", "화려한 장식", "빅토리아풍", "우아한"],
+    ja: ["ドール", "装飾的", "ヴィクトリア風", "エレガント"]
+  }
+},
 
-      {
-        emoji: "🖤🎀",
-        name: "Jirai Kei",
-        keywords:
-          ["dark-cute", "Japanese", "ribbon", "dramatic"]
-      },
+{
+  id: "Mori Kei",
+  emoji: "🍃",
+  names: {
+    en: "Mori Kei",
+    ko: "모리케이",
+    ja: "森ガール"
+  },
+  keywords: {
+    en: ["forest", "layered", "natural", "cozy"],
+    ko: ["숲", "레이어드", "내추럴", "포근한"],
+    ja: ["森", "重ね着", "ナチュラル", "ほっこり"]
+  }
+},
 
-      {
-        emoji: "🌸",
-        name: "Himekaji",
-        keywords:
-          ["princess-casual", "sweet", "feminine", "Japanese"]
-      },
+{
+  id: "Jirai Kei",
+  emoji: "🖤🎀",
+  names: {
+    en: "Jirai Kei",
+    ko: "지뢰계",
+    ja: "地雷系"
+  },
+  keywords: {
+    en: ["dark-cute", "Japanese", "ribbon", "dramatic"],
+    ko: ["다크큐트", "일본", "리본", "드라마틱"],
+    ja: ["病みかわ", "日本", "リボン", "ドラマティック"]
+  }
+},
 
-      {
-        emoji: "🎸",
-        name: "Grunge",
-        keywords:
-          ["rebellious", "messy", "alternative", "90s"]
-      },
+{
+  id: "Himekaji",
+  emoji: "🌸",
+  names: {
+    en: "Himekaji",
+    ko: "히메카지",
+    ja: "姫カジ"
+  },
+  keywords: {
+    en: ["princess-casual", "sweet", "feminine", "Japanese"],
+    ko: ["공주풍 캐주얼", "러블리", "여성스러운", "일본"],
+    ja: ["姫カジュアル", "スイート", "フェミニン", "日本"]
+  }
+},
 
-      {
-        emoji: "📸",
-        name: "Indie Sleaze",
-        keywords:
-          ["nightlife", "messy", "flash", "indie"]
-      },
+{
+  id: "Grunge",
+  emoji: "🎸",
+  names: {
+    en: "Grunge",
+    ko: "그런지",
+    ja: "グランジ"
+  },
+  keywords: {
+    en: ["rebellious", "messy", "alternative", "90s"],
+    ko: ["반항적인", "거친", "얼터너티브", "90년대"],
+    ja: ["反骨的", "ラフ", "オルタナティブ", "90年代"]
+  }
+},
 
-      {
-        emoji: "🕶️",
-        name: "Office Siren",
-        keywords:
-          ["sleek", "corporate", "sensual", "2000s"]
-      },
+{
+  id: "Indie Sleaze",
+  emoji: "📸",
+  names: {
+    en: "Indie Sleaze",
+    ko: "인디 슬리즈",
+    ja: "インディースリーズ"
+  },
+  keywords: {
+    en: ["nightlife", "messy", "flash", "indie"],
+    ko: ["나이트라이프", "거친", "플래시", "인디"],
+    ja: ["ナイトライフ", "ラフ", "フラッシュ", "インディー"]
+  }
+},
 
-      {
-        emoji: "🦋",
-        name: "Boho Chic",
-        keywords:
-          ["free-spirited", "earthy", "layered", "festival"]
-      },
+{
+  id: "Office Siren",
+  emoji: "🕶️",
+  names: {
+    en: "Office Siren",
+    ko: "오피스 사이렌",
+    ja: "オフィスサイレン"
+  },
+  keywords: {
+    en: ["sleek", "corporate", "sensual", "2000s"],
+    ko: ["세련된", "오피스", "관능적인", "2000년대"],
+    ja: ["洗練", "オフィス", "センシュアル", "2000年代"]
+  }
+},
 
-      {
-        emoji: "🖤💿",
-        name: "Cyber Y2K",
-        keywords:
-          ["futuristic", "digital", "metallic", "tech"]
-      },
+{
+  id: "Boho Chic",
+  emoji: "🦋",
+  names: {
+    en: "Boho Chic",
+    ko: "보호 시크",
+    ja: "ボーホーシック"
+  },
+  keywords: {
+    en: ["free-spirited", "earthy", "layered", "festival"],
+    ko: ["자유로운", "내추럴", "레이어드", "페스티벌"],
+    ja: ["自由奔放", "アーシー", "レイヤード", "フェス"]
+  }
+},
 
-      {
-        emoji: "📻",
-        name: "Vintage",
-        keywords:
-          ["nostalgic", "timeless", "retro", "classic"]
-      }
+{
+  id: "Cyber Y2K",
+  emoji: "🖤💿",
+  names: {
+    en: "Cyber Y2K",
+    ko: "사이버 Y2K",
+    ja: "サイバーY2K"
+  },
+  keywords: {
+    en: ["futuristic", "digital", "metallic", "tech"],
+    ko: ["미래적인", "디지털", "메탈릭", "테크"],
+    ja: ["近未来的", "デジタル", "メタリック", "テック"]
+  }
+},
+
+{
+  id: "Vintage",
+  emoji: "📻",
+  names: {
+    en: "Vintage",
+    ko: "빈티지",
+    ja: "ヴィンテージ"
+  },
+  keywords: {
+    en: ["nostalgic", "timeless", "retro", "classic"],
+    ko: ["향수를 불러일으키는", "유행을 타지 않는", "레트로", "클래식"],
+    ja: ["ノスタルジック", "タイムレス", "レトロ", "クラシック"]
+  }
+}
 
     ];
 
@@ -682,36 +923,44 @@ setLanguage(savedLanguage);
     showAesthetics(aesthetics);
 
 
-    searchInput.addEventListener(
-      "input",
-      function () {
+   searchInput.addEventListener(
+  "input",
+  function () {
 
-        const search =
-          searchInput.value
-            .toLowerCase()
-            .trim();
+    const search =
+      searchInput.value
+        .toLowerCase()
+        .trim();
 
+    const filtered =
+      aesthetics.filter(aesthetic => {
 
-        const filtered =
-          aesthetics.filter(aesthetic => {
+        const allNames =
+          Object.values(aesthetic.names)
+            .join(" ");
 
-            const text =
-              (
-                aesthetic.name
-                + " "
-                + aesthetic.keywords.join(" ")
-              ).toLowerCase();
+        const allKeywords =
+          Object.values(aesthetic.keywords)
+            .flat()
+            .join(" ");
 
+        const text =
+          (
+            aesthetic.id
+            + " "
+            + allNames
+            + " "
+            + allKeywords
+          ).toLowerCase();
 
-            return text.includes(search);
+        return text.includes(search);
 
-          });
+      });
 
+    showAesthetics(filtered);
 
-        showAesthetics(filtered);
-
-      }
-    );
+  }
+);
 
   </script>
 
