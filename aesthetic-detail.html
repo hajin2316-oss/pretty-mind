@@ -251,6 +251,30 @@
     margin-top: 40px;
   }
 }
+    .language-switcher {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 18px;
+  font-size: 0.9rem;
+  color: #b85c7a;
+}
+
+.language-switcher button {
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: none;
+  color: #b85c7a;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+}
+
+.language-switcher button:hover {
+  color: #e75480;
+}
   </style>
 </head>
 
@@ -258,10 +282,20 @@
 <body>
 
   <main class="page">
-
-    <a class="back-link" href="aesthetics.html">
-      ← Back to all aesthetics
-    </a>
+<div class="language-switcher">
+  <button type="button" onclick="setLanguage('en')">EN</button>
+  <span>·</span>
+  <button type="button" onclick="setLanguage('ko')">한국어</button>
+  <span>·</span>
+  <button type="button" onclick="setLanguage('ja')">日本語</button>
+</div>
+    <a
+  id="backLink"
+  class="back-link"
+  href="aesthetics.html"
+>
+  ← Back to all aesthetics
+</a>
 
 
     <section id="detailContent">
@@ -293,27 +327,27 @@
         <div class="info-card">
 
           <div class="section">
-            <h2>🎨 Colors</h2>
+            <h2 id="colorsTitle">🎨 Colors</h2>
             <p id="colors"></p>
           </div>
 
           <div class="section">
-            <h2>💄 Makeup</h2>
+            <h2 id="makeupTitle">💄 Makeup</h2>
             <p id="makeup"></p>
           </div>
 
           <div class="section">
-            <h2>💇 Hair</h2>
+            <h2 id="hairTitle">💇 Hair</h2>
             <p id="hair"></p>
           </div>
 
           <div class="section">
-            <h2>👗 Outfit</h2>
+            <h2 id="outfitTitle">👗 Outfit</h2>
             <p id="outfit"></p>
           </div>
 
           <div class="section">
-            <h2>💎 Accessories</h2>
+            <h2 id="accessoriesTitle">💎 Accessories</h2>
             <p id="accessories"></p>
           </div>
 
@@ -330,15 +364,15 @@
 <section id="styleGuide" class="style-guide">
 
   <div class="guide-title">
-    <h2>Try This Vibe ♡</h2>
-    <p>A simple guide to bring this aesthetic into your look ✦</p>
+    <h2 id="guideTitle">Try This Vibe ♡</h2>
+<p id="guideSubtitle">A simple guide to bring this aesthetic into your look ✦</p>
   </div>
 
   <div class="guide-grid">
 
     <article class="guide-card">
       <div class="guide-icon">💄</div>
-      <h3>Makeup Look</h3>
+      <h3 id="guideMakeupTitle">Makeup Look</h3>
       <p id="guideMakeup">
         Defined eyeliner, full lashes, bright under-eyes,
         rosy blush and a glossy lip.
@@ -347,7 +381,7 @@
 
     <article class="guide-card">
       <div class="guide-icon">👗</div>
-      <h3>Outfit Idea</h3>
+      <h3 id="guideOutfitTitle">Outfit Idea</h3>
       <p id="guideOutfit">
         Pair a fitted top with a mini skirt or denim,
         then finish the look with statement boots.
@@ -356,7 +390,7 @@
 
     <article class="guide-card">
       <div class="guide-icon">🎀</div>
-      <h3>Hair & Accessories</h3>
+     <h3 id="guideHairTitle">Hair & Accessories</h3>
       <p id="guideHair">
         Try voluminous waves or a high ponytail
         with sparkling jewelry, hair clips and long nails.
@@ -370,7 +404,75 @@
 
 
   <script>
+const translations = {
+  en: {
+    back: "← Back to all aesthetics",
+    colors: "🎨 Colors",
+    makeup: "💄 Makeup",
+    hair: "💇 Hair",
+    outfit: "👗 Outfit",
+    accessories: "💎 Accessories",
+    notFound: "This aesthetic could not be found ♡",
+    guideTitle: "Try This Vibe ♡",
+    guideSubtitle: "A simple guide to bring this aesthetic into your look ✦",
+    guideMakeup: "Makeup Look",
+    guideOutfit: "Outfit Idea",
+    guideHair: "Hair & Accessories"
+  },
 
+  ko: {
+    back: "← 모든 Aesthetic으로 돌아가기",
+    colors: "🎨 컬러",
+    makeup: "💄 메이크업",
+    hair: "💇 헤어",
+    outfit: "👗 아웃핏",
+    accessories: "💎 액세서리",
+    notFound: "이 Aesthetic을 찾을 수 없어 ♡",
+    guideTitle: "이 Vibe 따라하기 ♡",
+    guideSubtitle: "이 Aesthetic을 나만의 스타일에 더해보자 ✦",
+    guideMakeup: "메이크업 룩",
+    guideOutfit: "아웃핏 아이디어",
+    guideHair: "헤어 & 액세서리"
+  },
+
+  ja: {
+    back: "← Aesthetic一覧に戻る",
+    colors: "🎨 カラー",
+    makeup: "💄 メイク",
+    hair: "💇 ヘア",
+    outfit: "👗 コーデ",
+    accessories: "💎 アクセサリー",
+    notFound: "このAestheticが見つかりません ♡",
+    guideTitle: "このVibeを取り入れてみよう ♡",
+    guideSubtitle: "このAestheticを自分のスタイルに取り入れる簡単ガイド ✦",
+    guideMakeup: "メイクルック",
+    guideOutfit: "コーデアイデア",
+    guideHair: "ヘア & アクセサリー"
+  }
+};
+
+function setLanguage(lang) {
+  const t = translations[lang];
+
+  document.getElementById("backLink").textContent = t.back;
+  document.getElementById("colorsTitle").textContent = t.colors;
+  document.getElementById("makeupTitle").textContent = t.makeup;
+  document.getElementById("hairTitle").textContent = t.hair;
+  document.getElementById("outfitTitle").textContent = t.outfit;
+  document.getElementById("accessoriesTitle").textContent = t.accessories;
+  document.getElementById("notFound").textContent = t.notFound;
+
+  document.getElementById("guideTitle").textContent = t.guideTitle;
+  document.getElementById("guideSubtitle").textContent = t.guideSubtitle;
+  document.getElementById("guideMakeupTitle").textContent = t.guideMakeup;
+  document.getElementById("guideOutfitTitle").textContent = t.guideOutfit;
+  document.getElementById("guideHairTitle").textContent = t.guideHair;
+
+  localStorage.setItem("prettyMindLanguage", lang);
+}
+
+const savedLanguage =
+  localStorage.getItem("prettyMindLanguage") || "en";
     const aesthetics = {
 
       "Gyaru": {
@@ -787,7 +889,7 @@ document.getElementById("guideHair").textContent =
         "block";
 
     }
-
+setLanguage(savedLanguage);
   </script>
 
 </body>
