@@ -38,6 +38,7 @@
     }
 
     .contact-card {
+      position: relative;
       width: min(620px, 95%);
       padding: 50px 35px;
 
@@ -47,6 +48,35 @@
 
       box-shadow: 0 15px 40px rgba(184, 92, 122, 0.15);
       backdrop-filter: blur(10px);
+    }
+
+    .language-switcher {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 22px;
+
+      font-size: 0.9rem;
+      color: #b85c7a;
+    }
+
+    .language-switcher button {
+      margin: 0;
+      padding: 0;
+
+      background: none;
+      border: none;
+
+      color: #b85c7a;
+      font-family: inherit;
+      font-size: inherit;
+
+      cursor: pointer;
+    }
+
+    .language-switcher button:hover {
+      color: #e75480;
     }
 
     .icon {
@@ -125,6 +155,25 @@
       opacity: 0.7;
       line-height: 1.6;
     }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 16px;
+      }
+
+      .contact-card {
+        width: 100%;
+        padding: 35px 22px;
+      }
+
+      h1 {
+        font-size: 2.2rem;
+      }
+
+      .subtitle {
+        font-size: 0.95rem;
+      }
+    }
   </style>
 </head>
 
@@ -132,24 +181,33 @@
 
   <main class="contact-card">
 
+    <div class="language-switcher">
+      <button type="button" onclick="setLanguage('en')">EN</button>
+      <span>·</span>
+      <button type="button" onclick="setLanguage('ko')">한국어</button>
+      <span>·</span>
+      <button type="button" onclick="setLanguage('ja')">日本語</button>
+    </div>
+
     <div class="icon">💌</div>
 
-    <h1>Contact Pretty Mind ♡</h1>
+    <h1 id="contactTitle">
+      Contact Pretty Mind ♡
+    </h1>
 
-    <p class="subtitle">
-      Need a little help?
-      If you experience any issues while using Pretty Mind,
-      or need assistance with the site,
-      feel free to contact us ♡
+    <p id="contactSubtitle" class="subtitle">
+      Need a little help? If you experience any issues while using Pretty Mind,
+      or need assistance with the site, feel free to contact us ♡
     </p>
 
     <div class="help-box">
 
-      <strong>We're happy to help ✦</strong>
+      <strong id="helpTitle">
+        We're happy to help ✦
+      </strong>
 
-      <p>
-        Please describe the issue you are experiencing
-        as clearly as possible.
+      <p id="helpText">
+        Please describe the issue you are experiencing as clearly as possible.
       </p>
 
       <p class="email-address">
@@ -157,6 +215,7 @@
       </p>
 
       <a
+        id="emailButton"
         class="email-button"
         href="mailto:prettymind.contact@gmail.com"
       >
@@ -165,15 +224,96 @@
 
     </div>
 
-    <a class="back-link" href="index.html">
+    <a
+      id="backLink"
+      class="back-link"
+      href="index.html"
+    >
       ← Back to Pretty Mind
     </a>
 
-    <p class="tiny-note">
+    <p id="tinyNote" class="tiny-note">
       Please allow some time for a response ♡
     </p>
 
   </main>
+
+  <script>
+    const translations = {
+      en: {
+        title: "Contact Pretty Mind ♡",
+        subtitle:
+          "Need a little help? If you experience any issues while using Pretty Mind, or need assistance with the site, feel free to contact us ♡",
+        helpTitle: "We're happy to help ✦",
+        helpText:
+          "Please describe the issue you are experiencing as clearly as possible.",
+        emailButton: "Send an Email ♡",
+        back: "← Back to Pretty Mind",
+        note: "Please allow some time for a response ♡"
+      },
+
+      ko: {
+        title: "Pretty Mind에 문의하기 ♡",
+        subtitle:
+          "도움이 필요해? Pretty Mind를 이용하면서 문제가 생겼거나 사이트 이용에 도움이 필요하다면 언제든지 문의해줘 ♡",
+        helpTitle: "기꺼이 도와줄게 ✦",
+        helpText:
+          "겪고 있는 문제를 가능한 한 자세하게 설명해줘.",
+        emailButton: "이메일 보내기 ♡",
+        back: "← Pretty Mind로 돌아가기",
+        note: "답변까지 조금 시간이 걸릴 수 있어 ♡"
+      },
+
+      ja: {
+        title: "Pretty Mindにお問い合わせ ♡",
+        subtitle:
+          "困ったことがある？Pretty Mindの利用中に問題が発生した場合や、サイトについてサポートが必要な場合は、気軽にお問い合わせください ♡",
+        helpTitle: "喜んでお手伝いします ✦",
+        helpText:
+          "発生している問題について、できるだけ詳しく教えてください。",
+        emailButton: "メールを送る ♡",
+        back: "← Pretty Mindに戻る",
+        note: "返信まで少しお時間をいただく場合があります ♡"
+      }
+    };
+
+    function setLanguage(lang) {
+      const t = translations[lang];
+
+      document.getElementById("contactTitle").textContent =
+        t.title;
+
+      document.getElementById("contactSubtitle").textContent =
+        t.subtitle;
+
+      document.getElementById("helpTitle").textContent =
+        t.helpTitle;
+
+      document.getElementById("helpText").textContent =
+        t.helpText;
+
+      document.getElementById("emailButton").textContent =
+        t.emailButton;
+
+      document.getElementById("backLink").textContent =
+        t.back;
+
+      document.getElementById("tinyNote").textContent =
+        t.note;
+
+      document.documentElement.lang = lang;
+
+      localStorage.setItem(
+        "prettyMindLanguage",
+        lang
+      );
+    }
+
+    const savedLanguage =
+      localStorage.getItem("prettyMindLanguage") || "en";
+
+    setLanguage(savedLanguage);
+  </script>
 
 </body>
 </html>
