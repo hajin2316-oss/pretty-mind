@@ -367,6 +367,7 @@ function drawWheel() {
 }
 
 drawWheel();
+let selectedVibe = null;
 setLanguage(savedLanguage);
     const spinButton = document.getElementById("spinButton");
     const resultEmoji = document.getElementById("resultEmoji");
@@ -375,7 +376,6 @@ setLanguage(savedLanguage);
     const exploreLink = document.getElementById("exploreLink");
 let currentRotation = 0;
 let isSpinning = false;
-let selectedVibe = null;
   let soundEnabled =
   localStorage.getItem("prettyMindSound") !== "off";
 
