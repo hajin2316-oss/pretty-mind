@@ -83,7 +83,7 @@
       text-align: center;
     }
 
-    .visual-card img {
+    .visual-card > img {
       width: 100%;
       height: auto;
       object-fit: contain;
@@ -134,6 +134,16 @@
       margin: 0;
       line-height: 1.8;
       font-size: 16px;
+    }
+
+    .detail-image {
+      display: none;
+      width: 100%;
+      height: auto;
+      margin-top: 18px;
+      border-radius: 18px;
+      object-fit: contain;
+      box-shadow: 0 8px 22px rgba(231,84,128,0.12);
     }
 
     .tags {
@@ -260,6 +270,10 @@
         font-size: 38px;
       }
 
+      .detail-image {
+        border-radius: 16px;
+      }
+
       .guide-grid {
         grid-template-columns: 1fr;
       }
@@ -304,26 +318,31 @@
           <div class="section">
             <h2 id="colorsTitle">🎨 Colors</h2>
             <p id="colors"></p>
+            <img id="colorsImage" class="detail-image" alt="Colors aesthetic guide">
           </div>
 
           <div class="section">
             <h2 id="makeupTitle">💄 Makeup</h2>
             <p id="makeup"></p>
+            <img id="makeupImage" class="detail-image" alt="Makeup aesthetic guide">
           </div>
 
           <div class="section">
             <h2 id="hairTitle">💇 Hair</h2>
             <p id="hair"></p>
+            <img id="hairImage" class="detail-image" alt="Hair aesthetic guide">
           </div>
 
           <div class="section">
             <h2 id="outfitTitle">👗 Outfit</h2>
             <p id="outfit"></p>
+            <img id="outfitImage" class="detail-image" alt="Outfit aesthetic guide">
           </div>
 
           <div class="section">
             <h2 id="accessoriesTitle">💎 Accessories</h2>
             <p id="accessories"></p>
+            <img id="accessoriesImage" class="detail-image" alt="Accessories aesthetic guide">
           </div>
         </div>
       </div>
@@ -377,7 +396,6 @@ const translations = {
     guideOutfit: "Outfit Idea",
     guideHair: "Hair & Accessories"
   },
-
   ko: {
     back: "← 모든 Aesthetic으로 돌아가기",
     colors: "🎨 컬러",
@@ -392,7 +410,6 @@ const translations = {
     guideOutfit: "아웃핏 아이디어",
     guideHair: "헤어 & 액세서리"
   },
-
   ja: {
     back: "← Aesthetic一覧に戻る",
     colors: "🎨 カラー",
@@ -419,7 +436,6 @@ function setLanguage(lang) {
   document.getElementById("outfitTitle").textContent = t.outfit;
   document.getElementById("accessoriesTitle").textContent = t.accessories;
   document.getElementById("notFound").textContent = t.notFound;
-
   document.getElementById("guideTitle").textContent = t.guideTitle;
   document.getElementById("guideSubtitle").textContent = t.guideSubtitle;
   document.getElementById("guideMakeupTitle").textContent = t.guideMakeup;
@@ -447,6 +463,11 @@ const aesthetics = {
     "accessories": {"en": "large earrings · sparkling jewelry · hair clips · long nails", "ko": "큰 귀걸이 · 반짝이는 주얼리 · 헤어핀 · 롱네일", "ja": "大ぶりピアス · キラキラジュエリー · ヘアピン · ロングネイル"},
     "keywords": {"en": ["glamorous", "confident", "playful", "bold"], "ko": ["화려한", "자신감", "발랄한", "대담한"], "ja": ["華やか", "自信", "遊び心", "大胆"]},
     "image": "gyaru.png",
+    "colorsImage": "gyaru-colors.png",
+    "makeupImage": "gyaru-makeup.png",
+    "hairImage": "gyaru-hair.png",
+    "outfitImage": "gyaru-outfit.png",
+    "accessoriesImage": "gyaru-accessories.png",
     "guideMakeup": {
       "en": "Defined eyeliner, full lashes, bright under-eyes, rosy blush and a glossy lip.",
       "ko": "또렷한 아이라인과 풍성한 속눈썹, 밝은 언더아이에 로지 블러셔와 글로시 립을 더해봐.",
@@ -826,6 +847,27 @@ function renderAesthetic() {
     document.getElementById("hair").textContent = localized("hair");
     document.getElementById("outfit").textContent = localized("outfit");
     document.getElementById("accessories").textContent = localized("accessories");
+
+    const detailImages = [
+      ["colorsImage", "colorsImage", "Colors"],
+      ["makeupImage", "makeupImage", "Makeup"],
+      ["hairImage", "hairImage", "Hair"],
+      ["outfitImage", "outfitImage", "Outfit"],
+      ["accessoriesImage", "accessoriesImage", "Accessories"]
+    ];
+
+    detailImages.forEach(([elementId, dataKey, label]) => {
+      const detailImage = document.getElementById(elementId);
+
+      if (aesthetic[dataKey]) {
+        detailImage.src = aesthetic[dataKey];
+        detailImage.alt = displayName + " " + label + " guide";
+        detailImage.style.display = "block";
+      } else {
+        detailImage.removeAttribute("src");
+        detailImage.style.display = "none";
+      }
+    });
 
     document.getElementById("guideMakeup").textContent =
       aesthetic.guideMakeup?.[lang] || localized("makeup");
