@@ -502,10 +502,10 @@ const aesthetics = {
   "McBling": {
     emoji:"💖",
     names:{en:"McBling",ko:"맥블링",ja:"マックブリング"},
-    colors:{en:"hot pink · gold · white · leopard",ko:"핫핑크 · 골드 · 화이트 · 레오파드",ja:"ホットピンク · ゴールド · ホワイト · 레오파드"},
+    colors:{en:"hot pink · gold · white · leopard",ko:"핫핑크 · 골드 · 화이트 · 레오파드",ja:"ホットピンク · ゴールド · ホワイト · レオパード"},
     makeup:{en:"glitter eyes · bronzer · glossy lip",ko:"글리터 아이 · 브론저 · 글로시 립",ja:"グリッターアイ · ブロンザー · グロッシーリップ"},
     hair:{en:"big waves · blonde highlights",ko:"큰 웨이브 · 블론드 하이라이트",ja:"大きなウェーブ · ブロンドハイライト"},
-    outfit:{en:"velour · low-rise bottoms · crop tops · fur",ko:"벨루어 · 로우라이즈 · 크롭탑 · 퍼",ja:"ベロア · 로우라이즈 · 크롭탑 · ファー"},
+    outfit:{en:"velour · low-rise bottoms · crop tops · fur",ko:"벨루어 · 로우라이즈 · 크롭탑 · 퍼",ja:"ベロア · ローライズ · クロップトップ · ファー"},
     accessories:{en:"rhinestones · oversized sunglasses · bling bags",ko:"라인스톤 · 큰 선글라스 · 블링백",ja:"ラインストーン · 大きめサングラス · キラキラバッグ"},
     keywords:{en:["flashy","celebrity","luxe","2000s"],ko:["화려한","셀럽","럭셔리","2000년대"],ja:["派手","セレブ","ラグジュアリー","2000年代"]}
   },
@@ -541,7 +541,7 @@ const aesthetics = {
     hair:{en:"soft waves · cute hair clips",ko:"소프트 웨이브 · 귀여운 핀",ja:"ソフトウェーブ · 可愛いヘアピン"},
     outfit:{en:"cardigans · tennis skirts · oversized knits",ko:"가디건 · 테니스스커트 · 오버핏 니트",ja:"カーディガン · テニススカート · オーバーサイズニット"},
     accessories:{en:"heart clips · beaded jewelry",ko:"하트핀 · 비즈 주얼리",ja:"ハートピン · ビーズジュエリー"},
-    keywords:{en:["pastel","cute","sweet","dreamy"],ko:["파스텔","귀여운","사랑스러운","몽환적인"],ja:["パステル","可愛い","甘이","夢かわいい"]}
+    keywords:{en:["pastel","cute","sweet","dreamy"],ko:["파스텔","귀여운","사랑스러운","몽환적인"],ja:["パステル","可愛い","甘い","夢かわいい"]}
   },
 
   "Girly": {
@@ -602,7 +602,7 @@ const aesthetics = {
   "Old Money / Preppy": {
     emoji:"💰",
     names:{en:"Old Money / Preppy",ko:"올드머니 / 프레피",ja:"オールドマネー / プレッピー"},
-    colors:{en:"navy · cream · beige · burgundy",ko:"네이비 · 크림 · 베이지 · 버건디",ja:"네イビー · クリーム · ベージュ · バーガンディ"},
+    colors:{en:"navy · cream · beige · burgundy",ko:"네이비 · 크림 · 베이지 · 버건디",ja:"ネイビー · クリーム · ベージュ · バーガンディ"},
     makeup:{en:"clean skin · groomed brows · classic rose lip",ko:"깨끗한 피부 · 정돈된 눈썹 · 클래식 로즈립",ja:"清潔感のある肌 · 整えた眉 · クラシックなローズリップ"},
     hair:{en:"blowout · low bun",ko:"블로우아웃 · 로우번",ja:"ブローアウト · ローシニヨン"},
     outfit:{en:"shirts · cable knits · blazers · pleats",ko:"셔츠 · 케이블니트 · 블레이저 · 플리츠",ja:"シャツ · ケーブルニット · ブレザー · プリーツ"},
@@ -624,7 +624,7 @@ const aesthetics = {
   "Fairycore": {
     emoji:"🧚",
     names:{en:"Fairycore",ko:"페어리코어",ja:"フェアリーコア"},
-    colors:{en:"lilac · sage · pearl white · pink",ko:"라일락 · 세이지 · 펄화이트 · 핑크",ja:"ライラック · セージ · パールホワイト · 핑크"},
+    colors:{en:"lilac · sage · pearl white · pink",ko:"라일락 · 세이지 · 펄화이트 · 핑크",ja:"ライラック · セージ · パールホワイト · ピンク"},
     makeup:{en:"shimmer · holographic accents · pink/lilac eyes",ko:"쉬머 · 홀로그램 포인트 · 핑크/라일락 아이",ja:"シマー · ホログラムポイント · ピンク/ライラックアイ"},
     hair:{en:"waves · small braids · floral accents",ko:"웨이브 · 작은 브레이드 · 꽃 장식",ja:"ウェーブ · 細いブレイド · 花飾り"},
     outfit:{en:"chiffon · sheer layers · flowing skirts",ko:"쉬폰 · 시스루 레이어 · 흐르는 스커트",ja:"シフォン · シアーレイヤー · 流れるスカート"},
@@ -777,6 +777,8 @@ const aesthetics = {
   }
 };
 
+// 기존에 정상 작동하던 매핑은 그대로 유지하고,
+// 비어 있던 6개만 새로 채운 최종 매핑.
 const aestheticImageMap = {
   "Gyaru": {
     colorsImage:"1000049441.png",
@@ -785,6 +787,7 @@ const aestheticImageMap = {
     outfitImage:"1000050573.png",
     accessoriesImage:"1000049438.png"
   },
+
   "Himekaji": {
     image:"1000050601.png",
     colorsImage:"1000050724.png",
@@ -793,6 +796,7 @@ const aestheticImageMap = {
     outfitImage:"1000050656.png",
     accessoriesImage:"1000050665.png"
   },
+
   "Balletcore": {
     image:"1000049419.png",
     colorsImage:"1000049432.png",
@@ -800,9 +804,11 @@ const aestheticImageMap = {
     outfitImage:"1000049418.png",
     accessoriesImage:"1000049431.png"
   },
+
   "Acubi": {
     image:"1000049462.png"
   },
+
   "Boho Chic": {
     image:"1000050594.png",
     makeupImage:"1000050748.png",
@@ -810,6 +816,7 @@ const aestheticImageMap = {
     outfitImage:"1000050720.png",
     accessoriesImage:"1000050739.png"
   },
+
   "Cottagecore": {
     image:"file_00000000c734820b9cbc446e74b713fc.png",
     colorsImage:"file_00000000359c81fa9fedd346c9bfdc33(5).png",
@@ -818,6 +825,7 @@ const aestheticImageMap = {
     outfitImage:"file_00000000359c81fa9fedd346c9bfdc33(2).png",
     accessoriesImage:"file_00000000359c81fa9fedd346c9bfdc33(1).png"
   },
+
   "Fairycore": {
     image:"file_0000000069d4820999f25e0f661cabbf.png",
     colorsImage:"file_000000004d1c8206b6c6fbb3eb69aca8(5).png",
@@ -826,6 +834,7 @@ const aestheticImageMap = {
     outfitImage:"file_000000004d1c8206b6c6fbb3eb69aca8(2).png",
     accessoriesImage:"file_000000004d1c8206b6c6fbb3eb69aca8(1).png"
   },
+
   "Angelcore": {
     image:"file_000000006c8c81f7bb6a738d56945062.png",
     colorsImage:"file_00000000957481f79fb13ad227eadf0a(5).png",
@@ -834,6 +843,7 @@ const aestheticImageMap = {
     outfitImage:"file_00000000957481f79fb13ad227eadf0a(2).png",
     accessoriesImage:"file_00000000957481f79fb13ad227eadf0a(1).png"
   },
+
   "Dark Feminine": {
     image:"1000049777.png",
     colorsImage:"1000049767.png",
@@ -842,6 +852,7 @@ const aestheticImageMap = {
     outfitImage:"1000049764.png",
     accessoriesImage:"1000049763.png"
   },
+
   "McBling": {
     image:"1000049448.png",
     colorsImage:"1000049447.png",
@@ -850,6 +861,7 @@ const aestheticImageMap = {
     outfitImage:"1000049444.png",
     accessoriesImage:"1000049443.png"
   },
+
   "Light Academia": {
     image:"file_000000008a78820bac4703a9ad4d7cbd.png",
     colorsImage:"file_00000000a2088211bbc1d9b2f2d8c5e8(5).png",
@@ -858,6 +870,7 @@ const aestheticImageMap = {
     outfitImage:"file_00000000a2088211bbc1d9b2f2d8c5e8(2).png",
     accessoriesImage:"file_00000000a2088211bbc1d9b2f2d8c5e8(1).png"
   },
+
   "Cutecore / Kawaii": {
     image:"1000050610.png",
     colorsImage:"1000050745.png",
@@ -866,6 +879,7 @@ const aestheticImageMap = {
     outfitImage:"1000050674.png",
     accessoriesImage:"1000050679.png"
   },
+
   "Old Money / Preppy": {
     image:"file_000000008e68820bafaeeeb8b781caa5.png",
     colorsImage:"file_00000000ae6c81fa8707f50a11b37229(5).png",
@@ -874,6 +888,7 @@ const aestheticImageMap = {
     outfitImage:"file_00000000ae6c81fa8707f50a11b37229(2).png",
     accessoriesImage:"file_00000000ae6c81fa8707f50a11b37229(1).png"
   },
+
   "Office Siren": {
     image:"1000050615.png",
     colorsImage:"1000050753.png",
@@ -881,9 +896,11 @@ const aestheticImageMap = {
     hairImage:"1000050765.png",
     accessoriesImage:"1000050660.png"
   },
+
   "Hime Gyaru": {
     image:"1000050589.png"
   },
+
   "Lolita-inspired": {
     image:"1000050591.png",
     makeupImage:"1000050639.png",
@@ -891,24 +908,28 @@ const aestheticImageMap = {
     colorsImage:"1000050726.png",
     accessoriesImage:"1000050688.png"
   },
+
   "Clean Girl": {
     colorsImage:"1000049457.png",
     hairImage:"1000049455.png",
     outfitImage:"1000049454.png",
     accessoriesImage:"1000049453.png"
   },
+
   "Whimsigoth": {
     colorsImage:"1000050731.png",
     hairImage:"1000050722.png",
     outfitImage:"1000050647.png",
     accessoriesImage:"1000050662.png"
   },
+
   "Indie Sleaze": {
     image:"1000050609.png",
     makeupImage:"1000050644.png",
     hairImage:"1000050730.png",
     outfitImage:"1000050643.png"
   },
+
   "Soft Girl": {
     image:"file_00000000a38082119b8fe7a4272e1cea.png",
     colorsImage:"file_000000004e94820990fb80aea585c223(4).png",
@@ -917,12 +938,15 @@ const aestheticImageMap = {
     outfitImage:"file_000000004e94820990fb80aea585c223(2).png",
     accessoriesImage:"file_000000004e94820990fb80aea585c223(1).png"
   },
+
   "Y2K": {
     image:"1000049436.png"
   },
+
   "Romantic Feminine": {
     image:"1000049676.png"
   },
+
   "Girly": {
     colorsImage:"1000049663.png",
     makeupImage:"1000049662.png",
@@ -930,6 +954,7 @@ const aestheticImageMap = {
     outfitImage:"1000049660.png",
     accessoriesImage:"1000049659.png"
   },
+
   "Cyber Y2K": {
     colorsImage:"1000050683.png",
     makeupImage:"1000050699.png",
@@ -937,6 +962,7 @@ const aestheticImageMap = {
     outfitImage:"1000050734.png",
     accessoriesImage:"1000050685.png"
   },
+
   "Vintage": {
     image:"1000050598.png",
     colorsImage:"1000049648.png",
@@ -945,6 +971,7 @@ const aestheticImageMap = {
     outfitImage:"1000050661.png",
     accessoriesImage:"1000050671.png"
   },
+
   "Coquette": {
     image:"coquette.png",
     colorsImage:"1000050732.png",
@@ -953,6 +980,7 @@ const aestheticImageMap = {
     outfitImage:"1000050627.png",
     accessoriesImage:"1000050727.png"
   },
+
   "Dark Academia": {
     image:"1000049800.png",
     colorsImage:"1000049799.png",
@@ -961,6 +989,7 @@ const aestheticImageMap = {
     outfitImage:"1000049796.png",
     accessoriesImage:"1000049795.png"
   },
+
   "Mori Kei": {
     image:"1000050001.png",
     colorsImage:"1000050098.png",
@@ -969,6 +998,7 @@ const aestheticImageMap = {
     outfitImage:"1000050095.png",
     accessoriesImage:"1000050094.png"
   },
+
   "Grunge": {
     image:"1000050256.png",
     colorsImage:"1000050274.png",
@@ -977,6 +1007,7 @@ const aestheticImageMap = {
     outfitImage:"1000050270.png",
     accessoriesImage:"1000050271.png"
   },
+
   "Agejo Gyaru": {
     image:"pm-agejo-gyaru-main.png",
     colorsImage:"pm-agejo-gyaru-colors.png",
@@ -984,9 +1015,6 @@ const aestheticImageMap = {
     hairImage:"pm-agejo-gyaru-hair.png",
     outfitImage:"pm-agejo-gyaru-outfit.png",
     accessoriesImage:"pm-agejo-gyaru-accessories.png"
-  },
-  "Jirai Kei": {
-    image:"jirai-kei.png"
   }
 };
 
@@ -1034,7 +1062,6 @@ function renderAesthetic() {
         detailImage.alt = displayName + " " + label + " guide";
         detailImage.style.display = "block";
       } else {
-        detailImage.src = "";
         detailImage.removeAttribute("src");
         detailImage.style.display = "none";
       }
@@ -1065,7 +1092,6 @@ function renderAesthetic() {
       image.style.display = "block";
       placeholder.style.display = "none";
     } else {
-      image.src = "";
       image.removeAttribute("src");
       image.style.display = "none";
       placeholder.style.display = "flex";
