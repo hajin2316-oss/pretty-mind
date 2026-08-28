@@ -4,13 +4,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>Pretty Mind | Aesthetic Detail</title>
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -35,9 +32,7 @@
       text-decoration: none;
     }
 
-    .back-link:hover {
-      color: #e75480;
-    }
+    .back-link:hover { color: #e75480; }
 
     .hero {
       text-align: center;
@@ -97,32 +92,19 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background:
-        linear-gradient(
-          135deg,
-          rgba(255,255,255,0.85),
-          rgba(255,224,235,0.75)
-        );
+      background: linear-gradient(135deg, rgba(255,255,255,0.85), rgba(255,224,235,0.75));
       font-size: 70px;
     }
 
-    .info-card {
-      padding: 30px;
-    }
+    .info-card { padding: 30px; }
 
     .section {
       padding: 20px 0;
       border-bottom: 1px solid rgba(231,84,128,0.13);
     }
 
-    .section:first-child {
-      padding-top: 0;
-    }
-
-    .section:last-child {
-      border-bottom: none;
-      padding-bottom: 0;
-    }
+    .section:first-child { padding-top: 0; }
+    .section:last-child { border-bottom: none; padding-bottom: 0; }
 
     .section h2 {
       margin: 0 0 10px;
@@ -170,9 +152,7 @@
       font-size: 22px;
     }
 
-    .style-guide {
-      margin-top: 55px;
-    }
+    .style-guide { margin-top: 55px; }
 
     .guide-title {
       text-align: center;
@@ -251,14 +231,10 @@
       cursor: pointer;
     }
 
-    .language-switcher button:hover {
-      color: #e75480;
-    }
+    .language-switcher button:hover { color: #e75480; }
 
     @media (max-width: 760px) {
-      .detail-layout {
-        grid-template-columns: 1fr;
-      }
+      .detail-layout { grid-template-columns: 1fr; }
 
       .visual-card {
         max-width: 360px;
@@ -266,27 +242,15 @@
         margin: 0 auto;
       }
 
-      h1 {
-        font-size: 38px;
-      }
-
-      .detail-image {
-        border-radius: 16px;
-      }
-
-      .guide-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .style-guide {
-        margin-top: 40px;
-      }
+      h1 { font-size: 38px; }
+      .detail-image { border-radius: 16px; }
+      .guide-grid { grid-template-columns: 1fr; }
+      .style-guide { margin-top: 40px; }
     }
   </style>
 </head>
 
 <body>
-
   <main class="page">
     <div class="language-switcher">
       <button type="button" onclick="setLanguage('en')">EN</button>
@@ -296,9 +260,7 @@
       <button type="button" onclick="setLanguage('ja')">日本語</button>
     </div>
 
-    <a id="backLink" class="back-link" href="aesthetics.html">
-      ← Back to all aesthetics
-    </a>
+    <a id="backLink" class="back-link" href="aesthetics.html">← Back to all aesthetics</a>
 
     <section id="detailContent">
       <div class="hero">
@@ -348,9 +310,7 @@
       </div>
     </section>
 
-    <div id="notFound" class="not-found">
-      This aesthetic could not be found ♡
-    </div>
+    <div id="notFound" class="not-found">This aesthetic could not be found ♡</div>
 
     <section id="styleGuide" class="style-guide">
       <div class="guide-title">
@@ -445,413 +405,589 @@ function setLanguage(lang) {
   document.documentElement.lang = lang === "ko" ? "ko" : lang === "ja" ? "ja" : "en";
   localStorage.setItem("prettyMindLanguage", lang);
 
-  if (window.__prettyMindDetailReady) {
-    renderAesthetic();
-  }
+  if (window.__prettyMindDetailReady) renderAesthetic();
 }
 
 const savedLanguage = localStorage.getItem("prettyMindLanguage") || "en";
 
 const aesthetics = {
   "Gyaru": {
-    "emoji": "💋",
-    "names": {"en": "Gyaru", "ko": "갸루", "ja": "ギャル"},
-    "colors": {"en": "pink · brown · gold · white", "ko": "핑크 · 브라운 · 골드 · 화이트", "ja": "ピンク · ブラウン · ゴールド · ホワイト"},
-    "makeup": {"en": "defined eyeliner · full lashes · bright under-eyes · glossy lip · blush", "ko": "또렷한 아이라인 · 풍성한 속눈썹 · 밝은 언더아이 · 글로시 립 · 블러셔", "ja": "くっきりしたアイライン · ボリュームまつ毛 · 明るい下まぶた · グロッシーリップ · チーク"},
-    "hair": {"en": "voluminous waves · high ponytail · light brown/blonde tones", "ko": "볼륨 웨이브 · 하이 포니테일 · 밝은 브라운/블론드 계열", "ja": "ボリュームウェーブ · ハイポニーテール · 明るめブラウン/ブロンド系"},
-    "outfit": {"en": "mini skirt · fitted top · boots · denim", "ko": "미니스커트 · 핏되는 탑 · 부츠 · 데님", "ja": "ミニスカート · フィットトップス · ブーツ · デニム"},
-    "accessories": {"en": "large earrings · sparkling jewelry · hair clips · long nails", "ko": "큰 귀걸이 · 반짝이는 주얼리 · 헤어핀 · 롱네일", "ja": "大ぶりピアス · キラキラジュエリー · ヘアピン · ロングネイル"},
-    "keywords": {"en": ["glamorous", "confident", "playful", "bold"], "ko": ["화려한", "자신감", "발랄한", "대담한"], "ja": ["華やか", "自信", "遊び心", "大胆"]},
-    "image": "gyaru.png",
-    "colorsImage": "gyaru-colors.png",
-    "makeupImage": "gyaru-makeup.png",
-    "hairImage": "gyaru-hair.png",
-    "outfitImage": "gyaru-outfit.png",
-    "accessoriesImage": "gyaru-accessories.png",
-    "guideMakeup": {
-      "en": "Defined eyeliner, full lashes, bright under-eyes, rosy blush and a glossy lip.",
-      "ko": "또렷한 아이라인과 풍성한 속눈썹, 밝은 언더아이에 로지 블러셔와 글로시 립을 더해봐.",
-      "ja": "くっきりしたアイラインとボリュームまつ毛、明るい下まぶたにロージーチークとグロッシーリップを合わせてみて。"
+    emoji:"💋",
+    names:{en:"Gyaru",ko:"갸루",ja:"ギャル"},
+    colors:{en:"pink · brown · gold · white",ko:"핑크 · 브라운 · 골드 · 화이트",ja:"ピンク · ブラウン · ゴールド · ホワイト"},
+    makeup:{en:"defined eyeliner · full lashes · bright under-eyes · glossy lip · blush",ko:"또렷한 아이라인 · 풍성한 속눈썹 · 밝은 언더아이 · 글로시 립 · 블러셔",ja:"くっきりしたアイライン · ボリュームまつ毛 · 明るい下まぶた · グロッシーリップ · チーク"},
+    hair:{en:"voluminous waves · high ponytail · light brown/blonde tones",ko:"볼륨 웨이브 · 하이 포니테일 · 밝은 브라운/블론드 계열",ja:"ボリュームウェーブ · ハイポニーテール · 明るめブラウン/ブロンド系"},
+    outfit:{en:"mini skirt · fitted top · boots · denim",ko:"미니스커트 · 핏되는 탑 · 부츠 · 데님",ja:"ミニスカート · フィットトップス · ブーツ · デニム"},
+    accessories:{en:"large earrings · sparkling jewelry · hair clips · long nails",ko:"큰 귀걸이 · 반짝이는 주얼리 · 헤어핀 · 롱네일",ja:"大ぶりピアス · キラキラジュエリー · ヘアピン · ロングネイル"},
+    keywords:{en:["glamorous","confident","playful","bold"],ko:["화려한","자신감","발랄한","대담한"],ja:["華やか","自信","遊び心","大胆"]},
+    image:"gyaru.png",
+    colorsImage:"gyaru-colors.png",
+    makeupImage:"gyaru-makeup.png",
+    hairImage:"gyaru-hair.png",
+    outfitImage:"gyaru-outfit.png",
+    accessoriesImage:"gyaru-accessories.png",
+    guideMakeup:{
+      en:"Defined eyeliner, full lashes, bright under-eyes, rosy blush and a glossy lip.",
+      ko:"또렷한 아이라인과 풍성한 속눈썹, 밝은 언더아이에 로지 블러셔와 글로시 립을 더해봐.",
+      ja:"くっきりしたアイラインとボリュームまつ毛、明るい下まぶたにロージーチークとグロッシーリップを合わせてみて。"
     },
-    "guideOutfit": {
-      "en": "Pair a fitted top with a mini skirt or denim, then finish the look with statement boots.",
-      "ko": "핏되는 탑에 미니스커트나 데님을 매치하고 존재감 있는 부츠로 마무리해봐.",
-      "ja": "フィットトップスにミニスカートやデニムを合わせ、存在感のあるブーツで仕上げてみて。"
+    guideOutfit:{
+      en:"Pair a fitted top with a mini skirt or denim, then finish the look with statement boots.",
+      ko:"핏되는 탑에 미니스커트나 데님을 매치하고 존재감 있는 부츠로 마무리해봐.",
+      ja:"フィットトップスにミニスカートやデニムを合わせ、存在感のあるブーツで仕上げてみて。"
     },
-    "guideHair": {
-      "en": "Try voluminous waves or a high ponytail with sparkling jewelry, hair clips and long nails.",
-      "ko": "볼륨 웨이브나 하이 포니테일에 반짝이는 주얼리, 헤어핀, 롱네일을 더해봐.",
-      "ja": "ボリュームウェーブやハイポニーテールに、キラキラジュエリー、ヘアピン、ロングネイルを合わせてみて。"
+    guideHair:{
+      en:"Try voluminous waves or a high ponytail with sparkling jewelry, hair clips and long nails.",
+      ko:"볼륨 웨이브나 하이 포니테일에 반짝이는 주얼리, 헤어핀, 롱네일을 더해봐.",
+      ja:"ボリュームウェーブやハイポニーテールに、キラキラジュエリー、ヘアピン、ロングネイルを合わせてみて。"
     }
   },
 
   "Hime Gyaru": {
-    "emoji": "👑",
-    "names": {"en": "Hime Gyaru", "ko": "히메 갸루", "ja": "姫ギャル"},
-    "colors": {"en": "baby pink · white · cream · gold", "ko": "베이비핑크 · 화이트 · 크림 · 골드", "ja": "ベビーピンク · ホワイト · クリーム · ゴールド"},
-    "makeup": {"en": "big-eye makeup · long lashes · pink cheeks · glossy pink lip", "ko": "큰 눈매 · 긴 속눈썹 · 핑크 치크 · 글로시 핑크 립", "ja": "大きな目元 · ロングまつ毛 · ピンクチーク · グロッシーピンクリップ"},
-    "hair": {"en": "voluminous princess waves · ribbons · full-bodied hair", "ko": "풍성한 공주 웨이브 · 리본 · 볼륨 헤어", "ja": "ボリュームたっぷりの姫ウェーブ · リボン · ボリュームヘア"},
-    "outfit": {"en": "frills · lace · ribbons · princess-style dresses", "ko": "프릴 · 레이스 · 리본 · 공주풍 원피스", "ja": "フリル · レース · リボン · お姫様風ワンピース"},
-    "accessories": {"en": "pearls · hearts · tiara motifs · ribbons", "ko": "진주 · 하트 · 티아라 모티프 · 리본", "ja": "パール · ハート · ティアラモチーフ · リボン"},
-    "keywords": {"en": ["princess","sweet","glamorous","doll"], "ko": ["공주","러블리","화려한","인형"], "ja": ["お姫様","スイート","華やか","ドール"]}
+    emoji:"👑",
+    names:{en:"Hime Gyaru",ko:"히메 갸루",ja:"姫ギャル"},
+    colors:{en:"baby pink · white · cream · gold",ko:"베이비핑크 · 화이트 · 크림 · 골드",ja:"ベビーピンク · ホワイト · クリーム · ゴールド"},
+    makeup:{en:"big-eye makeup · long lashes · pink cheeks · glossy pink lip",ko:"큰 눈매 · 긴 속눈썹 · 핑크 치크 · 글로시 핑크 립",ja:"大きな目元 · ロングまつ毛 · ピンクチーク · グロッシーピンクリップ"},
+    hair:{en:"voluminous princess waves · ribbons · full-bodied hair",ko:"풍성한 공주 웨이브 · 리본 · 볼륨 헤어",ja:"ボリュームたっぷりの姫ウェーブ · リボン · ボリュームヘア"},
+    outfit:{en:"frills · lace · ribbons · princess-style dresses",ko:"프릴 · 레이스 · 리본 · 공주풍 원피스",ja:"フリル · レース · リボン · お姫様風ワンピース"},
+    accessories:{en:"pearls · hearts · tiara motifs · ribbons",ko:"진주 · 하트 · 티아라 모티프 · 리본",ja:"パール · ハート · ティアラモチーフ · リボン"},
+    keywords:{en:["princess","sweet","glamorous","doll"],ko:["공주","러블리","화려한","인형"],ja:["お姫様","スイート","華やか","ドール"]}
   },
 
   "Agejo Gyaru": {
-    "emoji": "💎",
-    "names": {"en": "Agejo Gyaru", "ko": "아게조 갸루", "ja": "アゲ嬢ギャル"},
-    "colors": {"en": "black · hot pink · wine · gold", "ko": "블랙 · 핫핑크 · 와인 · 골드", "ja": "ブラック · ホットピンク · ワイン · ゴールド"},
-    "makeup": {"en": "smoky eyes · long lashes · contouring · glossy nude/pink lip", "ko": "스모키 아이 · 긴 속눈썹 · 컨투어링 · 글로시 누드/핑크 립", "ja": "スモーキーアイ · ロングまつ毛 · コントゥアリング · グロッシーなヌード/ピンクリップ"},
-    "hair": {"en": "big waves · voluminous updos", "ko": "큰 웨이브 · 볼륨 업스타일", "ja": "大きなウェーブ · ボリュームアップスタイル"},
-    "outfit": {"en": "bodycon dresses · fur · lace · heels", "ko": "바디라인 드레스 · 퍼 · 레이스 · 힐", "ja": "ボディラインドレス · ファー · レース · ヒール"},
-    "accessories": {"en": "statement jewelry · clutch bags · glamorous nails", "ko": "큼직한 주얼리 · 클러치 · 화려한 네일", "ja": "大ぶりジュエリー · クラッチ · 華やかネイル"},
-    "keywords": {"en": ["mature","glamorous","sexy","nightlife"], "ko": ["성숙한","화려한","섹시한","나이트라이프"], "ja": ["大人っぽい","華やか","セクシー","ナイトライフ"]}
+    emoji:"💎",
+    names:{en:"Agejo Gyaru",ko:"아게조 갸루",ja:"アゲ嬢ギャル"},
+    colors:{en:"black · hot pink · wine · gold",ko:"블랙 · 핫핑크 · 와인 · 골드",ja:"ブラック · ホットピンク · ワイン · ゴールド"},
+    makeup:{en:"smoky eyes · long lashes · contouring · glossy nude/pink lip",ko:"스모키 아이 · 긴 속눈썹 · 컨투어링 · 글로시 누드/핑크 립",ja:"スモーキーアイ · ロングまつ毛 · コントゥアリング · グロッシーなヌード/ピンクリップ"},
+    hair:{en:"big waves · voluminous updos",ko:"큰 웨이브 · 볼륨 업스타일",ja:"大きなウェーブ · ボリュームアップスタイル"},
+    outfit:{en:"bodycon dresses · fur · lace · heels",ko:"바디라인 드레스 · 퍼 · 레이스 · 힐",ja:"ボディラインドレス · ファー · レース · ヒール"},
+    accessories:{en:"statement jewelry · clutch bags · glamorous nails",ko:"큼직한 주얼리 · 클러치 · 화려한 네일",ja:"大ぶりジュエリー · クラッチ · 華やかネイル"},
+    keywords:{en:["mature","glamorous","sexy","nightlife"],ko:["성숙한","화려한","섹시한","나이트라이프"],ja:["大人っぽい","華やか","セクシー","ナイトライフ"]}
   },
 
   "Coquette": {
-    "emoji": "🎀",
-    "names": {"en": "Coquette", "ko": "코케트", "ja": "コケット"},
-    "colors": {"en": "pink · ivory · red · cream", "ko": "핑크 · 아이보리 · 레드 · 크림", "ja": "ピンク · アイボリー · レッド · クリーム"},
-    "makeup": {"en": "pink blush · thin eyeliner · subtle shimmer · rose lip", "ko": "핑크 블러셔 · 얇은 아이라인 · 은은한 펄 · 로즈 립", "ja": "ピンクチーク · 細いアイライン · 控えめパール · ローズリップ"},
-    "hair": {"en": "soft curls · half-up hair · ribbons", "ko": "소프트 컬 · 반묶음 · 리본", "ja": "ソフトカール · ハーフアップ · リボン"},
-    "outfit": {"en": "lace tops · mini skirts · cardigans · ribbon details", "ko": "레이스 탑 · 미니스커트 · 가디건 · 리본 디테일", "ja": "レーストップス · ミニスカート · カーディガン · リボンディテール"},
-    "accessories": {"en": "pearls · ribbons · locket necklaces", "ko": "진주 · 리본 · 로켓 목걸이", "ja": "パール · リボン · ロケットネックレス"},
-    "keywords": {"en": ["romantic","delicate","feminine","ribbon"], "ko": ["로맨틱","섬세한","여성스러운","리본"], "ja": ["ロマンティック","繊細","フェミニン","リボン"]},
-    "image": "coquette.png"
+    emoji:"🎀",
+    names:{en:"Coquette",ko:"코케트",ja:"コケット"},
+    colors:{en:"pink · ivory · red · cream",ko:"핑크 · 아이보리 · 레드 · 크림",ja:"ピンク · アイボリー · レッド · クリーム"},
+    makeup:{en:"pink blush · thin eyeliner · subtle shimmer · rose lip",ko:"핑크 블러셔 · 얇은 아이라인 · 은은한 펄 · 로즈 립",ja:"ピンクチーク · 細いアイライン · 控えめパール · ローズリップ"},
+    hair:{en:"soft curls · half-up hair · ribbons",ko:"소프트 컬 · 반묶음 · 리본",ja:"ソフトカール · ハーフアップ · リボン"},
+    outfit:{en:"lace tops · mini skirts · cardigans · ribbon details",ko:"레이스 탑 · 미니스커트 · 가디건 · 리본 디테일",ja:"レーストップス · ミニスカート · カーディガン · リボンディテール"},
+    accessories:{en:"pearls · ribbons · locket necklaces",ko:"진주 · 리본 · 로켓 목걸이",ja:"パール · リボン · ロケットネックレス"},
+    keywords:{en:["romantic","delicate","feminine","ribbon"],ko:["로맨틱","섬세한","여성스러운","리본"],ja:["ロマンティック","繊細","フェミニン","リボン"]},
+    image:"coquette.png"
   },
 
   "Balletcore": {
-    "emoji": "🩰",
-    "names": {"en":"Balletcore","ko":"발레코어","ja":"バレエコア"},
-    "colors": {"en":"ballet pink · white · gray · cream","ko":"발레핑크 · 화이트 · 그레이 · 크림","ja":"バレエピンク · ホワイト · グレー · クリーム"},
-    "makeup": {"en":"sheer base · rosy cheeks · subtle highlight","ko":"투명한 베이스 · 로지 치크 · 은은한 하이라이트","ja":"透明感ベース · ロージーチーク · 控えめハイライト"},
-    "hair": {"en":"ballet bun · ribbon ponytail","ko":"발레 번 · 리본 포니테일","ja":"バレエシニヨン · リボンポニーテール"},
-    "outfit": {"en":"wrap cardigans · leg warmers · pleated/chiffon skirts","ko":"랩 가디건 · 레그워머 · 플리츠/쉬폰 스커트","ja":"ラップカーディガン · レッグウォーマー · プリーツ/シフォンスカート"},
-    "accessories": {"en":"ribbons · pearls · ballet flats","ko":"리본 · 진주 · 발레 플랫","ja":"リボン · パール · バレエシューズ"},
-    "keywords": {"en":["graceful","soft","delicate","elegant"],"ko":["우아한","부드러운","섬세한","고급스러운"],"ja":["優雅","柔らかい","繊細","エレガント"]}
+    emoji:"🩰",
+    names:{en:"Balletcore",ko:"발레코어",ja:"バレエコア"},
+    colors:{en:"ballet pink · white · gray · cream",ko:"발레핑크 · 화이트 · 그레이 · 크림",ja:"バレエピンク · ホワイト · グレー · クリーム"},
+    makeup:{en:"sheer base · rosy cheeks · subtle highlight",ko:"투명한 베이스 · 로지 치크 · 은은한 하이라이트",ja:"透明感ベース · ロージーチーク · 控えめハイライト"},
+    hair:{en:"ballet bun · ribbon ponytail",ko:"발레 번 · 리본 포니테일",ja:"バレエシニヨン · リボンポニーテール"},
+    outfit:{en:"wrap cardigans · leg warmers · pleated/chiffon skirts",ko:"랩 가디건 · 레그워머 · 플리츠/쉬폰 스커트",ja:"ラップカーディガン · レッグウォーマー · プリーツ/シフォンスカート"},
+    accessories:{en:"ribbons · pearls · ballet flats",ko:"리본 · 진주 · 발레 플랫",ja:"リボン · パール · バレエシューズ"},
+    keywords:{en:["graceful","soft","delicate","elegant"],ko:["우아한","부드러운","섬세한","고급스러운"],ja:["優雅","柔らかい","繊細","エレガント"]}
   },
 
   "Y2K": {
-    "emoji":"💿",
-    "names":{"en":"Y2K","ko":"Y2K","ja":"Y2K"},
-    "colors":{"en":"silver · pink · denim blue · lime","ko":"실버 · 핑크 · 데님블루 · 라임","ja":"シルバー · ピンク · デニムブルー · ライム"},
-    "makeup":{"en":"glossy lip · silver/pastel shadow · thin-brow look","ko":"글로시 립 · 실버/파스텔 섀도 · 얇은 눈썹 느낌","ja":"グロッシーリップ · シルバー/パステルシャドウ · 細眉風"},
-    "hair":{"en":"claw clips · mini braids · straight hair","ko":"집게핀 · 미니 브레이드 · 스트레이트","ja":"バンスクリップ · ミニブレイド · ストレート"},
-    "outfit":{"en":"baby tees · cargo pants · denim · mini skirts","ko":"베이비티 · 카고팬츠 · 데님 · 미니스커트","ja":"ベビーT · カーゴパンツ · デニム · ミニスカート"},
-    "accessories":{"en":"mini bags · tinted sunglasses · metallic accessories","ko":"미니백 · 틴티드 선글라스 · 메탈릭 액세서리","ja":"ミニバッグ · カラーレンズサングラス · メタリックアクセ"},
-    "keywords":{"en":["2000s","pop","playful","futuristic"],"ko":["2000년대","팝","발랄한","미래적인"],"ja":["2000年代","ポップ","遊び心","近未来的"]}
+    emoji:"💿",
+    names:{en:"Y2K",ko:"Y2K",ja:"Y2K"},
+    colors:{en:"silver · pink · denim blue · lime",ko:"실버 · 핑크 · 데님블루 · 라임",ja:"シルバー · ピンク · デニムブルー · ライム"},
+    makeup:{en:"glossy lip · silver/pastel shadow · thin-brow look",ko:"글로시 립 · 실버/파스텔 섀도 · 얇은 눈썹 느낌",ja:"グロッシーリップ · シルバー/パステルシャドウ · 細眉風"},
+    hair:{en:"claw clips · mini braids · straight hair",ko:"집게핀 · 미니 브레이드 · 스트레이트",ja:"バンスクリップ · ミニブレイド · ストレート"},
+    outfit:{en:"baby tees · cargo pants · denim · mini skirts",ko:"베이비티 · 카고팬츠 · 데님 · 미니스커트",ja:"ベビーT · カーゴパンツ · デニム · ミニスカート"},
+    accessories:{en:"mini bags · tinted sunglasses · metallic accessories",ko:"미니백 · 틴티드 선글라스 · 메탈릭 액세서리",ja:"ミニバッグ · カラーレンズサングラス · メタリックアクセ"},
+    keywords:{en:["2000s","pop","playful","futuristic"],ko:["2000년대","팝","발랄한","미래적인"],ja:["2000年代","ポップ","遊び心","近未来的"]}
   },
 
   "McBling": {
-    "emoji":"💖",
-    "names":{"en":"McBling","ko":"맥블링","ja":"マックブリング"},
-    "colors":{"en":"hot pink · gold · white · leopard","ko":"핫핑크 · 골드 · 화이트 · 레오파드","ja":"ホットピンク · ゴールド · ホワイト · レオパード"},
-    "makeup":{"en":"glitter eyes · bronzer · glossy lip","ko":"글리터 아이 · 브론저 · 글로시 립","ja":"グリッターアイ · ブロンザー · グロッシーリップ"},
-    "hair":{"en":"big waves · blonde highlights","ko":"큰 웨이브 · 블론드 하이라이트","ja":"大きなウェーブ · ブロンドハイライト"},
-    "outfit":{"en":"velour · low-rise bottoms · crop tops · fur","ko":"벨루어 · 로우라이즈 · 크롭탑 · 퍼","ja":"ベロア · ローライズ · クロップトップ · ファー"},
-    "accessories":{"en":"rhinestones · oversized sunglasses · bling bags","ko":"라인스톤 · 큰 선글라스 · 블링백","ja":"ラインストーン · 大きめサングラス · キラキラバッグ"},
-    "keywords":{"en":["flashy","celebrity","luxe","2000s"],"ko":["화려한","셀럽","럭셔리","2000년대"],"ja":["派手","セレブ","ラグジュアリー","2000年代"]}
+    emoji:"💖",
+    names:{en:"McBling",ko:"맥블링",ja:"マックブリング"},
+    colors:{en:"hot pink · gold · white · leopard",ko:"핫핑크 · 골드 · 화이트 · 레오파드",ja:"ホットピンク · ゴールド · ホワイト · 레오파드"},
+    makeup:{en:"glitter eyes · bronzer · glossy lip",ko:"글리터 아이 · 브론저 · 글로시 립",ja:"グリッターアイ · ブロンザー · グロッシーリップ"},
+    hair:{en:"big waves · blonde highlights",ko:"큰 웨이브 · 블론드 하이라이트",ja:"大きなウェーブ · ブロンドハイライト"},
+    outfit:{en:"velour · low-rise bottoms · crop tops · fur",ko:"벨루어 · 로우라이즈 · 크롭탑 · 퍼",ja:"ベロア · 로우라이즈 · 크롭탑 · ファー"},
+    accessories:{en:"rhinestones · oversized sunglasses · bling bags",ko:"라인스톤 · 큰 선글라스 · 블링백",ja:"ラインストーン · 大きめサングラス · キラキラバッグ"},
+    keywords:{en:["flashy","celebrity","luxe","2000s"],ko:["화려한","셀럽","럭셔리","2000년대"],ja:["派手","セレブ","ラグジュアリー","2000年代"]}
   },
 
   "Clean Girl": {
-    "emoji":"🤍",
-    "names":{"en":"Clean Girl","ko":"클린 걸","ja":"クリーンガール"},
-    "colors":{"en":"white · beige · cream · sage","ko":"화이트 · 베이지 · 크림 · 세이지","ja":"ホワイト · ベージュ · クリーム · セージ"},
-    "makeup":{"en":"dewy skin · groomed brows · natural cheeks · nude lip","ko":"윤광 피부 · 정돈된 눈썹 · 자연스러운 치크 · 누드립","ja":"ツヤ肌 · 整えた眉 · ナチュラルチーク · ヌードリップ"},
-    "hair":{"en":"sleek bun · neat ponytail","ko":"슬릭 번 · 깔끔한 포니테일","ja":"スリックシニヨン · きれいなポニーテール"},
-    "outfit":{"en":"basic tees · shirts · straight-leg pants","ko":"기본 티 · 셔츠 · 스트레이트 팬츠","ja":"ベーシックT · シャツ · ストレートパンツ"},
-    "accessories":{"en":"small gold hoops · simple bags","ko":"작은 골드 후프 · 심플 백","ja":"小さめゴールドフープ · シンプルバッグ"},
-    "keywords":{"en":["minimal","fresh","polished","effortless"],"ko":["미니멀","산뜻한","깔끔한","꾸안꾸"],"ja":["ミニマル","爽やか","洗練","自然体"]},
-    "image":"clean-girl.png"
+    emoji:"🤍",
+    names:{en:"Clean Girl",ko:"클린 걸",ja:"クリーンガール"},
+    colors:{en:"white · beige · cream · sage",ko:"화이트 · 베이지 · 크림 · 세이지",ja:"ホワイト · ベージュ · クリーム · セージ"},
+    makeup:{en:"dewy skin · groomed brows · natural cheeks · nude lip",ko:"윤광 피부 · 정돈된 눈썹 · 자연스러운 치크 · 누드립",ja:"ツヤ肌 · 整えた眉 · ナチュラルチーク · ヌードリップ"},
+    hair:{en:"sleek bun · neat ponytail",ko:"슬릭 번 · 깔끔한 포니테일",ja:"スリックシニヨン · きれいなポニーテール"},
+    outfit:{en:"basic tees · shirts · straight-leg pants",ko:"기본 티 · 셔츠 · 스트레이트 팬츠",ja:"ベーシックT · シャツ · ストレートパンツ"},
+    accessories:{en:"small gold hoops · simple bags",ko:"작은 골드 후프 · 심플 백",ja:"小さめゴールドフープ · シンプルバッグ"},
+    keywords:{en:["minimal","fresh","polished","effortless"],ko:["미니멀","산뜻한","깔끔한","꾸안꾸"],ja:["ミニマル","爽やか","洗練","自然体"]},
+    image:"clean-girl.png"
   },
 
   "Acubi": {
-    "emoji":"🩶",
-    "names":{"en":"Acubi","ko":"아쿠비","ja":"アクビ"},
-    "colors":{"en":"gray · black · white · muted blue","ko":"그레이 · 블랙 · 화이트 · 뮤트블루","ja":"グレー · ブラック · ホワイト · くすみブルー"},
-    "makeup":{"en":"soft contour shadow · thin eyeliner · muted lip","ko":"차분한 음영 · 얇은 아이라인 · 뮤트 립","ja":"落ち着いた陰影 · 細いアイライン · くすみリップ"},
-    "hair":{"en":"natural straight hair · layered cuts","ko":"자연스러운 스트레이트 · 레이어드","ja":"ナチュラルストレート · レイヤーカット"},
-    "outfit":{"en":"slim tops · loose pants · boleros · layered styling","ko":"슬림 탑 · 루즈 팬츠 · 볼레로 · 레이어드","ja":"スリムトップス · ルーズパンツ · ボレロ · レイヤード"},
-    "accessories":{"en":"silver jewelry · headphones · mini shoulder bags","ko":"실버 주얼리 · 헤드폰 · 미니 숄더백","ja":"シルバージュエリー · ヘッドホン · ミニショルダー"},
-    "keywords":{"en":["Korean","minimal","street","futuristic"],"ko":["한국","미니멀","스트리트","미래적인"],"ja":["韓国","ミニマル","ストリート","近未来的"]}
+    emoji:"🩶",
+    names:{en:"Acubi",ko:"아쿠비",ja:"アクビ"},
+    colors:{en:"gray · black · white · muted blue",ko:"그레이 · 블랙 · 화이트 · 뮤트블루",ja:"グレー · ブラック · ホワイト · くすみブルー"},
+    makeup:{en:"soft contour shadow · thin eyeliner · muted lip",ko:"차분한 음영 · 얇은 아이라인 · 뮤트 립",ja:"落ち着いた陰影 · 細いアイライン · くすみリップ"},
+    hair:{en:"natural straight hair · layered cuts",ko:"자연스러운 스트레이트 · 레이어드",ja:"ナチュラルストレート · レイヤーカット"},
+    outfit:{en:"slim tops · loose pants · boleros · layered styling",ko:"슬림 탑 · 루즈 팬츠 · 볼레로 · 레이어드",ja:"スリムトップス · ルーズパンツ · ボレロ · レイヤード"},
+    accessories:{en:"silver jewelry · headphones · mini shoulder bags",ko:"실버 주얼리 · 헤드폰 · 미니 숄더백",ja:"シルバージュエリー · ヘッドホン · ミニショルダー"},
+    keywords:{en:["Korean","minimal","street","futuristic"],ko:["한국","미니멀","스트리트","미래적인"],ja:["韓国","ミニマル","ストリート","近未来的"]}
   },
 
   "Soft Girl": {
-    "emoji":"🍓",
-    "names":{"en":"Soft Girl","ko":"소프트 걸","ja":"ソフトガール"},
-    "colors":{"en":"pastel pink · lilac · mint · white","ko":"파스텔핑크 · 라일락 · 민트 · 화이트","ja":"パステルピンク · ライラック · ミント · ホワイト"},
-    "makeup":{"en":"pink cheeks · sparkling eyes · tinted lip","ko":"핑크 치크 · 반짝이는 눈 · 틴티드 립","ja":"ピンクチーク · きらめく目元 · ティントリップ"},
-    "hair":{"en":"soft waves · cute hair clips","ko":"소프트 웨이브 · 귀여운 핀","ja":"ソフトウェーブ · 可愛いヘアピン"},
-    "outfit":{"en":"cardigans · tennis skirts · oversized knits","ko":"가디건 · 테니스스커트 · 오버핏 니트","ja":"カーディガン · テニススカート · オーバーサイズニット"},
-    "accessories":{"en":"heart clips · beaded jewelry","ko":"하트핀 · 비즈 주얼리","ja":"ハートピン · ビーズジュエリー"},
-    "keywords":{"en":["pastel","cute","sweet","dreamy"],"ko":["파스텔","귀여운","사랑스러운","몽환적인"],"ja":["パステル","可愛い","甘い","夢かわいい"]}
+    emoji:"🍓",
+    names:{en:"Soft Girl",ko:"소프트 걸",ja:"ソフトガール"},
+    colors:{en:"pastel pink · lilac · mint · white",ko:"파스텔핑크 · 라일락 · 민트 · 화이트",ja:"パステルピンク · ライラック · ミント · ホワイト"},
+    makeup:{en:"pink cheeks · sparkling eyes · tinted lip",ko:"핑크 치크 · 반짝이는 눈 · 틴티드 립",ja:"ピンクチーク · きらめく目元 · ティントリップ"},
+    hair:{en:"soft waves · cute hair clips",ko:"소프트 웨이브 · 귀여운 핀",ja:"ソフトウェーブ · 可愛いヘアピン"},
+    outfit:{en:"cardigans · tennis skirts · oversized knits",ko:"가디건 · 테니스스커트 · 오버핏 니트",ja:"カーディガン · テニススカート · オーバーサイズニット"},
+    accessories:{en:"heart clips · beaded jewelry",ko:"하트핀 · 비즈 주얼리",ja:"ハートピン · ビーズジュエリー"},
+    keywords:{en:["pastel","cute","sweet","dreamy"],ko:["파스텔","귀여운","사랑스러운","몽환적인"],ja:["パステル","可愛い","甘이","夢かわいい"]}
   },
 
   "Girly": {
-    "emoji":"🌸",
-    "names":{"en":"Girly","ko":"걸리","ja":"ガーリー"},
-    "colors":{"en":"pink · white · peach · red","ko":"핑크 · 화이트 · 피치 · 레드","ja":"ピンク · ホワイト · ピーチ · レッド"},
-    "makeup":{"en":"rosy cheeks · natural lashes · pink lip","ko":"로지 치크 · 자연스러운 속눈썹 · 핑크립","ja":"ロージーチーク · ナチュラルまつ毛 · ピンクリップ"},
-    "hair":{"en":"curls · half-up hair · ponytails","ko":"컬 · 반묶음 · 포니테일","ja":"カール · ハーフアップ · ポニーテール"},
-    "outfit":{"en":"skirts · blouses · cardigans · dresses","ko":"스커트 · 블라우스 · 가디건 · 원피스","ja":"スカート · ブラウス · カーディガン · ワンピース"},
-    "accessories":{"en":"small ribbons · pearls · mini bags","ko":"작은 리본 · 진주 · 미니백","ja":"小さなリボン · パール · ミニバッグ"},
-    "keywords":{"en":["feminine","lovely","everyday","sweet"],"ko":["여성스러운","러블리","데일리","사랑스러운"],"ja":["フェミニン","ラブリー","日常","スイート"]}
+    emoji:"🌸",
+    names:{en:"Girly",ko:"걸리",ja:"ガーリー"},
+    colors:{en:"pink · white · peach · red",ko:"핑크 · 화이트 · 피치 · 레드",ja:"ピンク · ホワイト · ピーチ · レッド"},
+    makeup:{en:"rosy cheeks · natural lashes · pink lip",ko:"로지 치크 · 자연스러운 속눈썹 · 핑크립",ja:"ロージーチーク · ナチュラルまつ毛 · ピンクリップ"},
+    hair:{en:"curls · half-up hair · ponytails",ko:"컬 · 반묶음 · 포니테일",ja:"カール · ハーフアップ · ポニーテール"},
+    outfit:{en:"skirts · blouses · cardigans · dresses",ko:"스커트 · 블라우스 · 가디건 · 원피스",ja:"スカート · ブラウス · カーディガン · ワンピース"},
+    accessories:{en:"small ribbons · pearls · mini bags",ko:"작은 리본 · 진주 · 미니백",ja:"小さなリボン · パール · ミニバッグ"},
+    keywords:{en:["feminine","lovely","everyday","sweet"],ko:["여성스러운","러블리","데일리","사랑스러운"],ja:["フェミニン","ラブリー","日常","スイート"]}
   },
 
   "Romantic Feminine": {
-    "emoji":"💐",
-    "names":{"en":"Romantic Feminine","ko":"로맨틱 페미닌","ja":"ロマンティックフェミニン"},
-    "colors":{"en":"rose · cream · burgundy · dusty pink","ko":"로즈 · 크림 · 버건디 · 더스티핑크","ja":"ローズ · クリーム · バーガンディ · ダスティピンク"},
-    "makeup":{"en":"rose shadow · soft eyeliner · MLBB lip","ko":"로즈 섀도 · 부드러운 아이라인 · MLBB 립","ja":"ローズシャドウ · 柔らかいアイライン · MLBBリップ"},
-    "hair":{"en":"loose waves · low bun","ko":"느슨한 웨이브 · 로우번","ja":"ゆるウェーブ · ローシニヨン"},
-    "outfit":{"en":"draping · floral dresses · silky blouses","ko":"드레이프 · 플로럴 원피스 · 실키 블라우스","ja":"ドレープ · 花柄ワンピース · シルキーブラウス"},
-    "accessories":{"en":"pearls · delicate necklaces","ko":"진주 · 섬세한 목걸이","ja":"パール · 繊細なネックレス"},
-    "keywords":{"en":["romantic","mature","elegant","soft"],"ko":["로맨틱","성숙한","우아한","부드러운"],"ja":["ロマンティック","大人っぽい","エレガント","柔らかい"]}
+    emoji:"💐",
+    names:{en:"Romantic Feminine",ko:"로맨틱 페미닌",ja:"ロマンティックフェミニン"},
+    colors:{en:"rose · cream · burgundy · dusty pink",ko:"로즈 · 크림 · 버건디 · 더스티핑크",ja:"ローズ · クリーム · バーガンディ · ダスティピンク"},
+    makeup:{en:"rose shadow · soft eyeliner · MLBB lip",ko:"로즈 섀도 · 부드러운 아이라인 · MLBB 립",ja:"ローズシャドウ · 柔らかいアイライン · MLBBリップ"},
+    hair:{en:"loose waves · low bun",ko:"느슨한 웨이브 · 로우번",ja:"ゆるウェーブ · ローシニヨン"},
+    outfit:{en:"draping · floral dresses · silky blouses",ko:"드레이프 · 플로럴 원피스 · 실키 블라우스",ja:"ドレープ · 花柄ワンピース · シルキーブラウス"},
+    accessories:{en:"pearls · delicate necklaces",ko:"진주 · 섬세한 목걸이",ja:"パール · 繊細なネックレス"},
+    keywords:{en:["romantic","mature","elegant","soft"],ko:["로맨틱","성숙한","우아한","부드러운"],ja:["ロマンティック","大人っぽい","エレガント","柔らかい"]}
   },
 
   "Dark Feminine": {
-    "emoji":"🖤",
-    "names":{"en":"Dark Feminine","ko":"다크 페미닌","ja":"ダークフェミニン"},
-    "colors":{"en":"black · burgundy · deep red · gold","ko":"블랙 · 버건디 · 딥레드 · 골드","ja":"ブラック · バーガンディ · ディープレッド · ゴールド"},
-    "makeup":{"en":"cat eye · shadowed eyes · red/berry lip","ko":"캣아이 · 음영 아이 · 레드/베리 립","ja":"キャットアイ · 陰影アイ · レッド/ベリーリップ"},
-    "hair":{"en":"glossy waves · sleek hair","ko":"윤기 있는 웨이브 · 슬릭 헤어","ja":"ツヤのあるウェーブ · スリックヘア"},
-    "outfit":{"en":"black dresses · long coats · lace","ko":"블랙 드레스 · 롱코트 · 레이스","ja":"ブラックドレス · ロングコート · レース"},
-    "accessories":{"en":"gold jewelry · structured bags","ko":"골드 주얼리 · 구조적인 백","ja":"ゴールドジュエリー · 構築的なバッグ"},
-    "keywords":{"en":["mysterious","powerful","elegant","seductive"],"ko":["신비로운","강렬한","우아한","매혹적인"],"ja":["ミステリアス","力強い","エレガント","魅惑的"]}
+    emoji:"🖤",
+    names:{en:"Dark Feminine",ko:"다크 페미닌",ja:"ダークフェミニン"},
+    colors:{en:"black · burgundy · deep red · gold",ko:"블랙 · 버건디 · 딥레드 · 골드",ja:"ブラック · バーガンディ · ディープレッド · ゴールド"},
+    makeup:{en:"cat eye · shadowed eyes · red/berry lip",ko:"캣아이 · 음영 아이 · 레드/베리 립",ja:"キャットアイ · 陰影アイ · レッド/ベリーリップ"},
+    hair:{en:"glossy waves · sleek hair",ko:"윤기 있는 웨이브 · 슬릭 헤어",ja:"ツヤのあるウェーブ · スリックヘア"},
+    outfit:{en:"black dresses · long coats · lace",ko:"블랙 드레스 · 롱코트 · 레이스",ja:"ブラックドレス · ロングコート · レース"},
+    accessories:{en:"gold jewelry · structured bags",ko:"골드 주얼리 · 구조적인 백",ja:"ゴールドジュエリー · 構築的なバッグ"},
+    keywords:{en:["mysterious","powerful","elegant","seductive"],ko:["신비로운","강렬한","우아한","매혹적인"],ja:["ミステリアス","力強い","エレガント","魅惑的"]}
   },
 
   "Dark Academia": {
-    "emoji":"📚",
-    "names":{"en":"Dark Academia","ko":"다크 아카데미아","ja":"ダークアカデミア"},
-    "colors":{"en":"brown · burgundy · forest green · cream","ko":"브라운 · 버건디 · 포레스트그린 · 크림","ja":"ブラウン · バーガンディ · フォレストグリーン · クリーム"},
-    "makeup":{"en":"brown shadow · natural skin · muted lip","ko":"브라운 음영 · 자연스러운 피부 · 뮤트립","ja":"ブラウンの陰影 · ナチュラル肌 · くすみリップ"},
-    "hair":{"en":"natural waves · low ponytail","ko":"자연스러운 웨이브 · 로우 포니","ja":"ナチュラルウェーブ · ローポニー"},
-    "outfit":{"en":"blazers · plaid skirts · knits · shirts","ko":"블레이저 · 체크스커트 · 니트 · 셔츠","ja":"ブレザー · チェックスカート · ニット · シャツ"},
-    "accessories":{"en":"loafers · leather bags · vintage watches","ko":"로퍼 · 가죽가방 · 빈티지 시계","ja":"ローファー · レザーバッグ · ヴィンテージ時計"},
-    "keywords":{"en":["scholarly","classic","literary","autumn"],"ko":["학구적인","클래식","문학적인","가을"],"ja":["知的","クラシック","文学的","秋"]}
+    emoji:"📚",
+    names:{en:"Dark Academia",ko:"다크 아카데미아",ja:"ダークアカデミア"},
+    colors:{en:"brown · burgundy · forest green · cream",ko:"브라운 · 버건디 · 포레스트그린 · 크림",ja:"ブラウン · バーガンディ · フォレストグリーン · クリーム"},
+    makeup:{en:"brown shadow · natural skin · muted lip",ko:"브라운 음영 · 자연스러운 피부 · 뮤트립",ja:"ブラウンの陰影 · ナチュラル肌 · くすみリップ"},
+    hair:{en:"natural waves · low ponytail",ko:"자연스러운 웨이브 · 로우 포니",ja:"ナチュラルウェーブ · ローポニー"},
+    outfit:{en:"blazers · plaid skirts · knits · shirts",ko:"블레이저 · 체크스커트 · 니트 · 셔츠",ja:"ブレザー · チェックスカート · ニット · シャツ"},
+    accessories:{en:"loafers · leather bags · vintage watches",ko:"로퍼 · 가죽가방 · 빈티지 시계",ja:"ローファー · レザーバッグ · ヴィンテージ時計"},
+    keywords:{en:["scholarly","classic","literary","autumn"],ko:["학구적인","클래식","문학적인","가을"],ja:["知的","クラシック","文学的","秋"]}
   },
 
   "Light Academia": {
-    "emoji":"☕",
-    "names":{"en":"Light Academia","ko":"라이트 아카데미아","ja":"ライトアカデミア"},
-    "colors":{"en":"ivory · beige · camel · sage","ko":"아이보리 · 베이지 · 카멜 · 세이지","ja":"アイボリー · ベージュ · キャメル · セージ"},
-    "makeup":{"en":"peach cheeks · brown mascara · nude lip","ko":"피치 치크 · 브라운 마스카라 · 누드립","ja":"ピーチチーク · ブラウンマスカラ · ヌードリップ"},
-    "hair":{"en":"natural waves · loose updos","ko":"자연스러운 웨이브 · 느슨한 묶음","ja":"ナチュラルウェーブ · ゆるいまとめ髪"},
-    "outfit":{"en":"cream knits · shirts · pleated skirts","ko":"크림 니트 · 셔츠 · 플리츠스커트","ja":"クリームニット · シャツ · プリーツスカート"},
-    "accessories":{"en":"loafers · canvas bags · thin-frame glasses","ko":"로퍼 · 캔버스백 · 얇은 안경","ja":"ローファー · キャンバスバッグ · 細フレーム眼鏡"},
-    "keywords":{"en":["scholarly","warm","gentle","classic"],"ko":["학구적인","따뜻한","부드러운","클래식"],"ja":["知的","温かい","優しい","クラシック"]}
+    emoji:"☕",
+    names:{en:"Light Academia",ko:"라이트 아카데미아",ja:"ライトアカデミア"},
+    colors:{en:"ivory · beige · camel · sage",ko:"아이보리 · 베이지 · 카멜 · 세이지",ja:"アイボリー · ベージュ · キャメル · セージ"},
+    makeup:{en:"peach cheeks · brown mascara · nude lip",ko:"피치 치크 · 브라운 마스카라 · 누드립",ja:"ピーチチーク · ブラウンマスカラ · ヌードリップ"},
+    hair:{en:"natural waves · loose updos",ko:"자연스러운 웨이브 · 느슨한 묶음",ja:"ナチュラルウェーブ · ゆるいまとめ髪"},
+    outfit:{en:"cream knits · shirts · pleated skirts",ko:"크림 니트 · 셔츠 · 플리츠스커트",ja:"クリームニット · シャツ · プリーツスカート"},
+    accessories:{en:"loafers · canvas bags · thin-frame glasses",ko:"로퍼 · 캔버스백 · 얇은 안경",ja:"ローファー · キャンバスバッグ · 細フレーム眼鏡"},
+    keywords:{en:["scholarly","warm","gentle","classic"],ko:["학구적인","따뜻한","부드러운","클래식"],ja:["知的","温かい","優しい","クラシック"]}
   },
 
   "Old Money / Preppy": {
-    "emoji":"💰",
-    "names":{"en":"Old Money / Preppy","ko":"올드머니 / 프레피","ja":"オールドマネー / プレッピー"},
-    "colors":{"en":"navy · cream · beige · burgundy","ko":"네이비 · 크림 · 베이지 · 버건디","ja":"ネイビー · クリーム · ベージュ · バーガンディ"},
-    "makeup":{"en":"clean skin · groomed brows · classic rose lip","ko":"깨끗한 피부 · 정돈된 눈썹 · 클래식 로즈립","ja":"清潔感のある肌 · 整えた眉 · クラシックなローズリップ"},
-    "hair":{"en":"blowout · low bun","ko":"블로우아웃 · 로우번","ja":"ブローアウト · ローシニヨン"},
-    "outfit":{"en":"shirts · cable knits · blazers · pleats","ko":"셔츠 · 케이블니트 · 블레이저 · 플리츠","ja":"シャツ · ケーブルニット · ブレザー · プリーツ"},
-    "accessories":{"en":"pearls · loafers · structured bags","ko":"진주 · 로퍼 · 구조적인 백","ja":"パール · ローファー · 構築的なバッグ"},
-    "keywords":{"en":["classic","polished","timeless","preppy"],"ko":["클래식","세련된","유행을 타지 않는","프레피"],"ja":["クラシック","洗練","タイムレス","プレッピー"]}
+    emoji:"💰",
+    names:{en:"Old Money / Preppy",ko:"올드머니 / 프레피",ja:"オールドマネー / プレッピー"},
+    colors:{en:"navy · cream · beige · burgundy",ko:"네이비 · 크림 · 베이지 · 버건디",ja:"네イビー · クリーム · ベージュ · バーガンディ"},
+    makeup:{en:"clean skin · groomed brows · classic rose lip",ko:"깨끗한 피부 · 정돈된 눈썹 · 클래식 로즈립",ja:"清潔感のある肌 · 整えた眉 · クラシックなローズリップ"},
+    hair:{en:"blowout · low bun",ko:"블로우아웃 · 로우번",ja:"ブローアウト · ローシニヨン"},
+    outfit:{en:"shirts · cable knits · blazers · pleats",ko:"셔츠 · 케이블니트 · 블레이저 · 플리츠",ja:"シャツ · ケーブルニット · ブレザー · プリーツ"},
+    accessories:{en:"pearls · loafers · structured bags",ko:"진주 · 로퍼 · 구조적인 백",ja:"パール · ローファー · 構築的なバッグ"},
+    keywords:{en:["classic","polished","timeless","preppy"],ko:["클래식","세련된","유행을 타지 않는","프레피"],ja:["クラシック","洗練","タイムレス","プレッピー"]}
   },
 
   "Cottagecore": {
-    "emoji":"🌷",
-    "names":{"en":"Cottagecore","ko":"코티지코어","ja":"コテージコア"},
-    "colors":{"en":"sage · cream · floral pink · brown","ko":"세이지 · 크림 · 플로럴핑크 · 브라운","ja":"セージ · クリーム · フローラルピンク · ブラウン"},
-    "makeup":{"en":"natural skin · peach cheeks · lip balm","ko":"자연스러운 피부 · 피치치크 · 립밤","ja":"ナチュラル肌 · ピーチチーク · リップバーム"},
-    "hair":{"en":"braids · loose waves","ko":"브레이드 · 느슨한 웨이브","ja":"ブレイド · ゆるウェーブ"},
-    "outfit":{"en":"floral dresses · puff sleeves · apron-inspired pieces","ko":"플로럴 원피스 · 퍼프소매 · 에이프런 느낌","ja":"花柄ワンピース · パフスリーブ · エプロン風"},
-    "accessories":{"en":"flowers · basket bags · lace","ko":"꽃 · 바구니백 · 레이스","ja":"花 · バスケットバッグ · レース"},
-    "keywords":{"en":["countryside","floral","cozy","nature"],"ko":["전원","플로럴","포근한","자연"],"ja":["田園","花柄","居心地のいい","自然"]}
+    emoji:"🌷",
+    names:{en:"Cottagecore",ko:"코티지코어",ja:"コテージコア"},
+    colors:{en:"sage · cream · floral pink · brown",ko:"세이지 · 크림 · 플로럴핑크 · 브라운",ja:"セージ · クリーム · フローラルピンク · ブラウン"},
+    makeup:{en:"natural skin · peach cheeks · lip balm",ko:"자연스러운 피부 · 피치치크 · 립밤",ja:"ナチュラル肌 · ピーチチーク · リップバーム"},
+    hair:{en:"braids · loose waves",ko:"브레이드 · 느슨한 웨이브",ja:"ブレイド · ゆるウェーブ"},
+    outfit:{en:"floral dresses · puff sleeves · apron-inspired pieces",ko:"플로럴 원피스 · 퍼프소매 · 에이프런 느낌",ja:"花柄ワンピース · パフスリーブ · エプロン風"},
+    accessories:{en:"flowers · basket bags · lace",ko:"꽃 · 바구니백 · 레이스",ja:"花 · バスケットバッグ · レース"},
+    keywords:{en:["countryside","floral","cozy","nature"],ko:["전원","플로럴","포근한","자연"],ja:["田園","花柄","居心地のいい","自然"]}
   },
 
   "Fairycore": {
-    "emoji":"🧚",
-    "names":{"en":"Fairycore","ko":"페어리코어","ja":"フェアリーコア"},
-    "colors":{"en":"lilac · sage · pearl white · pink","ko":"라일락 · 세이지 · 펄화이트 · 핑크","ja":"ライラック · セージ · パールホワイト · ピンク"},
-    "makeup":{"en":"shimmer · holographic accents · pink/lilac eyes","ko":"쉬머 · 홀로그램 포인트 · 핑크/라일락 아이","ja":"シマー · ホログラムポイント · ピンク/ライラックアイ"},
-    "hair":{"en":"waves · small braids · floral accents","ko":"웨이브 · 작은 브레이드 · 꽃 장식","ja":"ウェーブ · 細いブレイド · 花飾り"},
-    "outfit":{"en":"chiffon · sheer layers · flowing skirts","ko":"쉬폰 · 시스루 레이어 · 흐르는 스커트","ja":"シフォン · シアーレイヤー · 流れるスカート"},
-    "accessories":{"en":"crystals · flowers · butterflies","ko":"크리스털 · 꽃 · 나비","ja":"クリスタル · 花 · 蝶"},
-    "keywords":{"en":["magical","ethereal","nature","whimsical"],"ko":["마법 같은","신비로운","자연","동화적인"],"ja":["魔法のよう","幻想的","自然","ファンタジック"]}
+    emoji:"🧚",
+    names:{en:"Fairycore",ko:"페어리코어",ja:"フェアリーコア"},
+    colors:{en:"lilac · sage · pearl white · pink",ko:"라일락 · 세이지 · 펄화이트 · 핑크",ja:"ライラック · セージ · パールホワイト · 핑크"},
+    makeup:{en:"shimmer · holographic accents · pink/lilac eyes",ko:"쉬머 · 홀로그램 포인트 · 핑크/라일락 아이",ja:"シマー · ホログラムポイント · ピンク/ライラックアイ"},
+    hair:{en:"waves · small braids · floral accents",ko:"웨이브 · 작은 브레이드 · 꽃 장식",ja:"ウェーブ · 細いブレイド · 花飾り"},
+    outfit:{en:"chiffon · sheer layers · flowing skirts",ko:"쉬폰 · 시스루 레이어 · 흐르는 스커트",ja:"シフォン · シアーレイヤー · 流れるスカート"},
+    accessories:{en:"crystals · flowers · butterflies",ko:"크리스털 · 꽃 · 나비",ja:"クリスタル · 花 · 蝶"},
+    keywords:{en:["magical","ethereal","nature","whimsical"],ko:["마법 같은","신비로운","자연","동화적인"],ja:["魔法のよう","幻想的","自然","ファンタジック"]}
   },
 
   "Whimsigoth": {
-    "emoji":"🌙",
-    "names":{"en":"Whimsigoth","ko":"윔지갓","ja":"ウィムジゴス"},
-    "colors":{"en":"purple · black · navy · gold","ko":"퍼플 · 블랙 · 네이비 · 골드","ja":"パープル · ブラック · ネイビー · ゴールド"},
-    "makeup":{"en":"purple/brown smoky eyes · deep lip","ko":"퍼플/브라운 스모키 · 딥립","ja":"パープル/ブラウンのスモーキーアイ · ディープリップ"},
-    "hair":{"en":"natural voluminous curls","ko":"자연스러운 볼륨 컬","ja":"ナチュラルなボリュームカール"},
-    "outfit":{"en":"velvet · maxi skirts · lace · bell sleeves","ko":"벨벳 · 맥시스커트 · 레이스 · 벨슬리브","ja":"ベルベット · マキシスカート · レース · ベルスリーブ"},
-    "accessories":{"en":"moon · stars · vintage pendants","ko":"달 · 별 · 빈티지 펜던트","ja":"月 · 星 · ヴィンテージペンダント"},
-    "keywords":{"en":["celestial","witchy","90s","mystical"],"ko":["천체","마녀풍","90년대","신비로운"],"ja":["星空","魔女風","90年代","神秘的"]}
+    emoji:"🌙",
+    names:{en:"Whimsigoth",ko:"윔지갓",ja:"ウィムジゴス"},
+    colors:{en:"purple · black · navy · gold",ko:"퍼플 · 블랙 · 네이비 · 골드",ja:"パープル · ブラック · ネイビー · ゴールド"},
+    makeup:{en:"purple/brown smoky eyes · deep lip",ko:"퍼플/브라운 스모키 · 딥립",ja:"パープル/ブラウンのスモーキーアイ · ディープリップ"},
+    hair:{en:"natural voluminous curls",ko:"자연스러운 볼륨 컬",ja:"ナチュラルなボリュームカール"},
+    outfit:{en:"velvet · maxi skirts · lace · bell sleeves",ko:"벨벳 · 맥시스커트 · 레이스 · 벨슬리브",ja:"ベルベット · マキシスカート · レース · ベルスリーブ"},
+    accessories:{en:"moon · stars · vintage pendants",ko:"달 · 별 · 빈티지 펜던트",ja:"月 · 星 · ヴィンテージペンダント"},
+    keywords:{en:["celestial","witchy","90s","mystical"],ko:["천체","마녀풍","90년대","신비로운"],ja:["星空","魔女風","90年代","神秘的"]}
   },
 
   "Angelcore": {
-    "emoji":"👼",
-    "names":{"en":"Angelcore","ko":"엔젤코어","ja":"エンジェルコア"},
-    "colors":{"en":"white · silver · baby blue · pearl","ko":"화이트 · 실버 · 베이비블루 · 펄","ja":"ホワイト · シルバー · ベビーブルー · パール"},
-    "makeup":{"en":"pearl highlight · silver shimmer · sheer lip","ko":"펄 하이라이트 · 실버 쉬머 · 투명한 립","ja":"パールハイライト · シルバーシマー · 透明感リップ"},
-    "hair":{"en":"soft curls · braids","ko":"부드러운 컬 · 브레이드","ja":"柔らかいカール · ブレイド"},
-    "outfit":{"en":"white chiffon · lace · flowing silhouettes","ko":"화이트 쉬폰 · 레이스 · 흐르는 실루엣","ja":"ホワイトシフォン · レース · 流れるシルエット"},
-    "accessories":{"en":"pearls · silver · wing/star motifs","ko":"진주 · 실버 · 날개/별 모티프","ja":"パール · シルバー · 羽/星モチーフ"},
-    "keywords":{"en":["heavenly","airy","pure","ethereal"],"ko":["천상적인","가벼운","순수한","몽환적인"],"ja":["天使的","軽やか","純粋","幻想的"]}
+    emoji:"👼",
+    names:{en:"Angelcore",ko:"엔젤코어",ja:"エンジェルコア"},
+    colors:{en:"white · silver · baby blue · pearl",ko:"화이트 · 실버 · 베이비블루 · 펄",ja:"ホワイト · シルバー · ベビーブルー · パール"},
+    makeup:{en:"pearl highlight · silver shimmer · sheer lip",ko:"펄 하이라이트 · 실버 쉬머 · 투명한 립",ja:"パールハイライト · シルバーシマー · 透明感リップ"},
+    hair:{en:"soft curls · braids",ko:"부드러운 컬 · 브레이드",ja:"柔らかいカール · ブレイド"},
+    outfit:{en:"white chiffon · lace · flowing silhouettes",ko:"화이트 쉬폰 · 레이스 · 흐르는 실루엣",ja:"ホワイトシフォン · レース · 流れるシルエット"},
+    accessories:{en:"pearls · silver · wing/star motifs",ko:"진주 · 실버 · 날개/별 모티프",ja:"パール · シルバー · 羽/星モチーフ"},
+    keywords:{en:["heavenly","airy","pure","ethereal"],ko:["천상적인","가벼운","순수한","몽환적인"],ja:["天使的","軽やか","純粋","幻想的"]}
   },
 
   "Cutecore / Kawaii": {
-    "emoji":"🧸",
-    "names":{"en":"Cutecore / Kawaii","ko":"큐트코어 / 카와이","ja":"キュートコア / かわいい"},
-    "colors":{"en":"pink · mint · yellow · lilac","ko":"핑크 · 민트 · 옐로 · 라일락","ja":"ピンク · ミント · イエロー · ライラック"},
-    "makeup":{"en":"round-eye look · pink cheeks · glossy lip","ko":"동그란 눈매 · 핑크 치크 · 글로시 립","ja":"丸い目元 · ピンクチーク · グロッシーリップ"},
-    "hair":{"en":"twin tails · colorful clips","ko":"트윈테일 · 컬러핀","ja":"ツインテール · カラーピン"},
-    "outfit":{"en":"oversized knits · cute skirts · colorful layering","ko":"오버핏 니트 · 귀여운 스커트 · 컬러풀 레이어링","ja":"オーバーサイズニット · 可愛いスカート · カラフルレイヤード"},
-    "accessories":{"en":"character-style charms · beads · hair clips","ko":"캐릭터 느낌 참 · 비즈 · 헤어클립","ja":"キャラクター風チャーム · ビーズ · ヘアクリップ"},
-    "keywords":{"en":["adorable","colorful","playful","kawaii"],"ko":["귀여운","컬러풀","발랄한","카와이"],"ja":["可愛い","カラフル","遊び心","かわいい"]}
+    emoji:"🧸",
+    names:{en:"Cutecore / Kawaii",ko:"큐트코어 / 카와이",ja:"キュートコア / かわいい"},
+    colors:{en:"pink · mint · yellow · lilac",ko:"핑크 · 민트 · 옐로 · 라일락",ja:"ピンク · ミント · イエロー · ライラック"},
+    makeup:{en:"round-eye look · pink cheeks · glossy lip",ko:"동그란 눈매 · 핑크 치크 · 글로시 립",ja:"丸い目元 · ピンクチーク · グロッシーリップ"},
+    hair:{en:"twin tails · colorful clips",ko:"트윈테일 · 컬러핀",ja:"ツインテール · カラーピン"},
+    outfit:{en:"oversized knits · cute skirts · colorful layering",ko:"오버핏 니트 · 귀여운 스커트 · 컬러풀 레이어링",ja:"オーバーサイズニット · 可愛いスカート · カラフルレイヤード"},
+    accessories:{en:"character-style charms · beads · hair clips",ko:"캐릭터 느낌 참 · 비즈 · 헤어클립",ja:"キャラクター風チャーム · ビーズ · ヘアクリップ"},
+    keywords:{en:["adorable","colorful","playful","kawaii"],ko:["귀여운","컬러풀","발랄한","카와이"],ja:["可愛い","カラフル","遊び心","かわいい"]}
   },
 
   "Lolita-inspired": {
-    "emoji":"🍰",
-    "names":{"en":"Lolita-inspired","ko":"로리타 인스파이어드","ja":"ロリータ風"},
-    "colors":{"en":"pink · cream · black · wine","ko":"핑크 · 크림 · 블랙 · 와인","ja":"ピンク · クリーム · ブラック · ワイン"},
-    "makeup":{"en":"doll-like cheeks · defined lashes · rose lip","ko":"인형 같은 치크 · 또렷한 속눈썹 · 로즈립","ja":"ドール風チーク · くっきりまつ毛 · ローズリップ"},
-    "hair":{"en":"curls · twin tails · bonnet-style accessories","ko":"컬 · 트윈테일 · 보닛 스타일 액세서리","ja":"カール · ツインテール · ボンネット風アクセ"},
-    "outfit":{"en":"voluminous skirts · frills · blouses · lace","ko":"볼륨 스커트 · 프릴 · 블라우스 · 레이스","ja":"ボリュームスカート · フリル · ブラウス · レース"},
-    "accessories":{"en":"ribbons · cameos · pearls","ko":"리본 · 카메오 · 진주","ja":"リボン · カメオ · パール"},
-    "keywords":{"en":["doll","ornate","Victorian-inspired","elegant"],"ko":["인형","화려한 장식","빅토리아풍","우아한"],"ja":["ドール","装飾的","ヴィクトリア風","エレガント"]}
+    emoji:"🍰",
+    names:{en:"Lolita-inspired",ko:"로리타 인스파이어드",ja:"ロリータ風"},
+    colors:{en:"pink · cream · black · wine",ko:"핑크 · 크림 · 블랙 · 와인",ja:"ピンク · クリーム · ブラック · ワイン"},
+    makeup:{en:"doll-like cheeks · defined lashes · rose lip",ko:"인형 같은 치크 · 또렷한 속눈썹 · 로즈립",ja:"ドール風チーク · くっきりまつ毛 · ローズリップ"},
+    hair:{en:"curls · twin tails · bonnet-style accessories",ko:"컬 · 트윈테일 · 보닛 스타일 액세서리",ja:"カール · ツインテール · ボンネット風アクセ"},
+    outfit:{en:"voluminous skirts · frills · blouses · lace",ko:"볼륨 스커트 · 프릴 · 블라우스 · 레이스",ja:"ボリュームスカート · フリル · ブラウス · レース"},
+    accessories:{en:"ribbons · cameos · pearls",ko:"리본 · 카메오 · 진주",ja:"リボン · カメオ · パール"},
+    keywords:{en:["doll","ornate","Victorian-inspired","elegant"],ko:["인형","화려한 장식","빅토리아풍","우아한"],ja:["ドール","装飾的","ヴィクトリア風","エレガント"]}
   },
 
   "Mori Kei": {
-    "emoji":"🍃",
-    "names":{"en":"Mori Kei","ko":"모리케이","ja":"森ガール"},
-    "colors":{"en":"oatmeal · brown · moss green · cream","ko":"오트밀 · 브라운 · 모스그린 · 크림","ja":"オートミール · ブラウン · モスグリーン · クリーム"},
-    "makeup":{"en":"very natural skin · peach/beige tones","ko":"아주 자연스러운 피부 · 피치/베이지","ja":"とてもナチュラルな肌 · ピーチ/ベージュ"},
-    "hair":{"en":"slightly tousled waves · braids","ko":"흐트러진 듯한 웨이브 · 브레이드","ja":"少し無造作なウェーブ · ブレイド"},
-    "outfit":{"en":"layered dresses · knits · lace · loose fits","ko":"여러 겹의 원피스 · 니트 · 레이스 · 루즈핏","ja":"重ね着ワンピース · ニット · レース · ゆるシルエット"},
-    "accessories":{"en":"wood · leather · vintage lace","ko":"나무 · 가죽 · 빈티지 레이스","ja":"ウッド · レザー · ヴィンテージレース"},
-    "keywords":{"en":["forest","layered","natural","cozy"],"ko":["숲","레이어드","내추럴","포근한"],"ja":["森","重ね着","ナチュラル","ほっこり"]}
+    emoji:"🍃",
+    names:{en:"Mori Kei",ko:"모리케이",ja:"森ガール"},
+    colors:{en:"oatmeal · brown · moss green · cream",ko:"오트밀 · 브라운 · 모스그린 · 크림",ja:"オートミール · ブラウン · モスグリーン · クリーム"},
+    makeup:{en:"very natural skin · peach/beige tones",ko:"아주 자연스러운 피부 · 피치/베이지",ja:"とてもナチュラルな肌 · ピーチ/ベージュ"},
+    hair:{en:"slightly tousled waves · braids",ko:"흐트러진 듯한 웨이브 · 브레이드",ja:"少し無造作なウェーブ · ブレイド"},
+    outfit:{en:"layered dresses · knits · lace · loose fits",ko:"여러 겹의 원피스 · 니트 · 레이스 · 루즈핏",ja:"重ね着ワンピース · ニット · レース · ゆるシルエット"},
+    accessories:{en:"wood · leather · vintage lace",ko:"나무 · 가죽 · 빈티지 레이스",ja:"ウッド · レザー · ヴィンテージレース"},
+    keywords:{en:["forest","layered","natural","cozy"],ko:["숲","레이어드","내추럴","포근한"],ja:["森","重ね着","ナチュラル","ほっこり"]}
   },
 
   "Jirai Kei": {
-    "emoji":"🖤🎀",
-    "names":{"en":"Jirai Kei","ko":"지뢰계","ja":"地雷系"},
-    "colors":{"en":"black · pink · white · wine","ko":"블랙 · 핑크 · 화이트 · 와인","ja":"ブラック · ピンク · ホワイト · ワイン"},
-    "makeup":{"en":"defined eyes · pink/red under-eyes · pale-base look","ko":"또렷한 눈매 · 핑크/레드 언더아이 · 창백한 베이스 느낌","ja":"くっきりした目元 · ピンク/赤の下まぶた · 白めベース"},
-    "hair":{"en":"twin tails · curls · ribbons","ko":"트윈테일 · 컬 · 리본","ja":"ツインテール · カール · リボン"},
-    "outfit":{"en":"black × pink blouses · frill skirts · lace","ko":"블랙×핑크 블라우스 · 프릴스커트 · 레이스","ja":"黒×ピンクのブラウス · フリルスカート · レース"},
-    "accessories":{"en":"large ribbons · hearts · platform shoes","ko":"큰 리본 · 하트 · 플랫폼 슈즈","ja":"大きなリボン · ハート · 厚底シューズ"},
-    "keywords":{"en":["dark-cute","Japanese","ribbon","dramatic"],"ko":["다크큐트","일본","리본","드라마틱"],"ja":["病みかわ","日本","リボン","ドラマティック"]},
-    "image":"jirai-kei.png"
+    emoji:"🖤🎀",
+    names:{en:"Jirai Kei",ko:"지뢰계",ja:"地雷系"},
+    colors:{en:"black · pink · white · wine",ko:"블랙 · 핑크 · 화이트 · 와인",ja:"ブラック · ピンク · ホワイト · ワイン"},
+    makeup:{en:"defined eyes · pink/red under-eyes · pale-base look",ko:"또렷한 눈매 · 핑크/레드 언더아이 · 창백한 베이스 느낌",ja:"くっきりした目元 · ピンク/赤の下まぶた · 白めベース"},
+    hair:{en:"twin tails · curls · ribbons",ko:"트윈테일 · 컬 · 리본",ja:"ツインテール · カール · リボン"},
+    outfit:{en:"black × pink blouses · frill skirts · lace",ko:"블랙×핑크 블라우스 · 프릴스커트 · 레이스",ja:"黒×ピンクのブラウス · フリルスカート · レース"},
+    accessories:{en:"large ribbons · hearts · platform shoes",ko:"큰 리본 · 하트 · 플랫폼 슈즈",ja:"大きなリボン · ハート · 厚底シューズ"},
+    keywords:{en:["dark-cute","Japanese","ribbon","dramatic"],ko:["다크큐트","일본","리본","드라마틱"],ja:["病みかわ","日本","リボン","ドラマティック"]},
+    image:"jirai-kei.png"
   },
 
   "Himekaji": {
-    "emoji":"🌸",
-    "names":{"en":"Himekaji","ko":"히메카지","ja":"姫カジ"},
-    "colors":{"en":"pink · cream · beige · floral","ko":"핑크 · 크림 · 베이지 · 플로럴","ja":"ピンク · クリーム · ベージュ · フローラル"},
-    "makeup":{"en":"soft brown eyes · pink cheeks · glossy lip","ko":"부드러운 브라운 아이 · 핑크치크 · 글로시립","ja":"柔らかいブラウンアイ · ピンクチーク · グロッシーリップ"},
-    "hair":{"en":"large soft curls · half-up hair","ko":"큰 소프트 컬 · 반묶음","ja":"大きめソフトカール · ハーフアップ"},
-    "outfit":{"en":"floral dresses · cardigans · frills · denim","ko":"플로럴 원피스 · 가디건 · 프릴 · 데님","ja":"花柄ワンピース · カーディガン · フリル · デニム"},
-    "accessories":{"en":"ribbons · pearls · cute bags","ko":"리본 · 진주 · 귀여운 백","ja":"リボン · パール · 可愛いバッグ"},
-    "keywords":{"en":["princess-casual","sweet","feminine","Japanese"],"ko":["공주풍 캐주얼","러블리","여성스러운","일본"],"ja":["姫カジュアル","スイート","フェミニン","日本"]}
+    emoji:"🌸",
+    names:{en:"Himekaji",ko:"히메카지",ja:"姫カジ"},
+    colors:{en:"pink · cream · beige · floral",ko:"핑크 · 크림 · 베이지 · 플로럴",ja:"ピンク · クリーム · ベージュ · フローラル"},
+    makeup:{en:"soft brown eyes · pink cheeks · glossy lip",ko:"부드러운 브라운 아이 · 핑크치크 · 글로시립",ja:"柔らかいブラウンアイ · ピンクチーク · グロッシーリップ"},
+    hair:{en:"large soft curls · half-up hair",ko:"큰 소프트 컬 · 반묶음",ja:"大きめソフトカール · ハーフアップ"},
+    outfit:{en:"floral dresses · cardigans · frills · denim",ko:"플로럴 원피스 · 가디건 · 프릴 · 데님",ja:"花柄ワンピース · カーディガン · フリル · デニム"},
+    accessories:{en:"ribbons · pearls · cute bags",ko:"리본 · 진주 · 귀여운 백",ja:"リボン · パール · 可愛いバッグ"},
+    keywords:{en:["princess-casual","sweet","feminine","Japanese"],ko:["공주풍 캐주얼","러블리","여성스러운","일본"],ja:["姫カジュアル","スイート","フェミニン","日本"]}
   },
 
   "Grunge": {
-    "emoji":"🎸",
-    "names":{"en":"Grunge","ko":"그런지","ja":"グランジ"},
-    "colors":{"en":"black · charcoal · olive · dark red","ko":"블랙 · 차콜 · 올리브 · 다크레드","ja":"ブラック · チャコール · オリーブ · ダークレッド"},
-    "makeup":{"en":"smudged eyeliner · smoky eyes · muted lip","ko":"번진 듯한 아이라인 · 스모키 아이 · 뮤트립","ja":"にじんだようなアイライン · スモーキーアイ · くすみリップ"},
-    "hair":{"en":"natural, slightly messy texture","ko":"자연스럽고 약간 흐트러진 질감","ja":"自然で少し無造作な質感"},
-    "outfit":{"en":"band tees · ripped denim · plaid · oversized pieces","ko":"밴드티 · 찢어진 데님 · 체크 · 오버핏","ja":"バンドT · ダメージデニム · チェック · オーバーサイズ"},
-    "accessories":{"en":"chains · chokers · boots","ko":"체인 · 초커 · 부츠","ja":"チェーン · チョーカー · ブーツ"},
-    "keywords":{"en":["rebellious","messy","alternative","90s"],"ko":["반항적인","거친","얼터너티브","90년대"],"ja":["反骨的","ラフ","オルタナティブ","90年代"]}
+    emoji:"🎸",
+    names:{en:"Grunge",ko:"그런지",ja:"グランジ"},
+    colors:{en:"black · charcoal · olive · dark red",ko:"블랙 · 차콜 · 올리브 · 다크레드",ja:"ブラック · チャコール · オリーブ · ダークレッド"},
+    makeup:{en:"smudged eyeliner · smoky eyes · muted lip",ko:"번진 듯한 아이라인 · 스모키 아이 · 뮤트립",ja:"にじんだようなアイライン · スモーキーアイ · くすみリップ"},
+    hair:{en:"natural, slightly messy texture",ko:"자연스럽고 약간 흐트러진 질감",ja:"自然で少し無造作な質感"},
+    outfit:{en:"band tees · ripped denim · plaid · oversized pieces",ko:"밴드티 · 찢어진 데님 · 체크 · 오버핏",ja:"バンドT · ダメージデニム · チェック · オーバーサイズ"},
+    accessories:{en:"chains · chokers · boots",ko:"체인 · 초커 · 부츠",ja:"チェーン · チョーカー · ブーツ"},
+    keywords:{en:["rebellious","messy","alternative","90s"],ko:["반항적인","거친","얼터너티브","90년대"],ja:["反骨的","ラフ","オルタナティブ","90年代"]}
   },
 
   "Indie Sleaze": {
-    "emoji":"📸",
-    "names":{"en":"Indie Sleaze","ko":"인디 슬리즈","ja":"インディースリーズ"},
-    "colors":{"en":"black · silver · red · electric blue","ko":"블랙 · 실버 · 레드 · 일렉트릭블루","ja":"ブラック · シルバー · レッド · エレクトリックブルー"},
-    "makeup":{"en":"smudged black liner · glitter · intentionally imperfect finish","ko":"번진 블랙라이너 · 글리터 · 일부러 완벽하지 않은 느낌","ja":"にじんだ黒ライナー · グリッター · あえて完璧にしない仕上がり"},
-    "hair":{"en":"messy waves · bed hair","ko":"흐트러진 웨이브 · 베드헤어","ja":"乱れたウェーブ · ベッドヘア"},
-    "outfit":{"en":"skinny jeans · mini dresses · leather jackets · band tees","ko":"스키니진 · 미니드레스 · 가죽재킷 · 밴드티","ja":"スキニージーンズ · ミニドレス · レザージャケット · バンドT"},
-    "accessories":{"en":"flash-camera vibe · chains · vintage bags","ko":"플래시 카메라 느낌 · 체인 · 빈티지백","ja":"フラッシュ写真風 · チェーン · ヴィンテージバッグ"},
-    "keywords":{"en":["nightlife","messy","flash","indie"],"ko":["나이트라이프","거친","플래시","인디"],"ja":["ナイトライフ","ラフ","フラッシュ","インディー"]}
+    emoji:"📸",
+    names:{en:"Indie Sleaze",ko:"인디 슬리즈",ja:"インディースリーズ"},
+    colors:{en:"black · silver · red · electric blue",ko:"블랙 · 실버 · 레드 · 일렉트릭블루",ja:"ブラック · シルバー · レッド · エレクトリックブルー"},
+    makeup:{en:"smudged black liner · glitter · intentionally imperfect finish",ko:"번진 블랙라이너 · 글리터 · 일부러 완벽하지 않은 느낌",ja:"にじんだ黒ライナー · グリッター · あえて完璧にしない仕上がり"},
+    hair:{en:"messy waves · bed hair",ko:"흐트러진 웨이브 · 베드헤어",ja:"乱れたウェーブ · ベッドヘア"},
+    outfit:{en:"skinny jeans · mini dresses · leather jackets · band tees",ko:"스키니진 · 미니드레스 · 가죽재킷 · 밴드티",ja:"スキニージーンズ · ミニドレス · レザージャケット · バンドT"},
+    accessories:{en:"flash-camera vibe · chains · vintage bags",ko:"플래시 카메라 느낌 · 체인 · 빈티지백",ja:"フラッシュ写真風 · チェーン · ヴィンテージバッグ"},
+    keywords:{en:["nightlife","messy","flash","indie"],ko:["나이트라이프","거친","플래시","인디"],ja:["ナイトライフ","ラフ","フラッシュ","インディー"]}
   },
 
   "Office Siren": {
-    "emoji":"🕶️",
-    "names":{"en":"Office Siren","ko":"오피스 사이렌","ja":"オフィスサイレン"},
-    "colors":{"en":"charcoal · black · white · burgundy","ko":"차콜 · 블랙 · 화이트 · 버건디","ja":"チャコール · ブラック · ホワイト · バーガンディ"},
-    "makeup":{"en":"thin sharp eyeliner · neutral lip · polished base","ko":"얇고 날카로운 아이라인 · 뉴트럴 립 · 정돈된 베이스","ja":"細くシャープなアイライン · ニュートラルリップ · 整ったベース"},
-    "hair":{"en":"straight hair · sleek bun","ko":"스트레이트 · 슬릭번","ja":"ストレート · スリックシニヨン"},
-    "outfit":{"en":"fitted shirts · pencil skirts · slim pants","ko":"핏되는 셔츠 · 펜슬스커트 · 슬림 팬츠","ja":"フィットシャツ · ペンシルスカート · スリムパンツ"},
-    "accessories":{"en":"thin-frame glasses · silver jewelry · shoulder bags","ko":"얇은 안경 · 실버 주얼리 · 숄더백","ja":"細フレーム眼鏡 · シルバージュエリー · ショルダーバッグ"},
-    "keywords":{"en":["sleek","corporate","sensual","2000s"],"ko":["세련된","오피스","관능적인","2000년대"],"ja":["洗練","オフィス","センシュアル","2000年代"]}
+    emoji:"🕶️",
+    names:{en:"Office Siren",ko:"오피스 사이렌",ja:"オフィスサイレン"},
+    colors:{en:"charcoal · black · white · burgundy",ko:"차콜 · 블랙 · 화이트 · 버건디",ja:"チャコール · ブラック · ホワイト · バーガンディ"},
+    makeup:{en:"thin sharp eyeliner · neutral lip · polished base",ko:"얇고 날카로운 아이라인 · 뉴트럴 립 · 정돈된 베이스",ja:"細くシャープなアイライン · ニュートラルリップ · 整ったベース"},
+    hair:{en:"straight hair · sleek bun",ko:"스트레이트 · 슬릭번",ja:"ストレート · スリックシニヨン"},
+    outfit:{en:"fitted shirts · pencil skirts · slim pants",ko:"핏되는 셔츠 · 펜슬스커트 · 슬림 팬츠",ja:"フィットシャツ · ペンシルスカート · スリムパンツ"},
+    accessories:{en:"thin-frame glasses · silver jewelry · shoulder bags",ko:"얇은 안경 · 실버 주얼리 · 숄더백",ja:"細フレーム眼鏡 · シルバージュエリー · ショルダーバッグ"},
+    keywords:{en:["sleek","corporate","sensual","2000s"],ko:["세련된","오피스","관능적인","2000년대"],ja:["洗練","オフィス","センシュアル","2000年代"]}
   },
 
   "Boho Chic": {
-    "emoji":"🦋",
-    "names":{"en":"Boho Chic","ko":"보호 시크","ja":"ボーホーシック"},
-    "colors":{"en":"brown · turquoise · cream · rust","ko":"브라운 · 터키석 · 크림 · 러스트","ja":"ブラウン · ターコイズ · クリーム · ラスト"},
-    "makeup":{"en":"bronzed skin · warm eyes · natural lip","ko":"브론즈 피부 · 웜 아이 · 자연스러운 립","ja":"ブロンズ肌 · ウォームアイ · ナチュラルリップ"},
-    "hair":{"en":"long waves · braids","ko":"긴 웨이브 · 브레이드","ja":"ロングウェーブ · ブレイド"},
-    "outfit":{"en":"maxi skirts · crochet · prints · suede","ko":"맥시스커트 · 크로셰 · 프린트 · 스웨이드","ja":"マキシスカート · クロシェ · プリント · スエード"},
-    "accessories":{"en":"layered necklaces · bangles · fringe bags","ko":"레이어드 목걸이 · 뱅글 · 프린지백","ja":"重ね付けネックレス · バングル · フリンジバッグ"},
-    "keywords":{"en":["free-spirited","earthy","layered","festival"],"ko":["자유로운","내추럴","레이어드","페스티벌"],"ja":["自由奔放","アーシー","レイヤード","フェス"]}
+    emoji:"🦋",
+    names:{en:"Boho Chic",ko:"보호 시크",ja:"ボーホーシック"},
+    colors:{en:"brown · turquoise · cream · rust",ko:"브라운 · 터키석 · 크림 · 러스트",ja:"ブラウン · ターコイズ · クリーム · ラスト"},
+    makeup:{en:"bronzed skin · warm eyes · natural lip",ko:"브론즈 피부 · 웜 아이 · 자연스러운 립",ja:"ブロンズ肌 · ウォームアイ · ナチュラルリップ"},
+    hair:{en:"long waves · braids",ko:"긴 웨이브 · 브레이드",ja:"ロングウェーブ · ブレイド"},
+    outfit:{en:"maxi skirts · crochet · prints · suede",ko:"맥시스커트 · 크로셰 · 프린트 · 스웨이드",ja:"マキシスカート · クロシェ · プリント · スエード"},
+    accessories:{en:"layered necklaces · bangles · fringe bags",ko:"레이어드 목걸이 · 뱅글 · 프린지백",ja:"重ね付けネックレス · バングル · フリンジバッグ"},
+    keywords:{en:["free-spirited","earthy","layered","festival"],ko:["자유로운","내추럴","레이어드","페스티벌"],ja:["自由奔放","アーシー","レイヤード","フェス"]}
   },
 
   "Cyber Y2K": {
-    "emoji":"🖤💿",
-    "names":{"en":"Cyber Y2K","ko":"사이버 Y2K","ja":"サイバーY2K"},
-    "colors":{"en":"silver · black · neon blue · white","ko":"실버 · 블랙 · 네온블루 · 화이트","ja":"シルバー · ブラック · ネオンブルー · ホワイト"},
-    "makeup":{"en":"metallic shadow · graphic liner · glossy lip","ko":"메탈릭 섀도 · 그래픽 라이너 · 글로시립","ja":"メタリックシャドウ · グラフィックライナー · グロッシーリップ"},
-    "hair":{"en":"straight hair · color accents · spiky styling","ko":"스트레이트 · 컬러 포인트 · 스파이키 스타일","ja":"ストレート · カラーアクセント · スパイキースタイル"},
-    "outfit":{"en":"metallic pieces · techwear · crop tops · cargo","ko":"메탈릭 · 테크웨어 · 크롭탑 · 카고","ja":"メタリック · テックウェア · クロップトップ · カーゴ"},
-    "accessories":{"en":"silver chains · goggle-style glasses · headphones","ko":"실버 체인 · 고글형 안경 · 헤드폰","ja":"シルバーチェーン · ゴーグル風眼鏡 · ヘッドホン"},
-    "keywords":{"en":["futuristic","digital","metallic","tech"],"ko":["미래적인","디지털","메탈릭","테크"],"ja":["近未来的","デジタル","メタリック","テック"]}
+    emoji:"🖤💿",
+    names:{en:"Cyber Y2K",ko:"사이버 Y2K",ja:"サイバーY2K"},
+    colors:{en:"silver · black · neon blue · white",ko:"실버 · 블랙 · 네온블루 · 화이트",ja:"シルバー · ブラック · ネオンブルー · ホワイト"},
+    makeup:{en:"metallic shadow · graphic liner · glossy lip",ko:"메탈릭 섀도 · 그래픽 라이너 · 글로시립",ja:"メタリックシャドウ · グラフィックライナー · グロッシーリップ"},
+    hair:{en:"straight hair · color accents · spiky styling",ko:"스트레이트 · 컬러 포인트 · 스파이키 스타일",ja:"ストレート · カラーアクセント · スパイキースタイル"},
+    outfit:{en:"metallic pieces · techwear · crop tops · cargo",ko:"메탈릭 · 테크웨어 · 크롭탑 · 카고",ja:"メタリック · テックウェア · クロップトップ · カーゴ"},
+    accessories:{en:"silver chains · goggle-style glasses · headphones",ko:"실버 체인 · 고글형 안경 · 헤드폰",ja:"シルバーチェーン · ゴーグル風眼鏡 · ヘッドホン"},
+    keywords:{en:["futuristic","digital","metallic","tech"],ko:["미래적인","디지털","메탈릭","테크"],ja:["近未来的","デジタル","メタリック","テック"]}
   },
 
   "Vintage": {
-    "emoji":"📻",
-    "names":{"en":"Vintage","ko":"빈티지","ja":"ヴィンテージ"},
-    "colors":{"en":"cream · brown · mustard · dusty rose","ko":"크림 · 브라운 · 머스타드 · 더스티로즈","ja":"クリーム · ブラウン · マスタード · ダスティローズ"},
-    "makeup":{"en":"varies by era: red/rose lip · classic liner · soft cheeks","ko":"시대에 따라 달라지지만 레드/로즈 립 · 클래식 라이너 · 부드러운 치크","ja":"時代によって変化：赤/ローズリップ · クラシックライナー · 柔らかいチーク"},
-    "hair":{"en":"pin curls · vintage waves · scarf styling","ko":"핀컬 · 빈티지 웨이브 · 스카프 스타일링","ja":"ピンカール · ヴィンテージウェーブ · スカーフアレンジ"},
-    "outfit":{"en":"era-inspired dresses · high waists · cardigans · classic blouses","ko":"시대별 원피스 · 하이웨이스트 · 카디건 · 클래식 블라우스","ja":"年代別ワンピース · ハイウエスト · カーディガン · クラシックブラウス"},
-    "accessories":{"en":"pearls · scarves · vintage bags · brooches","ko":"진주 · 스카프 · 빈티지백 · 브로치","ja":"パール · スカーフ · ヴィンテージバッグ · ブローチ"},
-    "keywords":{"en":["nostalgic","timeless","retro","classic"],"ko":["향수를 불러일으키는","유행을 타지 않는","레트로","클래식"],"ja":["ノスタルジック","タイムレス","レトロ","クラシック"]}
+    emoji:"📻",
+    names:{en:"Vintage",ko:"빈티지",ja:"ヴィンテージ"},
+    colors:{en:"cream · brown · mustard · dusty rose",ko:"크림 · 브라운 · 머스타드 · 더스티로즈",ja:"クリーム · ブラウン · マスタード · ダスティローズ"},
+    makeup:{en:"varies by era: red/rose lip · classic liner · soft cheeks",ko:"시대에 따라 달라지지만 레드/로즈 립 · 클래식 라이너 · 부드러운 치크",ja:"時代によって変化：赤/ローズリップ · クラシックライナー · 柔らかいチーク"},
+    hair:{en:"pin curls · vintage waves · scarf styling",ko:"핀컬 · 빈티지 웨이브 · 스카프 스타일링",ja:"ピンカール · ヴィンテージウェーブ · スカーフアレンジ"},
+    outfit:{en:"era-inspired dresses · high waists · cardigans · classic blouses",ko:"시대별 원피스 · 하이웨이스트 · 카디건 · 클래식 블라우스",ja:"年代別ワンピース · ハイウエスト · カーディガン · クラシックブラウス"},
+    accessories:{en:"pearls · scarves · vintage bags · brooches",ko:"진주 · 스카프 · 빈티지백 · 브로치",ja:"パール · スカーフ · ヴィンテージバッグ · ブローチ"},
+    keywords:{en:["nostalgic","timeless","retro","classic"],ko:["향수를 불러일으키는","유행을 타지 않는","레트로","클래식"],ja:["ノスタルジック","タイムレス","レトロ","クラシック"]}
   }
 };
 
-// Image file mapping from the uploaded 178-image set
 const aestheticImageMap = {
-  "Gyaru": {colorsImage:"1000049441.png", makeupImage:"1000049440.png", hairImage:"1000049647.png", outfitImage:"1000050573.png", accessoriesImage:"1000049438.png"},
-  "Himekaji": {image:"1000050601.png", colorsImage:"1000050724.png", makeupImage:"1000050695.png", hairImage:"1000050667.png", outfitImage:"1000050656.png", accessoriesImage:"1000050665.png"},
-  "Balletcore": {image:"1000049419.png", colorsImage:"1000049432.png", hairImage:"1000049640.png", outfitImage:"1000049418.png", accessoriesImage:"1000049431.png"},
-  "Acubi": {image:"1000049462.png"},
-  "Boho Chic": {image:"1000050594.png", makeupImage:"1000050748.png", hairImage:"1000050686.png", outfitImage:"1000050720.png", accessoriesImage:"1000050739.png"},
-  "Cottagecore": {},
-  "Fairycore": {},
-  "Angelcore": {},
-  "Dark Feminine": {image:"1000049777.png", colorsImage:"1000049767.png", makeupImage:"1000049766.png", hairImage:"1000049765.png", outfitImage:"1000049764.png", accessoriesImage:"1000049763.png"},
-  "McBling": {image:"1000049448.png", colorsImage:"1000049447.png", makeupImage:"1000049446.png", hairImage:"1000049445.png", outfitImage:"1000049444.png", accessoriesImage:"1000049443.png"},
-  "Light Academia": {},
-  "Cutecore / Kawaii": {image:"1000050610.png", colorsImage:"1000050745.png", makeupImage:"1000050705.png", hairImage:"1000050687.png", outfitImage:"1000050674.png", accessoriesImage:"1000050679.png"},
-  "Old Money / Preppy": {},
-  "Office Siren": {image:"1000050615.png", colorsImage:"1000050753.png", makeupImage:"1000050696.png", hairImage:"1000050765.png", accessoriesImage:"1000050660.png"},
-  "Hime Gyaru": {image:"1000050589.png"},
-  "Lolita-inspired": {image:"1000050591.png", makeupImage:"1000050639.png", hairImage:"1000050638.png", colorsImage:"1000050726.png", accessoriesImage:"1000050688.png"},
-  "Clean Girl": {colorsImage:"1000049457.png", hairImage:"1000049455.png", outfitImage:"1000049454.png", accessoriesImage:"1000049453.png"},
-  "Whimsigoth": {colorsImage:"1000050731.png", hairImage:"1000050722.png", outfitImage:"1000050647.png", accessoriesImage:"1000050662.png"},
-  "Indie Sleaze": {image:"1000050609.png", makeupImage:"1000050644.png", hairImage:"1000050730.png", outfitImage:"1000050643.png"},
-  "Soft Girl": {},
-  "Y2K": {image:"1000049436.png"},
-  "Romantic Feminine": {image:"1000049676.png"},
-  "Girly": {colorsImage:"1000049663.png", makeupImage:"1000049662.png", hairImage:"1000049661.png", outfitImage:"1000049660.png", accessoriesImage:"1000049659.png"},
-  "Cyber Y2K": {colorsImage:"1000050683.png", makeupImage:"1000050699.png", hairImage:"1000050632.png", outfitImage:"1000050734.png", accessoriesImage:"1000050685.png"},
-  "Vintage": {image:"1000050598.png", colorsImage:"1000049648.png", makeupImage:"1000050698.png", hairImage:"1000050668.png", outfitImage:"1000050661.png", accessoriesImage:"1000050671.png"},
-  'Coquette': {image:"coquette.png", colorsImage:"1000050732.png", makeupImage:"1000050754.png", hairImage:"1000050658.png", outfitImage:"1000050627.png", accessoriesImage:"1000050727.png"},
-  'Dark Academia': {image:"1000049800.png", colorsImage:"1000049799.png", makeupImage:"1000049798.png", hairImage:"1000049797.png", outfitImage:"1000049796.png", accessoriesImage:"1000049795.png"},
-  'Mori Kei': {image:"1000050001.png", colorsImage:"1000050098.png", makeupImage:"1000050097.png", hairImage:"1000050096.png", outfitImage:"1000050095.png", accessoriesImage:"1000050094.png"},
-  'Grunge': {image:"1000050256.png", colorsImage:"1000050274.png", makeupImage:"1000050272.png", hairImage:"1000050269.png", outfitImage:"1000050270.png", accessoriesImage:"1000050271.png"},
-  'Agejo Gyaru': {image:"pm-agejo-gyaru-main.png", colorsImage:"pm-agejo-gyaru-colors.png", makeupImage:"pm-agejo-gyaru-makeup.png", hairImage:"pm-agejo-gyaru-hair.png", outfitImage:"pm-agejo-gyaru-outfit.png", accessoriesImage:"pm-agejo-gyaru-accessories.png"},
-
+  "Gyaru": {
+    colorsImage:"1000049441.png",
+    makeupImage:"1000049440.png",
+    hairImage:"1000049647.png",
+    outfitImage:"1000050573.png",
+    accessoriesImage:"1000049438.png"
+  },
+  "Himekaji": {
+    image:"1000050601.png",
+    colorsImage:"1000050724.png",
+    makeupImage:"1000050695.png",
+    hairImage:"1000050667.png",
+    outfitImage:"1000050656.png",
+    accessoriesImage:"1000050665.png"
+  },
+  "Balletcore": {
+    image:"1000049419.png",
+    colorsImage:"1000049432.png",
+    hairImage:"1000049640.png",
+    outfitImage:"1000049418.png",
+    accessoriesImage:"1000049431.png"
+  },
+  "Acubi": {
+    image:"1000049462.png"
+  },
+  "Boho Chic": {
+    image:"1000050594.png",
+    makeupImage:"1000050748.png",
+    hairImage:"1000050686.png",
+    outfitImage:"1000050720.png",
+    accessoriesImage:"1000050739.png"
+  },
+  "Cottagecore": {
+    image:"file_00000000c734820b9cbc446e74b713fc.png",
+    colorsImage:"file_00000000359c81fa9fedd346c9bfdc33(5).png",
+    makeupImage:"file_00000000359c81fa9fedd346c9bfdc33(4).png",
+    hairImage:"file_00000000359c81fa9fedd346c9bfdc33(3).png",
+    outfitImage:"file_00000000359c81fa9fedd346c9bfdc33(2).png",
+    accessoriesImage:"file_00000000359c81fa9fedd346c9bfdc33(1).png"
+  },
+  "Fairycore": {
+    image:"file_0000000069d4820999f25e0f661cabbf.png",
+    colorsImage:"file_000000004d1c8206b6c6fbb3eb69aca8(5).png",
+    makeupImage:"file_000000004d1c8206b6c6fbb3eb69aca8(4).png",
+    hairImage:"file_000000004d1c8206b6c6fbb3eb69aca8(3).png",
+    outfitImage:"file_000000004d1c8206b6c6fbb3eb69aca8(2).png",
+    accessoriesImage:"file_000000004d1c8206b6c6fbb3eb69aca8(1).png"
+  },
+  "Angelcore": {
+    image:"file_000000006c8c81f7bb6a738d56945062.png",
+    colorsImage:"file_00000000957481f79fb13ad227eadf0a(5).png",
+    makeupImage:"file_00000000957481f79fb13ad227eadf0a(4).png",
+    hairImage:"file_00000000957481f79fb13ad227eadf0a(3).png",
+    outfitImage:"file_00000000957481f79fb13ad227eadf0a(2).png",
+    accessoriesImage:"file_00000000957481f79fb13ad227eadf0a(1).png"
+  },
+  "Dark Feminine": {
+    image:"1000049777.png",
+    colorsImage:"1000049767.png",
+    makeupImage:"1000049766.png",
+    hairImage:"1000049765.png",
+    outfitImage:"1000049764.png",
+    accessoriesImage:"1000049763.png"
+  },
+  "McBling": {
+    image:"1000049448.png",
+    colorsImage:"1000049447.png",
+    makeupImage:"1000049446.png",
+    hairImage:"1000049445.png",
+    outfitImage:"1000049444.png",
+    accessoriesImage:"1000049443.png"
+  },
+  "Light Academia": {
+    image:"file_000000008a78820bac4703a9ad4d7cbd.png",
+    colorsImage:"file_00000000a2088211bbc1d9b2f2d8c5e8(5).png",
+    makeupImage:"file_000000004b048209890051f19075ca52.png",
+    hairImage:"file_00000000a2088211bbc1d9b2f2d8c5e8(3).png",
+    outfitImage:"file_00000000a2088211bbc1d9b2f2d8c5e8(2).png",
+    accessoriesImage:"file_00000000a2088211bbc1d9b2f2d8c5e8(1).png"
+  },
+  "Cutecore / Kawaii": {
+    image:"1000050610.png",
+    colorsImage:"1000050745.png",
+    makeupImage:"1000050705.png",
+    hairImage:"1000050687.png",
+    outfitImage:"1000050674.png",
+    accessoriesImage:"1000050679.png"
+  },
+  "Old Money / Preppy": {
+    image:"file_000000008e68820bafaeeeb8b781caa5.png",
+    colorsImage:"file_00000000ae6c81fa8707f50a11b37229(5).png",
+    makeupImage:"file_00000000ae6c81fa8707f50a11b37229(4).png",
+    hairImage:"file_00000000ae6c81fa8707f50a11b37229(3).png",
+    outfitImage:"file_00000000ae6c81fa8707f50a11b37229(2).png",
+    accessoriesImage:"file_00000000ae6c81fa8707f50a11b37229(1).png"
+  },
+  "Office Siren": {
+    image:"1000050615.png",
+    colorsImage:"1000050753.png",
+    makeupImage:"1000050696.png",
+    hairImage:"1000050765.png",
+    accessoriesImage:"1000050660.png"
+  },
+  "Hime Gyaru": {
+    image:"1000050589.png"
+  },
+  "Lolita-inspired": {
+    image:"1000050591.png",
+    makeupImage:"1000050639.png",
+    hairImage:"1000050638.png",
+    colorsImage:"1000050726.png",
+    accessoriesImage:"1000050688.png"
+  },
+  "Clean Girl": {
+    colorsImage:"1000049457.png",
+    hairImage:"1000049455.png",
+    outfitImage:"1000049454.png",
+    accessoriesImage:"1000049453.png"
+  },
+  "Whimsigoth": {
+    colorsImage:"1000050731.png",
+    hairImage:"1000050722.png",
+    outfitImage:"1000050647.png",
+    accessoriesImage:"1000050662.png"
+  },
+  "Indie Sleaze": {
+    image:"1000050609.png",
+    makeupImage:"1000050644.png",
+    hairImage:"1000050730.png",
+    outfitImage:"1000050643.png"
+  },
+  "Soft Girl": {
+    image:"file_00000000a38082119b8fe7a4272e1cea.png",
+    colorsImage:"file_000000004e94820990fb80aea585c223(4).png",
+    makeupImage:"file_000000004e94820990fb80aea585c223(4)(1).png",
+    hairImage:"file_000000004e94820990fb80aea585c223(3).png",
+    outfitImage:"file_000000004e94820990fb80aea585c223(2).png",
+    accessoriesImage:"file_000000004e94820990fb80aea585c223(1).png"
+  },
+  "Y2K": {
+    image:"1000049436.png"
+  },
+  "Romantic Feminine": {
+    image:"1000049676.png"
+  },
+  "Girly": {
+    colorsImage:"1000049663.png",
+    makeupImage:"1000049662.png",
+    hairImage:"1000049661.png",
+    outfitImage:"1000049660.png",
+    accessoriesImage:"1000049659.png"
+  },
+  "Cyber Y2K": {
+    colorsImage:"1000050683.png",
+    makeupImage:"1000050699.png",
+    hairImage:"1000050632.png",
+    outfitImage:"1000050734.png",
+    accessoriesImage:"1000050685.png"
+  },
+  "Vintage": {
+    image:"1000050598.png",
+    colorsImage:"1000049648.png",
+    makeupImage:"1000050698.png",
+    hairImage:"1000050668.png",
+    outfitImage:"1000050661.png",
+    accessoriesImage:"1000050671.png"
+  },
+  "Coquette": {
+    image:"coquette.png",
+    colorsImage:"1000050732.png",
+    makeupImage:"1000050754.png",
+    hairImage:"1000050658.png",
+    outfitImage:"1000050627.png",
+    accessoriesImage:"1000050727.png"
+  },
+  "Dark Academia": {
+    image:"1000049800.png",
+    colorsImage:"1000049799.png",
+    makeupImage:"1000049798.png",
+    hairImage:"1000049797.png",
+    outfitImage:"1000049796.png",
+    accessoriesImage:"1000049795.png"
+  },
+  "Mori Kei": {
+    image:"1000050001.png",
+    colorsImage:"1000050098.png",
+    makeupImage:"1000050097.png",
+    hairImage:"1000050096.png",
+    outfitImage:"1000050095.png",
+    accessoriesImage:"1000050094.png"
+  },
+  "Grunge": {
+    image:"1000050256.png",
+    colorsImage:"1000050274.png",
+    makeupImage:"1000050272.png",
+    hairImage:"1000050269.png",
+    outfitImage:"1000050270.png",
+    accessoriesImage:"1000050271.png"
+  },
+  "Agejo Gyaru": {
+    image:"pm-agejo-gyaru-main.png",
+    colorsImage:"pm-agejo-gyaru-colors.png",
+    makeupImage:"pm-agejo-gyaru-makeup.png",
+    hairImage:"pm-agejo-gyaru-hair.png",
+    outfitImage:"pm-agejo-gyaru-outfit.png",
+    accessoriesImage:"pm-agejo-gyaru-accessories.png"
+  },
+  "Jirai Kei": {
+    image:"jirai-kei.png"
+  }
 };
 
 Object.entries(aestheticImageMap).forEach(([name, imgs]) => {
@@ -870,14 +1006,9 @@ function renderAesthetic() {
     document.getElementById("styleGuide").style.display = "block";
     document.getElementById("notFound").style.display = "none";
 
-    const displayName =
-      aesthetic.names?.[lang] || aesthetic.names?.en || aestheticName;
-
-    const localized = (field) =>
-      aesthetic[field]?.[lang] || aesthetic[field]?.en || aesthetic[field] || "";
-
-    const displayKeywords =
-      aesthetic.keywords?.[lang] || aesthetic.keywords?.en || [];
+    const displayName = aesthetic.names?.[lang] || aesthetic.names?.en || aestheticName;
+    const localized = (field) => aesthetic[field]?.[lang] || aesthetic[field]?.en || aesthetic[field] || "";
+    const displayKeywords = aesthetic.keywords?.[lang] || aesthetic.keywords?.en || [];
 
     document.getElementById("name").textContent = displayName;
     document.getElementById("emoji").textContent = aesthetic.emoji;
@@ -903,6 +1034,7 @@ function renderAesthetic() {
         detailImage.alt = displayName + " " + label + " guide";
         detailImage.style.display = "block";
       } else {
+        detailImage.src = "";
         detailImage.removeAttribute("src");
         detailImage.style.display = "none";
       }
@@ -915,11 +1047,9 @@ function renderAesthetic() {
       aesthetic.guideOutfit?.[lang] || localized("outfit");
 
     document.getElementById("guideHair").textContent =
-      aesthetic.guideHair?.[lang] ||
-      (localized("hair") + " · " + localized("accessories"));
+      aesthetic.guideHair?.[lang] || (localized("hair") + " · " + localized("accessories"));
 
-    document.getElementById("keywordLine").textContent =
-      displayKeywords.join(" · ");
+    document.getElementById("keywordLine").textContent = displayKeywords.join(" · ");
 
     const tags = document.getElementById("tags");
     tags.innerHTML = displayKeywords
@@ -935,6 +1065,7 @@ function renderAesthetic() {
       image.style.display = "block";
       placeholder.style.display = "none";
     } else {
+      image.src = "";
       image.removeAttribute("src");
       image.style.display = "none";
       placeholder.style.display = "flex";
@@ -942,7 +1073,6 @@ function renderAesthetic() {
     }
 
     document.title = "Pretty Mind | " + displayName;
-
   } else {
     document.getElementById("detailContent").style.display = "none";
     document.getElementById("styleGuide").style.display = "none";
@@ -953,6 +1083,5 @@ function renderAesthetic() {
 window.__prettyMindDetailReady = true;
 setLanguage(savedLanguage);
   </script>
-
 </body>
 </html>
