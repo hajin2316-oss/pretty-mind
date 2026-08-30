@@ -538,6 +538,7 @@
       .room-background {
         background-position: center;
         background-size: cover;
+        z-index: 1;
       }
 
       .room-placeholder {
@@ -1187,53 +1188,12 @@
     ====================================== */
 
     const characters = {
-const characters = {
 
-  coquette: {
-    name: "Coquette",
-    emoji: "🎀",
-    roomImage: "coquette-study-room.png",
-    characterImage: "coquette-study-character-side.png",
-    position: {
-      left: "0%",
-      bottom: "0%",
-      width: "61%",
-      height: "96%"
-    }
-  },
-
-  clean: {
-    name: "Clean Girl",
-    emoji: "🤍",
-    roomImage: "clean-girl-study-room.png",
-    characterImage: "clean-girl-study-character-side.png",
-    position: {
-      left: "0%",
-      bottom: "0%",
-      width: "61%",
-      height: "96%"
-    }
-  },
-
-  gyaru: {
-    name: "Gyaru",
-    emoji: "💖",
-    roomImage: "gyaru-study-room.png",
-    characterImage: "gyaru-study-character-side.png",
-    position: {
-      left: "0%",
-      bottom: "0%",
-      width: "63%",
-      height: "97%"
-    }
-  }
-
-};
       coquette: {
         name: "Coquette",
         emoji: "🎀",
         roomImage: "coquette-study-room.png",
-        characterImage: "coquette-study-character.png",
+        characterImage: "coquette-study-character-side.png",
         position: { left: "1%", bottom: "0%", width: "58%", height: "95%" }
       },
 
@@ -1241,7 +1201,7 @@ const characters = {
         name: "Clean Girl",
         emoji: "🤍",
         roomImage: "clean-girl-study-room.png",
-        characterImage: "clean-girl-study-character.png",
+        characterImage: "clean-girl-study-character-side.png",
         position: { left: "1%", bottom: "0%", width: "58%", height: "95%" }
       },
 
@@ -1249,7 +1209,7 @@ const characters = {
         name: "Gyaru",
         emoji: "💖",
         roomImage: "gyaru-study-room.png",
-        characterImage: "gyaru-study-character.png",
+        characterImage: "gyaru-study-character-side.png",
         position: { left: "1%", bottom: "0%", width: "60%", height: "96%" }
       }
 
