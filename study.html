@@ -510,27 +510,67 @@
     ========================== */
 
     @media (max-width: 900px) {
+      /* Mobile/tablet: show the room first, then the timer below it. */
       .room-shell {
         aspect-ratio: auto;
-        min-height: 680px;
+        min-height: 0;
+        overflow: visible;
+        display: flex;
+        flex-direction: column;
+        background: transparent;
+        border: 0;
+        box-shadow: none;
+        border-radius: 0;
+      }
+
+      .room-background,
+      .room-placeholder {
+        position: relative;
+        inset: auto;
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        border-radius: 30px;
+        overflow: hidden;
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow);
+      }
+
+      .room-background {
+        background-position: center;
+        background-size: cover;
+      }
+
+      .room-placeholder {
+        display: none;
       }
 
       .character-layer {
-        left: 50%;
-        transform: translateX(-50%);
-        top: 20px;
+        left: 1%;
+        top: 0;
         bottom: auto;
-        width: 78%;
-        height: 360px;
+        transform: none;
+        width: 58%;
+        height: auto;
+        aspect-ratio: 1 / 1;
+        z-index: 2;
+      }
+
+      .character-image {
+        object-position: left bottom;
       }
 
       .timer-panel {
-        left: 50%;
+        position: relative;
+        left: auto;
         right: auto;
         top: auto;
-        bottom: 28px;
-        transform: translateX(-50%);
-        width: min(520px, 90%);
+        bottom: auto;
+        transform: none;
+        width: min(560px, 94%);
+        margin: 22px auto 0;
+        padding: 24px;
+        box-sizing: border-box;
+        z-index: 5;
       }
 
       .lower-grid {
@@ -558,17 +598,19 @@
         margin-bottom: 18px;
       }
 
-      .room-shell {
-        min-height: 650px;
+      .room-background,
+      .room-placeholder {
         border-radius: 25px;
       }
 
       .character-layer {
-        width: 94%;
-        height: 310px;
+        left: 0;
+        width: 60%;
       }
 
       .timer-panel {
+        width: 100%;
+        margin-top: 18px;
         padding: 21px 15px;
         border-radius: 23px;
       }
