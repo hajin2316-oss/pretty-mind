@@ -1,0 +1,1861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Pretty Mind | Study Timer</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    :root {
+      --pink: #e75480;
+      --deep-pink: #c95f82;
+      --soft-pink: #f8d9e5;
+      --cream: #fff9f6;
+      --text: #a95673;
+      --white-glass: rgba(255, 255, 255, 0.72);
+      --border: rgba(255, 255, 255, 0.9);
+      --shadow: 0 14px 38px rgba(183, 86, 118, 0.16);
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--text);
+      background:
+        radial-gradient(
+          circle at 20% 10%,
+          rgba(255,255,255,0.9),
+          transparent 32%
+        ),
+        linear-gradient(
+          135deg,
+          #fce8ef 0%,
+          #f6ccdc 50%,
+          #fce7ef 100%
+        );
+    }
+
+    button,
+    input {
+      font-family: inherit;
+    }
+
+    button {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .page {
+      width: min(1180px, 94%);
+      margin: 0 auto;
+      padding: 28px 0 60px;
+    }
+
+    /* =========================
+       TOP BAR
+    ========================== */
+
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+
+    .back-link {
+      color: var(--text);
+      text-decoration: none;
+      font-size: 15px;
+    }
+
+    .back-link:hover {
+      color: var(--pink);
+    }
+
+    .language-switcher {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+    }
+
+    .language-switcher button {
+      border: 0;
+      background: none;
+      color: var(--text);
+      cursor: pointer;
+      padding: 3px;
+    }
+
+    .language-switcher button:hover,
+    .language-switcher button.active {
+      color: var(--pink);
+    }
+
+    /* =========================
+       HERO
+    ========================== */
+
+    .hero {
+      text-align: center;
+      margin-bottom: 26px;
+    }
+
+    .hero h1 {
+      margin: 0;
+      color: var(--pink);
+      font-size: clamp(36px, 6vw, 58px);
+      font-weight: 700;
+    }
+
+    .hero p {
+      margin: 10px 0 0;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    /* =========================
+       ROOM
+    ========================== */
+
+    .room-shell {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      min-height: 430px;
+      overflow: hidden;
+      border-radius: 34px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      background:
+        linear-gradient(
+          135deg,
+          #f6d5e2,
+          #f9e9ee
+        );
+    }
+
+    .room-background {
+      position: absolute;
+      inset: 0;
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      transition:
+        background-image 0.45s ease,
+        filter 0.45s ease;
+    }
+
+    /*
+      다음 단계에서 실제 방 이미지를 연결하면
+      이 placeholder는 자동으로 필요 없어질 거야.
+    */
+
+    .room-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 8px;
+      text-align: center;
+      color: rgba(169, 86, 115, 0.55);
+      background:
+        radial-gradient(
+          circle at center,
+          rgba(255,255,255,0.3),
+          transparent 55%
+        );
+    }
+
+    .room-placeholder .big-emoji {
+      font-size: 72px;
+    }
+
+    /* =========================
+       CHARACTER
+    ========================== */
+
+    .character-layer {
+      position: absolute;
+      left: 7%;
+      bottom: 3%;
+      width: 49%;
+      height: 86%;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .character-image {
+      display: none;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center bottom;
+      filter: drop-shadow(0 12px 14px rgba(60, 25, 40, 0.16));
+    }
+
+    .character-placeholder {
+      font-size: clamp(80px, 12vw, 150px);
+      transform-origin: center bottom;
+    }
+
+    /* =========================
+       STUDY ANIMATION STATES
+    ========================== */
+
+    .room-shell.studying .character-placeholder,
+    .room-shell.studying .character-image {
+      animation: studyMotion 1.8s ease-in-out infinite;
+    }
+
+    @keyframes studyMotion {
+      0% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(2px);
+      }
+
+      100% {
+        transform: translateY(0);
+      }
+    }
+
+    .room-shell.finished .character-placeholder,
+    .room-shell.finished .character-image {
+      animation: finishBounce 0.55s ease-in-out 3;
+    }
+
+    @keyframes finishBounce {
+      0% {
+        transform: translateY(0) scale(1);
+      }
+
+      50% {
+        transform: translateY(-12px) scale(1.03);
+      }
+
+      100% {
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    /* =========================
+       TIMER PANEL
+    ========================== */
+
+    .timer-panel {
+      position: absolute;
+      right: 4%;
+      top: 50%;
+      transform: translateY(-50%);
+      width: min(360px, 37%);
+      padding: 26px;
+      border-radius: 28px;
+      background: rgba(255,255,255,0.79);
+      border: 1px solid rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 12px 30px rgba(92, 49, 65, 0.13);
+      z-index: 5;
+      text-align: center;
+    }
+
+    .current-character {
+      margin-bottom: 8px;
+      font-size: 14px;
+      letter-spacing: 0.4px;
+    }
+
+    .timer-display {
+      margin: 4px 0 18px;
+      color: var(--pink);
+      font-size: clamp(48px, 6vw, 76px);
+      font-weight: 700;
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .timer-message {
+      min-height: 22px;
+      margin-bottom: 18px;
+      font-size: 14px;
+    }
+
+    /* =========================
+       TIMER CONTROLS
+    ========================== */
+
+    .timer-buttons {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 9px;
+    }
+
+    .main-button {
+      border: 0;
+      border-radius: 999px;
+      padding: 11px 18px;
+      cursor: pointer;
+      font-size: 14px;
+      transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        opacity 0.2s ease;
+    }
+
+    .main-button:hover {
+      transform: translateY(-2px);
+    }
+
+    .start-button {
+      color: white;
+      background: var(--pink);
+      box-shadow: 0 7px 18px rgba(231,84,128,0.25);
+    }
+
+    .pause-button,
+    .reset-button {
+      color: var(--text);
+      background: rgba(255,235,242,0.9);
+      border: 1px solid rgba(231,84,128,0.15);
+    }
+
+    /* =========================
+       TIME SETTINGS
+    ========================== */
+
+    .time-setting {
+      margin-top: 22px;
+      padding-top: 19px;
+      border-top: 1px solid rgba(231,84,128,0.13);
+    }
+
+    .time-setting-title {
+      margin-bottom: 10px;
+      font-size: 13px;
+    }
+
+    .preset-buttons {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .preset {
+      padding: 7px 11px;
+      border-radius: 999px;
+      border: 1px solid rgba(231,84,128,0.17);
+      background: rgba(255,255,255,0.7);
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    .preset:hover,
+    .preset.active {
+      color: white;
+      background: var(--pink);
+    }
+
+    .custom-time {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 7px;
+      margin-top: 10px;
+    }
+
+    .custom-time input {
+      width: 70px;
+      padding: 8px;
+      border-radius: 12px;
+      border: 1px solid rgba(231,84,128,0.2);
+      outline: none;
+      text-align: center;
+      color: var(--text);
+      background: rgba(255,255,255,0.8);
+    }
+
+    .custom-time button {
+      padding: 8px 11px;
+      border: 0;
+      border-radius: 12px;
+      background: #f5d6e1;
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    /* =========================
+       LOWER CONTROLS
+    ========================== */
+
+    .lower-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 22px;
+    }
+
+    .control-card {
+      padding: 24px;
+      border-radius: 28px;
+      background: var(--white-glass);
+      border: 1px solid var(--border);
+      box-shadow: 0 9px 25px rgba(183,86,118,0.12);
+      text-align: center;
+    }
+
+    .control-card h2 {
+      margin: 0 0 8px;
+      color: var(--pink);
+      font-size: 23px;
+    }
+
+    .control-card > p {
+      margin: 0 0 18px;
+      font-size: 14px;
+    }
+
+    /* =========================
+       CHARACTER SELECTOR
+    ========================== */
+
+    .character-selector {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .character-option {
+      border: 1px solid rgba(231,84,128,0.14);
+      border-radius: 20px;
+      padding: 14px 8px;
+      background: rgba(255,255,255,0.68);
+      color: var(--text);
+      cursor: pointer;
+      transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        background 0.2s ease;
+    }
+
+    .character-option:hover {
+      transform: translateY(-3px);
+    }
+
+    .character-option.active {
+      border-color: rgba(231,84,128,0.55);
+      background: rgba(255,225,236,0.92);
+    }
+
+    .character-option .character-emoji {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 27px;
+    }
+
+    /* =========================
+       SOUND SELECTOR
+    ========================== */
+
+    .sound-selector {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 9px;
+    }
+
+    .sound-option {
+      padding: 11px 15px;
+      border: 1px solid rgba(231,84,128,0.15);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.72);
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    .sound-option:hover,
+    .sound-option.active {
+      color: white;
+      background: var(--pink);
+    }
+
+    /* =========================
+       FOOT NOTE
+    ========================== */
+
+    .tiny-note {
+      text-align: center;
+      margin-top: 22px;
+      font-size: 12px;
+      opacity: 0.7;
+    }
+
+    /* =========================
+       RESPONSIVE
+    ========================== */
+
+    @media (max-width: 900px) {
+      .room-shell {
+        aspect-ratio: auto;
+        min-height: 680px;
+      }
+
+      .character-layer {
+        left: 50%;
+        transform: translateX(-50%);
+        top: 20px;
+        bottom: auto;
+        width: 78%;
+        height: 360px;
+      }
+
+      .timer-panel {
+        left: 50%;
+        right: auto;
+        top: auto;
+        bottom: 28px;
+        transform: translateX(-50%);
+        width: min(520px, 90%);
+      }
+
+      .lower-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .page {
+        width: 94%;
+        padding-top: 18px;
+      }
+
+      .top-bar {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .language-switcher {
+        align-self: flex-end;
+      }
+
+      .hero {
+        margin-bottom: 18px;
+      }
+
+      .room-shell {
+        min-height: 650px;
+        border-radius: 25px;
+      }
+
+      .character-layer {
+        width: 94%;
+        height: 310px;
+      }
+
+      .timer-panel {
+        padding: 21px 15px;
+        border-radius: 23px;
+      }
+
+      .timer-display {
+        font-size: 54px;
+      }
+
+      .character-selector {
+        grid-template-columns: 1fr;
+      }
+
+      .control-card {
+        padding: 20px 15px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="page">
+
+    <div class="top-bar">
+
+      <a
+        id="backLink"
+        class="back-link"
+        href="index.html"
+      >
+        ← Back to Pretty Mind
+      </a>
+
+      <div class="language-switcher">
+
+        <button
+          type="button"
+          data-lang="en"
+          onclick="setLanguage('en')"
+        >
+          EN
+        </button>
+
+        <span>·</span>
+
+        <button
+          type="button"
+          data-lang="ko"
+          onclick="setLanguage('ko')"
+        >
+          한국어
+        </button>
+
+        <span>·</span>
+
+        <button
+          type="button"
+          data-lang="ja"
+          onclick="setLanguage('ja')"
+        >
+          日本語
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <section class="hero">
+
+      <h1>
+        Study Timer ⏱️
+      </h1>
+
+      <p id="heroSubtitle">
+        Pick your study buddy and make focus time a little prettier ♡
+      </p>
+
+    </section>
+
+
+    <section
+      id="roomShell"
+      class="room-shell"
+    >
+
+      <div
+        id="roomBackground"
+        class="room-background"
+      ></div>
+
+
+      <div
+        id="roomPlaceholder"
+        class="room-placeholder"
+      >
+
+        <div
+          id="roomEmoji"
+          class="big-emoji"
+        >
+          🎀
+        </div>
+
+        <div id="roomPlaceholderText">
+          Coquette Room
+        </div>
+
+      </div>
+
+
+      <div class="character-layer">
+
+        <img
+          id="characterImage"
+          class="character-image"
+          alt=""
+        >
+
+        <div
+          id="characterPlaceholder"
+          class="character-placeholder"
+        >
+          🎀
+        </div>
+
+      </div>
+
+
+      <div class="timer-panel">
+
+        <div
+          id="currentCharacter"
+          class="current-character"
+        >
+          🎀 Coquette
+        </div>
+
+        <div
+          id="timerDisplay"
+          class="timer-display"
+        >
+          25:00
+        </div>
+
+        <div
+          id="timerMessage"
+          class="timer-message"
+        >
+          Ready when you are ♡
+        </div>
+
+
+        <div class="timer-buttons">
+
+          <button
+            id="startButton"
+            class="main-button start-button"
+            type="button"
+          >
+            ▶ Start
+          </button>
+
+          <button
+            id="pauseButton"
+            class="main-button pause-button"
+            type="button"
+          >
+            Ⅱ Pause
+          </button>
+
+          <button
+            id="resetButton"
+            class="main-button reset-button"
+            type="button"
+          >
+            ↻ Reset
+          </button>
+
+        </div>
+
+
+        <div class="time-setting">
+
+          <div
+            id="timeSettingTitle"
+            class="time-setting-title"
+          >
+            Study time
+          </div>
+
+
+          <div class="preset-buttons">
+
+            <button
+              class="preset"
+              type="button"
+              data-minutes="15"
+            >
+              15
+            </button>
+
+            <button
+              class="preset active"
+              type="button"
+              data-minutes="25"
+            >
+              25
+            </button>
+
+            <button
+              class="preset"
+              type="button"
+              data-minutes="45"
+            >
+              45
+            </button>
+
+            <button
+              class="preset"
+              type="button"
+              data-minutes="60"
+            >
+              60
+            </button>
+
+          </div>
+
+
+          <div class="custom-time">
+
+            <input
+              id="customMinutes"
+              type="number"
+              min="1"
+              max="180"
+              value="25"
+              aria-label="Custom study minutes"
+            >
+
+            <span id="minutesLabel">
+              min
+            </span>
+
+            <button
+              id="setTimeButton"
+              type="button"
+            >
+              Set
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <section class="lower-grid">
+
+
+      <article class="control-card">
+
+        <h2 id="characterTitle">
+          Choose Your Study Buddy ♡
+        </h2>
+
+        <p id="characterSubtitle">
+          Each girl has her own room and vibe.
+        </p>
+
+
+        <div class="character-selector">
+
+          <button
+            class="character-option active"
+            type="button"
+            data-character="coquette"
+          >
+
+            <span class="character-emoji">
+              🎀
+            </span>
+
+            Coquette
+
+          </button>
+
+
+          <button
+            class="character-option"
+            type="button"
+            data-character="clean"
+          >
+
+            <span class="character-emoji">
+              🤍
+            </span>
+
+            Clean Girl
+
+          </button>
+
+
+          <button
+            class="character-option"
+            type="button"
+            data-character="gyaru"
+          >
+
+            <span class="character-emoji">
+              💖
+            </span>
+
+            Gyaru
+
+          </button>
+
+        </div>
+
+      </article>
+
+
+      <article class="control-card">
+
+        <h2 id="soundTitle">
+          Focus Sound 🎧
+        </h2>
+
+        <p id="soundSubtitle">
+          Pick a little background atmosphere.
+        </p>
+
+
+        <div class="sound-selector">
+
+          <button
+            class="sound-option"
+            type="button"
+            data-sound="rain"
+          >
+            🌧 Rain
+          </button>
+
+          <button
+            class="sound-option"
+            type="button"
+            data-sound="white"
+          >
+            🤍 White Noise
+          </button>
+
+          <button
+            class="sound-option active"
+            type="button"
+            data-sound="off"
+          >
+            🔇 Off
+          </button>
+
+        </div>
+
+      </article>
+
+    </section>
+
+
+    <p
+      id="tinyNote"
+      class="tiny-note"
+    >
+      Pretty Mind ♡ Make your focus time yours.
+    </p>
+
+  </main>
+
+
+  <script>
+
+    /* =====================================
+       TRANSLATIONS
+    ====================================== */
+
+    const translations = {
+
+      en: {
+        back: "← Back to Pretty Mind",
+        heroSubtitle:
+          "Pick your study buddy and make focus time a little prettier ♡",
+
+        ready:
+          "Ready when you are ♡",
+
+        studying:
+          "You're doing great — keep going ✦",
+
+        paused:
+          "Paused ♡ Take your time.",
+
+        finished:
+          "You did it! Study session complete ♡",
+
+        start:
+          "▶ Start",
+
+        pause:
+          "Ⅱ Pause",
+
+        reset:
+          "↻ Reset",
+
+        studyTime:
+          "Study time",
+
+        min:
+          "min",
+
+        set:
+          "Set",
+
+        characterTitle:
+          "Choose Your Study Buddy ♡",
+
+        characterSubtitle:
+          "Each girl has her own room and vibe.",
+
+        soundTitle:
+          "Focus Sound 🎧",
+
+        soundSubtitle:
+          "Pick a little background atmosphere.",
+
+        note:
+          "Pretty Mind ♡ Make your focus time yours.",
+
+        rooms: {
+          coquette: "Coquette Room",
+          clean: "Clean Girl Room",
+          gyaru: "Gyaru Room"
+        }
+
+      },
+
+
+      ko: {
+        back: "← Pretty Mind로 돌아가기",
+
+        heroSubtitle:
+          "함께 공부할 캐릭터를 고르고 집중 시간도 예쁘게 만들어봐 ♡",
+
+        ready:
+          "준비되면 시작해봐 ♡",
+
+        studying:
+          "잘하고 있어 — 조금만 더 집중해보자 ✦",
+
+        paused:
+          "일시정지 ♡ 천천히 해도 괜찮아.",
+
+        finished:
+          "해냈다! 공부 완료 ♡",
+
+        start:
+          "▶ 시작",
+
+        pause:
+          "Ⅱ 일시정지",
+
+        reset:
+          "↻ 리셋",
+
+        studyTime:
+          "공부 시간",
+
+        min:
+          "분",
+
+        set:
+          "설정",
+
+        characterTitle:
+          "공부 친구를 골라봐 ♡",
+
+        characterSubtitle:
+          "각 캐릭터마다 자신만의 방과 분위기가 있어.",
+
+        soundTitle:
+          "집중 사운드 🎧",
+
+        soundSubtitle:
+          "공부할 때 함께할 배경음을 골라봐.",
+
+        note:
+          "Pretty Mind ♡ 나만의 집중 시간을 만들어봐.",
+
+        rooms: {
+          coquette: "Coquette 방",
+          clean: "Clean Girl 방",
+          gyaru: "Gyaru 방"
+        }
+
+      },
+
+
+      ja: {
+        back: "← Pretty Mindに戻る",
+
+        heroSubtitle:
+          "一緒に勉強するキャラクターを選んで、集中時間をもっと可愛く ♡",
+
+        ready:
+          "準備ができたら始めよう ♡",
+
+        studying:
+          "いい感じ！そのまま集中しよう ✦",
+
+        paused:
+          "一時停止 ♡ ゆっくりで大丈夫。",
+
+        finished:
+          "できた！勉強セッション完了 ♡",
+
+        start:
+          "▶ スタート",
+
+        pause:
+          "Ⅱ 一時停止",
+
+        reset:
+          "↻ リセット",
+
+        studyTime:
+          "勉強時間",
+
+        min:
+          "分",
+
+        set:
+          "設定",
+
+        characterTitle:
+          "勉強仲間を選ぼう ♡",
+
+        characterSubtitle:
+          "それぞれのキャラクターに自分だけの部屋とVibeがあるよ。",
+
+        soundTitle:
+          "集中サウンド 🎧",
+
+        soundSubtitle:
+          "勉強のお供に好きな環境音を選んでね。",
+
+        note:
+          "Pretty Mind ♡ 自分だけの集中時間を。",
+
+        rooms: {
+          coquette: "Coquette Room",
+          clean: "Clean Girl Room",
+          gyaru: "Gyaru Room"
+        }
+
+      }
+
+    };
+
+
+    /* =====================================
+       CHARACTER DATA
+
+       ★ 다음 단계에서 여기 이미지 파일명을
+       연결하면 된다!
+    ====================================== */
+
+    const characters = {
+
+      coquette: {
+        name: "Coquette",
+        emoji: "🎀",
+
+        roomImage: "",
+        characterImage: ""
+      },
+
+      clean: {
+        name: "Clean Girl",
+        emoji: "🤍",
+
+        roomImage: "",
+        characterImage: ""
+      },
+
+      gyaru: {
+        name: "Gyaru",
+        emoji: "💖",
+
+        roomImage: "",
+        characterImage: ""
+      }
+
+    };
+
+
+    /* =====================================
+       STATE
+    ====================================== */
+
+    let currentCharacter = "coquette";
+
+    let selectedMinutes = 25;
+
+    let totalSeconds = selectedMinutes * 60;
+
+    let remainingSeconds = totalSeconds;
+
+    let timerInterval = null;
+
+    let timerState = "ready";
+
+    let currentSound = "off";
+
+
+    /* =====================================
+       ELEMENTS
+    ====================================== */
+
+    const roomShell =
+      document.getElementById("roomShell");
+
+    const roomBackground =
+      document.getElementById("roomBackground");
+
+    const roomPlaceholder =
+      document.getElementById("roomPlaceholder");
+
+    const roomEmoji =
+      document.getElementById("roomEmoji");
+
+    const roomPlaceholderText =
+      document.getElementById("roomPlaceholderText");
+
+    const characterImage =
+      document.getElementById("characterImage");
+
+    const characterPlaceholder =
+      document.getElementById("characterPlaceholder");
+
+    const currentCharacterLabel =
+      document.getElementById("currentCharacter");
+
+    const timerDisplay =
+      document.getElementById("timerDisplay");
+
+    const timerMessage =
+      document.getElementById("timerMessage");
+
+
+    /* =====================================
+       LANGUAGE
+    ====================================== */
+
+    function getLanguage() {
+
+      return (
+        localStorage.getItem("prettyMindLanguage")
+        || "en"
+      );
+
+    }
+
+
+    function setLanguage(lang) {
+
+      if (!translations[lang]) {
+        lang = "en";
+      }
+
+      localStorage.setItem(
+        "prettyMindLanguage",
+        lang
+      );
+
+      document.documentElement.lang = lang;
+
+      updateLanguage();
+
+    }
+
+
+    function updateLanguage() {
+
+      const lang = getLanguage();
+
+      const t = translations[lang];
+
+      document.getElementById(
+        "backLink"
+      ).textContent = t.back;
+
+
+      document.getElementById(
+        "heroSubtitle"
+      ).textContent = t.heroSubtitle;
+
+
+      document.getElementById(
+        "startButton"
+      ).textContent = t.start;
+
+
+      document.getElementById(
+        "pauseButton"
+      ).textContent = t.pause;
+
+
+      document.getElementById(
+        "resetButton"
+      ).textContent = t.reset;
+
+
+      document.getElementById(
+        "timeSettingTitle"
+      ).textContent = t.studyTime;
+
+
+      document.getElementById(
+        "minutesLabel"
+      ).textContent = t.min;
+
+
+      document.getElementById(
+        "setTimeButton"
+      ).textContent = t.set;
+
+
+      document.getElementById(
+        "characterTitle"
+      ).textContent = t.characterTitle;
+
+
+      document.getElementById(
+        "characterSubtitle"
+      ).textContent = t.characterSubtitle;
+
+
+      document.getElementById(
+        "soundTitle"
+      ).textContent = t.soundTitle;
+
+
+      document.getElementById(
+        "soundSubtitle"
+      ).textContent = t.soundSubtitle;
+
+
+      document.getElementById(
+        "tinyNote"
+      ).textContent = t.note;
+
+
+      document
+        .querySelectorAll(
+          ".language-switcher button"
+        )
+        .forEach(button => {
+
+          button.classList.toggle(
+            "active",
+            button.dataset.lang === lang
+          );
+
+        });
+
+
+      updateTimerMessage();
+
+      renderCharacter();
+
+    }
+
+
+    /* =====================================
+       TIMER DISPLAY
+    ====================================== */
+
+    function updateTimerDisplay() {
+
+      const minutes =
+        Math.floor(
+          remainingSeconds / 60
+        );
+
+      const seconds =
+        remainingSeconds % 60;
+
+
+      timerDisplay.textContent =
+        String(minutes).padStart(2, "0")
+        + ":"
+        + String(seconds).padStart(2, "0");
+
+    }
+
+
+    function updateTimerMessage() {
+
+      const t =
+        translations[getLanguage()];
+
+
+      if (timerState === "studying") {
+
+        timerMessage.textContent =
+          t.studying;
+
+      }
+
+      else if (timerState === "paused") {
+
+        timerMessage.textContent =
+          t.paused;
+
+      }
+
+      else if (timerState === "finished") {
+
+        timerMessage.textContent =
+          t.finished;
+
+      }
+
+      else {
+
+        timerMessage.textContent =
+          t.ready;
+
+      }
+
+    }
+
+
+    /* =====================================
+       TIMER
+    ====================================== */
+
+    function startTimer() {
+
+      if (
+        timerInterval ||
+        remainingSeconds <= 0
+      ) {
+        return;
+      }
+
+
+      timerState = "studying";
+
+      roomShell.classList.add(
+        "studying"
+      );
+
+      roomShell.classList.remove(
+        "finished"
+      );
+
+      updateTimerMessage();
+
+
+      timerInterval =
+        setInterval(() => {
+
+          remainingSeconds--;
+
+          updateTimerDisplay();
+
+
+          if (
+            remainingSeconds <= 0
+          ) {
+
+            finishTimer();
+
+          }
+
+        }, 1000);
+
+    }
+
+
+    function pauseTimer() {
+
+      if (!timerInterval) {
+        return;
+      }
+
+
+      clearInterval(
+        timerInterval
+      );
+
+      timerInterval = null;
+
+      timerState = "paused";
+
+      roomShell.classList.remove(
+        "studying"
+      );
+
+      updateTimerMessage();
+
+    }
+
+
+    function resetTimer() {
+
+      clearInterval(
+        timerInterval
+      );
+
+      timerInterval = null;
+
+      remainingSeconds =
+        totalSeconds;
+
+      timerState = "ready";
+
+      roomShell.classList.remove(
+        "studying",
+        "finished"
+      );
+
+      updateTimerDisplay();
+
+      updateTimerMessage();
+
+    }
+
+
+    function finishTimer() {
+
+      clearInterval(
+        timerInterval
+      );
+
+      timerInterval = null;
+
+      remainingSeconds = 0;
+
+      timerState = "finished";
+
+      roomShell.classList.remove(
+        "studying"
+      );
+
+      roomShell.classList.add(
+        "finished"
+      );
+
+      updateTimerDisplay();
+
+      updateTimerMessage();
+
+
+      /*
+        다음 단계에서
+        완료 사운드를 여기 연결할 예정!
+      */
+
+    }
+
+
+    document.getElementById(
+      "startButton"
+    ).addEventListener(
+      "click",
+      startTimer
+    );
+
+
+    document.getElementById(
+      "pauseButton"
+    ).addEventListener(
+      "click",
+      pauseTimer
+    );
+
+
+    document.getElementById(
+      "resetButton"
+    ).addEventListener(
+      "click",
+      resetTimer
+    );
+
+
+    /* =====================================
+       TIME PRESETS
+    ====================================== */
+
+    function setStudyTime(minutes) {
+
+      const parsed =
+        Number(minutes);
+
+
+      if (
+        !Number.isFinite(parsed) ||
+        parsed < 1
+      ) {
+        return;
+      }
+
+
+      selectedMinutes =
+        Math.min(
+          180,
+          Math.floor(parsed)
+        );
+
+
+      totalSeconds =
+        selectedMinutes * 60;
+
+      remainingSeconds =
+        totalSeconds;
+
+
+      clearInterval(
+        timerInterval
+      );
+
+      timerInterval = null;
+
+      timerState = "ready";
+
+
+      roomShell.classList.remove(
+        "studying",
+        "finished"
+      );
+
+
+      document.getElementById(
+        "customMinutes"
+      ).value = selectedMinutes;
+
+
+      updateTimerDisplay();
+
+      updateTimerMessage();
+
+
+      document
+        .querySelectorAll(
+          ".preset"
+        )
+        .forEach(button => {
+
+          button.classList.toggle(
+            "active",
+            Number(
+              button.dataset.minutes
+            ) === selectedMinutes
+          );
+
+        });
+
+    }
+
+
+    document
+      .querySelectorAll(
+        ".preset"
+      )
+      .forEach(button => {
+
+        button.addEventListener(
+          "click",
+          () => {
+
+            setStudyTime(
+              button.dataset.minutes
+            );
+
+          }
+        );
+
+      });
+
+
+    document.getElementById(
+      "setTimeButton"
+    ).addEventListener(
+      "click",
+      () => {
+
+        setStudyTime(
+          document.getElementById(
+            "customMinutes"
+          ).value
+        );
+
+      }
+    );
+
+
+    /* =====================================
+       CHARACTER SELECTOR
+    ====================================== */
+
+    function renderCharacter() {
+
+      const character =
+        characters[currentCharacter];
+
+      const lang =
+        getLanguage();
+
+      const t =
+        translations[lang];
+
+
+      currentCharacterLabel.textContent =
+        character.emoji
+        + " "
+        + character.name;
+
+
+      roomEmoji.textContent =
+        character.emoji;
+
+
+      roomPlaceholderText.textContent =
+        t.rooms[currentCharacter];
+
+
+      /*
+        ROOM IMAGE
+      */
+
+      if (character.roomImage) {
+
+        roomBackground.style.backgroundImage =
+          `url("${character.roomImage}")`;
+
+        roomPlaceholder.style.display =
+          "none";
+
+      }
+
+      else {
+
+        roomBackground.style.backgroundImage =
+          "none";
+
+        roomPlaceholder.style.display =
+          "flex";
+
+      }
+
+
+      /*
+        CHARACTER IMAGE
+      */
+
+      if (character.characterImage) {
+
+        characterImage.src =
+          character.characterImage;
+
+        characterImage.alt =
+          character.name;
+
+        characterImage.style.display =
+          "block";
+
+        characterPlaceholder.style.display =
+          "none";
+
+      }
+
+      else {
+
+        characterImage.removeAttribute(
+          "src"
+        );
+
+        characterImage.style.display =
+          "none";
+
+        characterPlaceholder.style.display =
+          "block";
+
+        characterPlaceholder.textContent =
+          character.emoji;
+
+      }
+
+    }
+
+
+    document
+      .querySelectorAll(
+        ".character-option"
+      )
+      .forEach(button => {
+
+        button.addEventListener(
+          "click",
+          () => {
+
+            currentCharacter =
+              button.dataset.character;
+
+
+            document
+              .querySelectorAll(
+                ".character-option"
+              )
+              .forEach(item => {
+
+                item.classList.toggle(
+                  "active",
+                  item === button
+                );
+
+              });
+
+
+            renderCharacter();
+
+          }
+        );
+
+      });
+
+
+    /* =====================================
+       SOUND SELECTOR
+
+       지금은 UI 선택만 작동.
+       다음 단계에서 실제 오디오 연결!
+    ====================================== */
+
+    document
+      .querySelectorAll(
+        ".sound-option"
+      )
+      .forEach(button => {
+
+        button.addEventListener(
+          "click",
+          () => {
+
+            currentSound =
+              button.dataset.sound;
+
+
+            document
+              .querySelectorAll(
+                ".sound-option"
+              )
+              .forEach(item => {
+
+                item.classList.toggle(
+                  "active",
+                  item === button
+                );
+
+              });
+
+          }
+        );
+
+      });
+
+
+    /* =====================================
+       INITIALIZE
+    ====================================== */
+
+    updateTimerDisplay();
+
+    updateLanguage();
+
+  </script>
+
+</body>
+</html>
