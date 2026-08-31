@@ -209,47 +209,16 @@
       font-size: clamp(80px, 12vw, 150px);
       transform-origin: center bottom;
     }
-
     /* =========================
        STUDY ANIMATION STATES
+       Character motion is handled by frame swapping in JavaScript.
+       We intentionally do NOT animate the whole image, so the desk/chair
+       stay perfectly aligned with the room.
     ========================== */
 
-    .room-shell.studying .character-placeholder,
-    .room-shell.studying .character-image {
-      animation: studyMotion 1.8s ease-in-out infinite;
-    }
-
-    @keyframes studyMotion {
-      0% {
-        transform: translateY(0);
-      }
-
-      50% {
-        transform: translateY(2px);
-      }
-
-      100% {
-        transform: translateY(0);
-      }
-    }
-
-    .room-shell.finished .character-placeholder,
-    .room-shell.finished .character-image {
-      animation: finishBounce 0.55s ease-in-out 3;
-    }
-
-    @keyframes finishBounce {
-      0% {
-        transform: translateY(0) scale(1);
-      }
-
-      50% {
-        transform: translateY(-12px) scale(1.03);
-      }
-
-      100% {
-        transform: translateY(0) scale(1);
-      }
+    .character-image {
+      transform: none !important;
+      animation: none !important;
     }
 
     /* =========================
@@ -1205,15 +1174,30 @@
         name: "Coquette",
         emoji: "🎀",
         roomImage: "coquette-study-room.png",
-        characterImage: "coquette-study-character-side.png",
+        frames: {
+          base: "coquette-study-character-side.png",
+          write: "coquette-study-write.png",
+          blink: "coquette-study-blink.png",
+          page: "coquette-study-page.png",
+          finish: "coquette-study-finish.png"
+        },
         position: { left: "1%", bottom: "0%", width: "58%", height: "95%" }
       },
+
+      /* IMPORTANT: Clean Girl and Gyaru CHARACTER FILE NAMES were saved in reverse.
+         Room file names stay normal; only character animation files are swapped. */
 
       clean: {
         name: "Clean Girl",
         emoji: "🤍",
         roomImage: "clean-girl-study-room.png",
-        characterImage: "clean-girl-study-character-side.png",
+        frames: {
+          base: "gyaru-study-character-side.png",
+          write: "gyaru-study-write.png",
+          blink: "gyaru-study-blink.png",
+          page: "gyaru-study-page.png",
+          finish: "gyaru-study-finish.png"
+        },
         position: { left: "1%", bottom: "0%", width: "58%", height: "95%" }
       },
 
@@ -1221,7 +1205,13 @@
         name: "Gyaru",
         emoji: "💖",
         roomImage: "gyaru-study-room.png",
-        characterImage: "gyaru-study-character-side.png",
+        frames: {
+          base: "clean-girl-study-character-side.png",
+          write: "clean-girl-study-write.png",
+          blink: "clean-girl-study-blink.png",
+          page: "clean-girl-study-page.png",
+          finish: "clean-girl-study-finish.png"
+        },
         position: { left: "1%", bottom: "0%", width: "60%", height: "96%" }
       }
 
@@ -1248,6 +1238,15 @@
     let timerState = "ready";
 
     let currentSound = "off";
+
+    let writingAnimationInterval = null;
+    let blinkTimeout = null;
+    let blinkReturnTimeout = null;
+    let pageTimeout = null;
+    let pageReturnTimeout = null;
+    let finishReturnTimeout = null;
+    let specialFrameActive = false;
+    let writingFrameVisible = false;
 
 
     /* =====================================
@@ -1413,6 +1412,129 @@
 
 
     /* =====================================
+       CHARACTER FRAME ANIMATION
+    ====================================== */
+
+    function getCurrentFrames() {
+      return characters[currentCharacter].frames || {};
+    }
+
+    function showCharacterFrame(frameName = "base") {
+      const frames = getCurrentFrames();
+      const source = frames[frameName] || frames.base;
+      if (!source) return;
+      if (characterImage.getAttribute("src") !== source) {
+        characterImage.src = source;
+      }
+      characterImage.style.display = "block";
+      characterPlaceholder.style.display = "none";
+    }
+
+    function clearCharacterAnimationTimers() {
+      clearInterval(writingAnimationInterval);
+      clearTimeout(blinkTimeout);
+      clearTimeout(blinkReturnTimeout);
+      clearTimeout(pageTimeout);
+      clearTimeout(pageReturnTimeout);
+      clearTimeout(finishReturnTimeout);
+      writingAnimationInterval = null;
+      blinkTimeout = null;
+      blinkReturnTimeout = null;
+      pageTimeout = null;
+      pageReturnTimeout = null;
+      finishReturnTimeout = null;
+      specialFrameActive = false;
+      writingFrameVisible = false;
+    }
+
+    function randomBetween(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function scheduleBlink() {
+      clearTimeout(blinkTimeout);
+      blinkTimeout = setTimeout(() => {
+        if (timerState !== "studying") return;
+        if (specialFrameActive) {
+          scheduleBlink();
+          return;
+        }
+        specialFrameActive = true;
+        showCharacterFrame("blink");
+        blinkReturnTimeout = setTimeout(() => {
+          if (timerState === "studying") {
+            specialFrameActive = false;
+            showCharacterFrame(writingFrameVisible ? "write" : "base");
+            scheduleBlink();
+          }
+        }, 160);
+      }, randomBetween(3500, 7000));
+    }
+
+    function schedulePageMovement() {
+      clearTimeout(pageTimeout);
+      pageTimeout = setTimeout(() => {
+        if (timerState !== "studying") return;
+        if (specialFrameActive) {
+          schedulePageMovement();
+          return;
+        }
+        specialFrameActive = true;
+        showCharacterFrame("page");
+        pageReturnTimeout = setTimeout(() => {
+          if (timerState === "studying") {
+            specialFrameActive = false;
+            showCharacterFrame(writingFrameVisible ? "write" : "base");
+            schedulePageMovement();
+          }
+        }, 320);
+      }, randomBetween(9000, 16000));
+    }
+
+    function startCharacterAnimation() {
+      clearCharacterAnimationTimers();
+      specialFrameActive = false;
+      writingFrameVisible = false;
+      showCharacterFrame("base");
+      writingAnimationInterval = setInterval(() => {
+        if (timerState !== "studying" || specialFrameActive) return;
+        writingFrameVisible = !writingFrameVisible;
+        showCharacterFrame(writingFrameVisible ? "write" : "base");
+      }, 520);
+      scheduleBlink();
+      schedulePageMovement();
+    }
+
+    function stopCharacterAnimation(showBase = true) {
+      clearCharacterAnimationTimers();
+      if (showBase) showCharacterFrame("base");
+    }
+
+    function showFinishFrame() {
+      clearCharacterAnimationTimers();
+      specialFrameActive = true;
+      showCharacterFrame("finish");
+      finishReturnTimeout = setTimeout(() => {
+        if (timerState === "finished") {
+          specialFrameActive = false;
+          showCharacterFrame("base");
+        }
+      }, 2800);
+    }
+
+    function preloadCharacterFrames() {
+      Object.values(characters).forEach(character => {
+        if (!character.frames) return;
+        Object.values(character.frames).forEach(src => {
+          if (!src) return;
+          const image = new Image();
+          image.src = src;
+        });
+      });
+    }
+
+
+    /* =====================================
        TIMER DISPLAY
     ====================================== */
 
@@ -1521,6 +1643,8 @@
         "finished"
       );
 
+      startCharacterAnimation();
+
       updateTimerMessage();
       syncRunningTimer();
 
@@ -1557,6 +1681,8 @@
         "studying"
       );
 
+      stopCharacterAnimation(true);
+
       updateTimerMessage();
 
     }
@@ -1580,6 +1706,8 @@
         "studying",
         "finished"
       );
+
+      stopCharacterAnimation(true);
 
       updateTimerDisplay();
       updateTimerMessage();
@@ -1606,6 +1734,8 @@
       roomShell.classList.add(
         "finished"
       );
+
+      showFinishFrame();
 
       updateTimerDisplay();
       updateTimerMessage();
@@ -1704,6 +1834,8 @@
         "studying",
         "finished"
       );
+
+      stopCharacterAnimation(true);
 
 
       document.getElementById(
@@ -1833,42 +1965,29 @@
 
       }
 
-
       /*
         CHARACTER IMAGE
       */
 
-      if (character.characterImage) {
+      const frames = character.frames || {};
 
-        characterImage.src =
-          character.characterImage;
-
-        characterImage.alt =
-          character.name;
-
-        characterImage.style.display =
-          "block";
-
-        characterPlaceholder.style.display =
-          "none";
-
+      if (frames.base) {
+        showCharacterFrame("base");
       }
 
       else {
+        characterImage.removeAttribute("src");
+        characterImage.style.display = "none";
+        characterPlaceholder.style.display = "block";
+        characterPlaceholder.textContent = character.emoji;
+      }
 
-        characterImage.removeAttribute(
-          "src"
-        );
+      if (timerState === "studying") {
+        startCharacterAnimation();
+      }
 
-        characterImage.style.display =
-          "none";
-
-        characterPlaceholder.style.display =
-          "block";
-
-        characterPlaceholder.textContent =
-          character.emoji;
-
+      else if (timerState === "finished") {
+        showFinishFrame();
       }
 
     }
@@ -1883,6 +2002,8 @@
         button.addEventListener(
           "click",
           () => {
+
+            stopCharacterAnimation(false);
 
             currentCharacter =
               button.dataset.character;
@@ -1953,6 +2074,8 @@
     /* =====================================
        INITIALIZE
     ====================================== */
+
+    preloadCharacterFrames();
 
     updateTimerDisplay();
 
