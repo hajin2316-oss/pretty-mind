@@ -1184,15 +1184,15 @@
         position: { left: "1%", bottom: "0%", width: "58%", height: "95%" }
       },
 
-      /* IMPORTANT: Clean Girl and Gyaru CHARACTER FILE NAMES were saved in reverse.
-         Room file names stay normal; only character animation files are swapped. */
+      /* Clean Girl / Gyaru animation asset names are reversed.
+         Keep each BASE image with its own character; swap only animated frames. */
 
       clean: {
         name: "Clean Girl",
         emoji: "🤍",
         roomImage: "clean-girl-study-room.png",
         frames: {
-          base: "gyaru-study-character-side.png",
+          base: "clean-girl-study-character-side.png",
           write: "gyaru-study-write.png",
           blink: "gyaru-study-blink.png",
           page: "gyaru-study-page.png",
@@ -1206,7 +1206,7 @@
         emoji: "💖",
         roomImage: "gyaru-study-room.png",
         frames: {
-          base: "clean-girl-study-character-side.png",
+          base: "gyaru-study-character-side.png",
           write: "clean-girl-study-write.png",
           blink: "clean-girl-study-blink.png",
           page: "clean-girl-study-page.png",
@@ -1467,8 +1467,8 @@
             showCharacterFrame(writingFrameVisible ? "write" : "base");
             scheduleBlink();
           }
-        }, 160);
-      }, randomBetween(3500, 7000));
+        }, randomBetween(105, 145));
+      }, randomBetween(2200, 4800));
     }
 
     function schedulePageMovement() {
@@ -1500,7 +1500,7 @@
         if (timerState !== "studying" || specialFrameActive) return;
         writingFrameVisible = !writingFrameVisible;
         showCharacterFrame(writingFrameVisible ? "write" : "base");
-      }, 520);
+      }, 720);
       scheduleBlink();
       schedulePageMovement();
     }
