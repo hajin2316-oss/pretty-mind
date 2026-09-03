@@ -1456,8 +1456,7 @@
       blinkTimeout = setTimeout(() => {
         if (timerState !== "studying") return;
         if (specialFrameActive) {
-          scheduleBlink();
-          return;
+              return;
         }
         specialFrameActive = true;
         showCharacterFrame("blink");
@@ -1465,8 +1464,7 @@
           if (timerState === "studying") {
             specialFrameActive = false;
             showCharacterFrame(writingFrameVisible ? "write" : "base");
-            scheduleBlink();
-          }
+                }
         }, randomBetween(105, 145));
       }, randomBetween(2200, 4800));
     }
@@ -1500,8 +1498,7 @@
         if (timerState !== "studying" || specialFrameActive) return;
         writingFrameVisible = !writingFrameVisible;
         showCharacterFrame(writingFrameVisible ? "write" : "base");
-      }, 720);
-      scheduleBlink();
+      }, 620);
       schedulePageMovement();
     }
 
