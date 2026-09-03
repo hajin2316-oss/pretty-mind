@@ -221,6 +221,32 @@
       animation: none !important;
     }
 
+    .writing-overlay {
+      position: absolute;
+      inset: 0;
+      display: none;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center bottom;
+      pointer-events: none;
+      z-index: 3;
+      opacity: 0;
+      transition: opacity 70ms linear;
+      filter: drop-shadow(0 12px 14px rgba(60, 25, 40, 0.16));
+    }
+
+    .writing-overlay.visible {
+      display: block;
+      opacity: 1;
+    }
+
+    @media (max-width: 900px) {
+      .writing-overlay {
+        object-position: left bottom;
+      }
+    }
+
     /* =========================
        TIMER PANEL
     ========================== */
@@ -532,12 +558,16 @@
         justify-content: center;
       }
 
-      .character-image {
-        display: block;
+      .character-image,
+      .writing-overlay {
         width: 100%;
         height: 100%;
         object-fit: contain;
         object-position: left bottom;
+      }
+
+      .character-image {
+        display: block;
       }
 
       .timer-panel {
@@ -710,6 +740,13 @@
           id="characterImage"
           class="character-image"
           alt=""
+        >
+
+        <img
+          id="writingOverlay"
+          class="writing-overlay"
+          alt=""
+          aria-hidden="true"
         >
 
         <div
@@ -1174,30 +1211,19 @@
         name: "Coquette",
         emoji: "🎀",
         roomImage: "coquette-study-room.png",
-        frames: {
-          base: "coquette-study-character-side.png",
-          write: "coquette-study-write.png",
-          blink: "coquette-study-blink.png",
-          page: "coquette-study-page.png",
-          finish: "coquette-study-finish.png"
-        },
+        baseImage: "coquette-study-character-side.png",
+        handWriteImage: "coquette-study-hand-write.png",
+        finishImage: "coquette-study-finish.png",
         position: { left: "1%", bottom: "0%", width: "58%", height: "95%" }
       },
-
-      /* Clean Girl / Gyaru animation asset names are reversed.
-         Keep each BASE image with its own character; swap only animated frames. */
 
       clean: {
         name: "Clean Girl",
         emoji: "🤍",
         roomImage: "clean-girl-study-room.png",
-        frames: {
-          base: "clean-girl-study-character-side.png",
-          write: "gyaru-study-write.png",
-          blink: "gyaru-study-blink.png",
-          page: "gyaru-study-page.png",
-          finish: "gyaru-study-finish.png"
-        },
+        baseImage: "clean-girl-study-character-side.png",
+        handWriteImage: "clean-girl-study-hand-write.png",
+        finishImage: "gyaru-study-finish.png",
         position: { left: "1%", bottom: "0%", width: "58%", height: "95%" }
       },
 
@@ -1205,13 +1231,9 @@
         name: "Gyaru",
         emoji: "💖",
         roomImage: "gyaru-study-room.png",
-        frames: {
-          base: "gyaru-study-character-side.png",
-          write: "clean-girl-study-write.png",
-          blink: "clean-girl-study-blink.png",
-          page: "clean-girl-study-page.png",
-          finish: "clean-girl-study-finish.png"
-        },
+        baseImage: "gyaru-study-character-side.png",
+        handWriteImage: "gyaru-study-hand-write.png",
+        finishImage: "clean-girl-study-finish.png",
         position: { left: "1%", bottom: "0%", width: "60%", height: "96%" }
       }
 
@@ -1239,13 +1261,8 @@
 
     let currentSound = "off";
 
-    let writingAnimationInterval = null;
-    let blinkTimeout = null;
-    let blinkReturnTimeout = null;
-    let pageTimeout = null;
-    let pageReturnTimeout = null;
+    let writingAnimationTimeout = null;
     let finishReturnTimeout = null;
-    let specialFrameActive = false;
     let writingFrameVisible = false;
 
 
@@ -1273,6 +1290,9 @@
 
     const characterImage =
       document.getElementById("characterImage");
+
+    const writingOverlay =
+      document.getElementById("writingOverlay");
 
     const characterPlaceholder =
       document.getElementById("characterPlaceholder");
@@ -1412,117 +1432,134 @@
 
 
     /* =====================================
-       CHARACTER FRAME ANIMATION
+       CHARACTER ANIMATION
+       Blink + page movement removed.
+       Base stays fixed; only hand/pen overlay moves.
     ====================================== */
 
-    function getCurrentFrames() {
-      return characters[currentCharacter].frames || {};
+    function hideWritingOverlay() {
+      writingFrameVisible = false;
+      writingOverlay.classList.remove("visible");
+      writingOverlay.style.display = "none";
     }
 
-    function showCharacterFrame(frameName = "base") {
-      const frames = getCurrentFrames();
-      const source = frames[frameName] || frames.base;
-      if (!source) return;
-      if (characterImage.getAttribute("src") !== source) {
-        characterImage.src = source;
+    function showBaseCharacter() {
+      const character = characters[currentCharacter];
+
+      if (!character.baseImage) {
+        characterImage.removeAttribute("src");
+        characterImage.style.display = "none";
+        hideWritingOverlay();
+        return;
       }
+
+      if (characterImage.getAttribute("src") !== character.baseImage) {
+        characterImage.src = character.baseImage;
+      }
+
       characterImage.style.display = "block";
       characterPlaceholder.style.display = "none";
     }
 
+    function prepareWritingOverlay() {
+      const character = characters[currentCharacter];
+      hideWritingOverlay();
+
+      if (!character.handWriteImage) {
+        writingOverlay.removeAttribute("src");
+        return;
+      }
+
+      writingOverlay.src = character.handWriteImage;
+    }
+
     function clearCharacterAnimationTimers() {
-      clearInterval(writingAnimationInterval);
-      clearTimeout(blinkTimeout);
-      clearTimeout(blinkReturnTimeout);
-      clearTimeout(pageTimeout);
-      clearTimeout(pageReturnTimeout);
+      clearTimeout(writingAnimationTimeout);
       clearTimeout(finishReturnTimeout);
-      writingAnimationInterval = null;
-      blinkTimeout = null;
-      blinkReturnTimeout = null;
-      pageTimeout = null;
-      pageReturnTimeout = null;
+
+      writingAnimationTimeout = null;
       finishReturnTimeout = null;
-      specialFrameActive = false;
-      writingFrameVisible = false;
+
+      hideWritingOverlay();
     }
 
     function randomBetween(min, max) {
       return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
-    function scheduleBlink() {
-      clearTimeout(blinkTimeout);
-      blinkTimeout = setTimeout(() => {
-        if (timerState !== "studying") return;
-        if (specialFrameActive) {
-              return;
-        }
-        specialFrameActive = true;
-        showCharacterFrame("blink");
-        blinkReturnTimeout = setTimeout(() => {
-          if (timerState === "studying") {
-            specialFrameActive = false;
-            showCharacterFrame(writingFrameVisible ? "write" : "base");
-                }
-        }, randomBetween(105, 145));
-      }, randomBetween(2200, 4800));
-    }
+    function scheduleWritingMotion() {
+      if (timerState !== "studying") return;
 
-    function schedulePageMovement() {
-      clearTimeout(pageTimeout);
-      pageTimeout = setTimeout(() => {
-        if (timerState !== "studying") return;
-        if (specialFrameActive) {
-          schedulePageMovement();
+      const thinkingPause = Math.random() < 0.12;
+      const delay = thinkingPause
+        ? randomBetween(900, 1450)
+        : randomBetween(420, 720);
+
+      writingAnimationTimeout = setTimeout(() => {
+        if (timerState !== "studying") {
+          hideWritingOverlay();
           return;
         }
-        specialFrameActive = true;
-        showCharacterFrame("page");
-        pageReturnTimeout = setTimeout(() => {
-          if (timerState === "studying") {
-            specialFrameActive = false;
-            showCharacterFrame(writingFrameVisible ? "write" : "base");
-            schedulePageMovement();
-          }
-        }, 320);
-      }, randomBetween(9000, 16000));
+
+        writingFrameVisible = !writingFrameVisible;
+
+        if (writingFrameVisible) {
+          writingOverlay.style.display = "block";
+          requestAnimationFrame(() => {
+            writingOverlay.classList.add("visible");
+          });
+        } else {
+          writingOverlay.classList.remove("visible");
+          setTimeout(() => {
+            if (!writingFrameVisible) {
+              writingOverlay.style.display = "none";
+            }
+          }, 80);
+        }
+
+        scheduleWritingMotion();
+      }, delay);
     }
 
     function startCharacterAnimation() {
       clearCharacterAnimationTimers();
-      specialFrameActive = false;
-      writingFrameVisible = false;
-      showCharacterFrame("base");
-      writingAnimationInterval = setInterval(() => {
-        if (timerState !== "studying" || specialFrameActive) return;
-        writingFrameVisible = !writingFrameVisible;
-        showCharacterFrame(writingFrameVisible ? "write" : "base");
-      }, 620);
-      schedulePageMovement();
+      showBaseCharacter();
+      prepareWritingOverlay();
+      scheduleWritingMotion();
     }
 
     function stopCharacterAnimation(showBase = true) {
       clearCharacterAnimationTimers();
-      if (showBase) showCharacterFrame("base");
+      if (showBase) showBaseCharacter();
     }
 
     function showFinishFrame() {
       clearCharacterAnimationTimers();
-      specialFrameActive = true;
-      showCharacterFrame("finish");
+
+      const character = characters[currentCharacter];
+
+      if (!character.finishImage) {
+        showBaseCharacter();
+        return;
+      }
+
+      characterImage.src = character.finishImage;
+      characterImage.style.display = "block";
+
       finishReturnTimeout = setTimeout(() => {
         if (timerState === "finished") {
-          specialFrameActive = false;
-          showCharacterFrame("base");
+          showBaseCharacter();
         }
       }, 2800);
     }
 
     function preloadCharacterFrames() {
       Object.values(characters).forEach(character => {
-        if (!character.frames) return;
-        Object.values(character.frames).forEach(src => {
+        [
+          character.baseImage,
+          character.handWriteImage,
+          character.finishImage
+        ].forEach(src => {
           if (!src) return;
           const image = new Image();
           image.src = src;
@@ -1966,15 +2003,16 @@
         CHARACTER IMAGE
       */
 
-      const frames = character.frames || {};
-
-      if (frames.base) {
-        showCharacterFrame("base");
+      if (character.baseImage) {
+        showBaseCharacter();
+        prepareWritingOverlay();
       }
 
       else {
         characterImage.removeAttribute("src");
         characterImage.style.display = "none";
+        writingOverlay.removeAttribute("src");
+        hideWritingOverlay();
         characterPlaceholder.style.display = "block";
         characterPlaceholder.textContent = character.emoji;
       }
