@@ -985,6 +985,14 @@
           </button>
 
           <button
+            class="sound-option"
+            type="button"
+            data-sound="lofi"
+          >
+            🎧 Lo-fi
+          </button>
+
+          <button
             class="sound-option active"
             type="button"
             data-sound="off"
@@ -1260,6 +1268,18 @@
     let timerState = "ready";
 
     let currentSound = "off";
+
+    const rainAudio = new Audio("mixkit-light-rain-looping-1249.wav");
+    rainAudio.loop = true;
+    rainAudio.volume = 0.42;
+
+    const lofiAudio = new Audio("mixkit-sleepy-cat-135.mp3");
+    lofiAudio.loop = true;
+    lofiAudio.volume = 0.34;
+
+    let whiteNoiseContext = null;
+    let whiteNoiseSource = null;
+    let whiteNoiseGain = null;
 
     let writingAnimationTimeout = null;
     let finishReturnTimeout = null;
@@ -2068,41 +2088,93 @@
 
     /* =====================================
        SOUND SELECTOR
-
-       지금은 UI 선택만 작동.
-       다음 단계에서 실제 오디오 연결!
     ====================================== */
 
+    function stopWhiteNoise() {
+      if (whiteNoiseSource) {
+        try { whiteNoiseSource.stop(); } catch (error) {}
+        whiteNoiseSource.disconnect();
+        whiteNoiseSource = null;
+      }
+      if (whiteNoiseGain) {
+        whiteNoiseGain.disconnect();
+        whiteNoiseGain = null;
+      }
+    }
+
+    function startWhiteNoise() {
+      stopWhiteNoise();
+
+      if (!whiteNoiseContext) {
+        whiteNoiseContext =
+          new (window.AudioContext || window.webkitAudioContext)();
+      }
+
+      if (whiteNoiseContext.state === "suspended") {
+        whiteNoiseContext.resume();
+      }
+
+      const bufferSize = whiteNoiseContext.sampleRate * 2;
+      const noiseBuffer = whiteNoiseContext.createBuffer(
+        1,
+        bufferSize,
+        whiteNoiseContext.sampleRate
+      );
+      const output = noiseBuffer.getChannelData(0);
+
+      for (let i = 0; i < bufferSize; i += 1) {
+        output[i] = (Math.random() * 2 - 1) * 0.34;
+      }
+
+      whiteNoiseSource = whiteNoiseContext.createBufferSource();
+      whiteNoiseGain = whiteNoiseContext.createGain();
+      whiteNoiseSource.buffer = noiseBuffer;
+      whiteNoiseSource.loop = true;
+      whiteNoiseGain.gain.value = 0.12;
+      whiteNoiseSource.connect(whiteNoiseGain);
+      whiteNoiseGain.connect(whiteNoiseContext.destination);
+      whiteNoiseSource.start();
+    }
+
+    function stopAllFocusSounds() {
+      rainAudio.pause();
+      rainAudio.currentTime = 0;
+      lofiAudio.pause();
+      lofiAudio.currentTime = 0;
+      stopWhiteNoise();
+    }
+
+    function playSelectedFocusSound() {
+      stopAllFocusSounds();
+
+      if (currentSound === "rain") {
+        rainAudio.play().catch(() => {});
+      }
+      else if (currentSound === "white") {
+        startWhiteNoise();
+      }
+      else if (currentSound === "lofi") {
+        lofiAudio.play().catch(() => {});
+      }
+    }
+
     document
-      .querySelectorAll(
-        ".sound-option"
-      )
+      .querySelectorAll(".sound-option")
       .forEach(button => {
+        button.addEventListener("click", () => {
+          currentSound = button.dataset.sound;
 
-        button.addEventListener(
-          "click",
-          () => {
+          document
+            .querySelectorAll(".sound-option")
+            .forEach(item => {
+              item.classList.toggle(
+                "active",
+                item === button
+              );
+            });
 
-            currentSound =
-              button.dataset.sound;
-
-
-            document
-              .querySelectorAll(
-                ".sound-option"
-              )
-              .forEach(item => {
-
-                item.classList.toggle(
-                  "active",
-                  item === button
-                );
-
-              });
-
-          }
-        );
-
+          playSelectedFocusSound();
+        });
       });
 
 
