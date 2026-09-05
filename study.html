@@ -1300,6 +1300,11 @@
     lofiAudio.loop = true;
     lofiAudio.volume = 0.34;
 
+    const completionAudio =
+      new Audio("mixkit-clock-bells-hour-signal-1069.wav");
+    completionAudio.preload = "auto";
+    completionAudio.volume = 0.65;
+
     let whiteNoiseContext = null;
     let whiteNoiseSource = null;
     let whiteNoiseGain = null;
@@ -1822,9 +1827,8 @@
       updateTimerDisplay();
       updateTimerMessage();
 
-      /*
-        다음 단계에서 완료 사운드를 여기에 연결할 예정!
-      */
+      completionAudio.currentTime = 0;
+      completionAudio.play().catch(() => {});
 
     }
 
