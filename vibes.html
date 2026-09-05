@@ -237,6 +237,7 @@
     </div>
     <a id="rouletteButton" class="explore-button" href="roulette.html">Spin the Vibe Roulette ♡</a>
 <a id="aestheticsButton" class="explore-button" href="aesthetics.html">Explore all aesthetics ♡</a>
+<a id="studyTimerButton" class="explore-button" href="study-timer.html">Study Timer ⏱️</a>
   </main>
 <script>
 function setLanguage(lang) {
@@ -272,7 +273,8 @@ jiraiKeiTag1: "Dark",
 jiraiKeiTag2: "Cute",
 jiraiKeiTag3: "Yami",
       rouletteButton: "Spin the Vibe Roulette ♡",
-      aestheticsButton: "Explore all aesthetics ♡"
+      aestheticsButton: "Explore all aesthetics ♡",
+      studyTimerButton: "Study Timer ⏱️"
     },
 
     ko: {
@@ -306,7 +308,8 @@ jiraiKeiTag1: "다크",
 jiraiKeiTag2: "큐트",
 jiraiKeiTag3: "야미",
       rouletteButton: "Vibe 룰렛 돌리기 ♡",
-      aestheticsButton: "모든 추구미 둘러보기 ♡"
+      aestheticsButton: "모든 추구미 둘러보기 ♡",
+      studyTimerButton: "스터디 타이머 ⏱️"
     },
 
     ja: {
@@ -340,7 +343,8 @@ jiraiKeiTag1: "ダーク",
 jiraiKeiTag2: "キュート",
 jiraiKeiTag3: "病み",
       rouletteButton: "Vibeルーレットを回す ♡",
-      aestheticsButton: "すべてのAestheticを見る ♡"
+      aestheticsButton: "すべてのAestheticを見る ♡",
+      studyTimerButton: "スタディタイマー ⏱️"
     }
   };
 
@@ -393,6 +397,9 @@ document.getElementById("jiraiKeiTag3").textContent = translations[lang].jiraiKe
 
   document.getElementById("aestheticsButton").textContent =
     translations[lang].aestheticsButton;
+
+  document.getElementById("studyTimerButton").textContent =
+    translations[lang].studyTimerButton;
 
   localStorage.setItem("prettyMindLanguage", lang);
 }
