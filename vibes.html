@@ -172,6 +172,26 @@
   color: #d94f78;
   transform: none;
 }
+
+    /* Pretty Mind - Basic Content Protection */
+    body {
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    input,
+    textarea,
+    select,
+    [contenteditable="true"] {
+      -webkit-user-select: text;
+      user-select: text;
+    }
+
+    img {
+      -webkit-user-drag: none;
+      user-drag: none;
+    }
+
   </style>
 </head>
 
@@ -408,6 +428,61 @@ const savedLanguage =
   localStorage.getItem("prettyMindLanguage") || "en";
 
 setLanguage(savedLanguage);
+
+
+/* =========================================
+   Pretty Mind - Basic Content Protection
+   ========================================= */
+
+function isEditableElement(element) {
+  return (
+    element &&
+    (
+      element.tagName === "INPUT" ||
+      element.tagName === "TEXTAREA" ||
+      element.tagName === "SELECT" ||
+      element.isContentEditable
+    )
+  );
+}
+
+/* Disable right-click except inside editable fields */
+document.addEventListener("contextmenu", function(event) {
+  if (!isEditableElement(event.target)) {
+    event.preventDefault();
+  }
+});
+
+/* Prevent image dragging */
+document.addEventListener("dragstart", function(event) {
+  if (event.target.tagName === "IMG") {
+    event.preventDefault();
+  }
+});
+
+/* Prevent ordinary copying outside editable fields */
+document.addEventListener("copy", function(event) {
+  if (!isEditableElement(event.target)) {
+    event.preventDefault();
+  }
+});
+
+/* Prevent cut outside editable fields */
+document.addEventListener("cut", function(event) {
+  if (!isEditableElement(event.target)) {
+    event.preventDefault();
+  }
+});
+
+/* Block simple Save Page shortcut */
+document.addEventListener("keydown", function(event) {
+  const key = event.key.toLowerCase();
+
+  if ((event.ctrlKey || event.metaKey) && key === "s") {
+    event.preventDefault();
+  }
+});
+
 </script>
 </body>
 </html>
