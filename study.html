@@ -370,6 +370,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      flex-wrap: wrap;
       gap: 7px;
       margin-top: 10px;
     }
@@ -862,10 +863,23 @@
           <div class="custom-time">
 
             <input
+              id="customHours"
+              type="number"
+              min="0"
+              max="24"
+              value="0"
+              aria-label="Custom study hours"
+            >
+
+            <span id="hoursLabel">
+              hour
+            </span>
+
+            <input
               id="customMinutes"
               type="number"
-              min="1"
-              max="180"
+              min="0"
+              max="59"
               value="25"
               aria-label="Custom study minutes"
             >
@@ -1054,6 +1068,9 @@
         studyTime:
           "Study time",
 
+        hour:
+          "hour",
+
         min:
           "min",
 
@@ -1114,6 +1131,9 @@
         studyTime:
           "공부 시간",
 
+        hour:
+          "시간",
+
         min:
           "분",
 
@@ -1173,6 +1193,9 @@
 
         studyTime:
           "勉強時間",
+
+        hour:
+          "時間",
 
         min:
           "分",
@@ -1396,6 +1419,11 @@
 
 
       document.getElementById(
+        "hoursLabel"
+      ).textContent = t.hour;
+
+
+      document.getElementById(
         "minutesLabel"
       ).textContent = t.min;
 
@@ -1594,22 +1622,22 @@
 
     function updateTimerDisplay() {
 
-      const minutes =
-        Math.floor(
-          remainingSeconds / 60
-        );
+      const hours = Math.floor(remainingSeconds / 3600);
+      const minutes = Math.floor((remainingSeconds % 3600) / 60);
+      const seconds = remainingSeconds % 60;
 
-      const seconds =
-        remainingSeconds % 60;
-
-
-      timerDisplay.textContent =
-        String(minutes).padStart(2, "0")
-        + ":"
-        + String(seconds).padStart(2, "0");
+      if (hours > 0) {
+        timerDisplay.textContent =
+          String(hours).padStart(2, "0") + ":"
+          + String(minutes).padStart(2, "0") + ":"
+          + String(seconds).padStart(2, "0");
+      } else {
+        timerDisplay.textContent =
+          String(minutes).padStart(2, "0") + ":"
+          + String(seconds).padStart(2, "0");
+      }
 
     }
-
 
     function updateTimerMessage() {
 
@@ -1848,41 +1876,20 @@
 
     function setStudyTime(minutes) {
 
-      const parsed =
-        Number(minutes);
+      const parsed = Number(minutes);
 
-
-      if (
-        !Number.isFinite(parsed) ||
-        parsed < 1
-      ) {
+      if (!Number.isFinite(parsed) || parsed <= 0) {
         return;
       }
 
+      selectedMinutes = Math.min(1440, Math.floor(parsed));
+      totalSeconds = selectedMinutes * 60;
+      remainingSeconds = totalSeconds;
 
-      selectedMinutes =
-        Math.min(
-          180,
-          Math.floor(parsed)
-        );
-
-
-      totalSeconds =
-        selectedMinutes * 60;
-
-      remainingSeconds =
-        totalSeconds;
-
-
-      clearInterval(
-        timerInterval
-      );
-
+      clearInterval(timerInterval);
       timerInterval = null;
       endTimestamp = null;
-
       timerState = "ready";
-
 
       roomShell.classList.remove(
         "studying",
@@ -1891,34 +1898,25 @@
 
       stopCharacterAnimation(true);
 
+      document.getElementById("customHours").value =
+        Math.floor(selectedMinutes / 60);
 
-      document.getElementById(
-        "customMinutes"
-      ).value = selectedMinutes;
-
+      document.getElementById("customMinutes").value =
+        selectedMinutes % 60;
 
       updateTimerDisplay();
-
       updateTimerMessage();
 
-
       document
-        .querySelectorAll(
-          ".preset"
-        )
+        .querySelectorAll(".preset")
         .forEach(button => {
-
           button.classList.toggle(
             "active",
-            Number(
-              button.dataset.minutes
-            ) === selectedMinutes
+            Number(button.dataset.minutes) === selectedMinutes
           );
-
         });
 
     }
-
 
     document
       .querySelectorAll(
@@ -1946,11 +1944,33 @@
       "click",
       () => {
 
-        setStudyTime(
-          document.getElementById(
-            "customMinutes"
-          ).value
-        );
+        const hoursInput =
+          document.getElementById("customHours");
+
+        const minutesInput =
+          document.getElementById("customMinutes");
+
+        let hours = Math.floor(Number(hoursInput.value));
+        let minutes = Math.floor(Number(minutesInput.value));
+
+        if (!Number.isFinite(hours)) hours = 0;
+        if (!Number.isFinite(minutes)) minutes = 0;
+
+        hours = Math.max(0, Math.min(24, hours));
+        minutes = Math.max(0, Math.min(59, minutes));
+
+        if (hours === 24) {
+          minutes = 0;
+        }
+
+        if (hours === 0 && minutes === 0) {
+          minutes = 1;
+        }
+
+        hoursInput.value = hours;
+        minutesInput.value = minutes;
+
+        setStudyTime((hours * 60) + minutes);
 
       }
     );
