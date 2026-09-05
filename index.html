@@ -5,41 +5,66 @@
   <span>·</span>
   <button onclick="setLanguage('ja')">日本語</button>
 </div>
+
 <div class="hero">
-<h1>Pretty Mind ♡</h1>
-<p id="tagline">Dress your vibe, Doll up your mind. ♡</p>
-<button id="startButton" onclick="location.href='vibes.html'">Start MY Vibe ♡</button>
-<span class="sparkle sparkle1">✦</span>
-<span class="sparkle sparkle2">♡</span>
-<span class="sparkle sparkle3">✦</span>
-<span class="sparkle sparkle4">⋆</span>
+  <h1>Pretty Mind ♡</h1>
+  <p id="tagline">Dress your vibe, Doll up your mind. ♡</p>
+  <button id="startButton" onclick="location.href='vibes.html'">Start MY Vibe ♡</button>
+
+  <span class="sparkle sparkle1">✦</span>
+  <span class="sparkle sparkle2">♡</span>
+  <span class="sparkle sparkle3">✦</span>
+  <span class="sparkle sparkle4">⋆</span>
 </div>
+
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap');
+
 body {
-background:
-radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.75), transparent 35%),
-linear-gradient(135deg, #fce4ec 0%, #f8cddd 50%, #fce7ef 100%);
-text-align: center;
-padding-top: 80px;
-margin: 0;
-min-height: 100vh;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.75), transparent 35%),
+    linear-gradient(135deg, #fce4ec 0%, #f8cddd 50%, #fce7ef 100%);
+  text-align: center;
+  padding-top: 80px;
+  margin: 0;
+  min-height: 100vh;
+
+  /* Pretty Mind content protection */
+  -webkit-user-select: none;
+  user-select: none;
 }
+
+/* Keep form fields usable on pages that contain them */
+input,
+textarea,
+select,
+[contenteditable="true"] {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+img {
+  -webkit-user-drag: none;
+  user-drag: none;
+}
+
 button {
-background-color: #e75480;
-color: white;
-font-size: 18px;
-padding: 12px 30px;
-border: none;
-border-radius: 25px;
-cursor: pointer;
-transition: 0.3s;
-box-shadow: 0 4px 10px rgba(231, 84, 128, 0.25);  
+  background-color: #e75480;
+  color: white;
+  font-size: 18px;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 4px 10px rgba(231, 84, 128, 0.25);
 }
+
 button:hover {
-background-color: #d94f78;
-transform: translateY(-3px);
+  background-color: #d94f78;
+  transform: translateY(-3px);
 }
+
 .language-switcher {
   position: fixed;
   top: 20px;
@@ -77,35 +102,36 @@ transform: translateY(-3px);
   color: #d94f78;
   transform: none;
 }
+
 p {
-color: #b85c7a;
-font-size: 20px;
-margin-top: 10px;
-margin-bottom: 20px;
+  color: #b85c7a;
+  font-size: 20px;
+  margin-top: 10px;
+  margin-bottom: 20px;
 }
+
 .hero {
-background-color: rgba(255, 255, 255, 0.45);
-width: 600px;
-max-width: 80%;
-margin: 0 auto;
-box-sizing: border-box;
-padding: 50px 30px;
-border-radius: 35px; 
-box-shadow: 0 8px 30px rgba(231, 84, 128, 0.18);
-border: 1px solid rgba(255, 255, 255, 0.7);
-backdrop-filter: blur(10px);
--webkit-backdrop-filter: blur(10px);
-}
-h1 {
-color: #d94f87;
-font-size: 60px;
-font-family: "Dancing Script", cursive;
-font-weight: normal;
-letter-spacing: 3px;
-text-shadow: 0 2px 8px rgba(231, 84, 128, 0.18);
-}
-.hero {
+  background-color: rgba(255, 255, 255, 0.45);
+  width: 600px;
+  max-width: 80%;
+  margin: 0 auto;
+  box-sizing: border-box;
+  padding: 50px 30px;
+  border-radius: 35px;
+  box-shadow: 0 8px 30px rgba(231, 84, 128, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   position: relative;
+}
+
+h1 {
+  color: #d94f87;
+  font-size: 60px;
+  font-family: "Dancing Script", cursive;
+  font-weight: normal;
+  letter-spacing: 3px;
+  text-shadow: 0 2px 8px rgba(231, 84, 128, 0.18);
 }
 
 .sparkle {
@@ -113,6 +139,7 @@ text-shadow: 0 2px 8px rgba(231, 84, 128, 0.18);
   color: #e75480;
   opacity: 0.65;
   pointer-events: none;
+  animation: twinkle 2.4s ease-in-out infinite;
 }
 
 .sparkle1 {
@@ -125,19 +152,23 @@ text-shadow: 0 2px 8px rgba(231, 84, 128, 0.18);
   top: 35px;
   right: 45px;
   font-size: 22px;
+  animation-delay: 0.5s;
 }
 
 .sparkle3 {
   bottom: 35px;
   left: 55px;
   font-size: 18px;
+  animation-delay: 1s;
 }
 
 .sparkle4 {
   bottom: 25px;
   right: 55px;
   font-size: 25px;
+  animation-delay: 1.5s;
 }
+
 @keyframes twinkle {
   0%, 100% {
     opacity: 0.35;
@@ -150,55 +181,42 @@ text-shadow: 0 2px 8px rgba(231, 84, 128, 0.18);
   }
 }
 
-.sparkle {
-  animation: twinkle 2.4s ease-in-out infinite;
+.site-footer {
+  margin-top: 40px;
+  padding: 20px 15px 30px;
+  text-align: center;
+  font-size: 14px;
+  color: #b85c7a;
+  opacity: 0.8;
 }
 
-.sparkle2 {
-  animation-delay: 0.5s;
+.site-footer a {
+  color: #b85c7a;
+  text-decoration: none;
 }
 
-.sparkle3 {
-  animation-delay: 1s;
+.site-footer a:hover {
+  text-decoration: underline;
 }
 
-.sparkle4 {
-  animation-delay: 1.5s;
-}
-</style>
-<footer class="site-footer">
-  <a id="contactLink" href="contact.html">Contact ♡</a>
-  <span> · </span>
-  <span>© 2026 Pretty Mind</span>
-  <div id="copyrightNotice" class="copyright-notice">
-  All rights reserved. Unauthorized copying, reproduction, or distribution of Pretty Mind content is strictly prohibited and may result in legal action.
-</div>
-</footer>
-<style>
-  .site-footer {
-    margin-top: 40px;
-    padding: 20px 15px 30px;
-    text-align: center;
-    font-size: 14px;
-    color: #b85c7a;
-    opacity: 0.8;
-  }
-
-  .site-footer a {
-    color: #b85c7a;
-    text-decoration: none;
-  }
-
-  .site-footer a:hover {
-    text-decoration: underline;
-  }
-  .copyright-notice {
+.copyright-notice {
   margin-top: 8px;
   font-size: 11px;
   opacity: 0.6;
   line-height: 1.5;
 }
 </style>
+
+<footer class="site-footer">
+  <a id="contactLink" href="contact.html">Contact ♡</a>
+  <span> · </span>
+  <span>© 2026 Pretty Mind</span>
+
+  <div id="copyrightNotice" class="copyright-notice">
+    All rights reserved. Unauthorized copying, reproduction, or distribution of Pretty Mind content is strictly prohibited and may result in legal action.
+  </div>
+</footer>
+
 <script>
 function setLanguage(lang) {
   const translations = {
@@ -243,4 +261,58 @@ const savedLanguage =
   localStorage.getItem("prettyMindLanguage") || "en";
 
 setLanguage(savedLanguage);
+
+
+/* =========================================
+   Pretty Mind - Basic Content Protection
+   ========================================= */
+
+function isEditableElement(element) {
+  return (
+    element &&
+    (
+      element.tagName === "INPUT" ||
+      element.tagName === "TEXTAREA" ||
+      element.tagName === "SELECT" ||
+      element.isContentEditable
+    )
+  );
+}
+
+/* Disable right-click except inside editable fields */
+document.addEventListener("contextmenu", function(event) {
+  if (!isEditableElement(event.target)) {
+    event.preventDefault();
+  }
+});
+
+/* Prevent image dragging */
+document.addEventListener("dragstart", function(event) {
+  if (event.target.tagName === "IMG") {
+    event.preventDefault();
+  }
+});
+
+/* Prevent ordinary copying outside editable fields */
+document.addEventListener("copy", function(event) {
+  if (!isEditableElement(event.target)) {
+    event.preventDefault();
+  }
+});
+
+/* Prevent cut outside editable fields */
+document.addEventListener("cut", function(event) {
+  if (!isEditableElement(event.target)) {
+    event.preventDefault();
+  }
+});
+
+/* Block simple Save Page shortcut */
+document.addEventListener("keydown", function(event) {
+  const key = event.key.toLowerCase();
+
+  if ((event.ctrlKey || event.metaKey) && key === "s") {
+    event.preventDefault();
+  }
+});
 </script>
