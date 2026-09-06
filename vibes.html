@@ -41,6 +41,12 @@
       gap: 24px;
     }
 
+    .vibe-card-link {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
     .vibe-card {
       background: rgba(255, 255, 255, 0.72);
       border: 1px solid rgba(255, 255, 255, 0.9);
@@ -50,6 +56,8 @@
       box-shadow: 0 10px 30px rgba(231, 84, 128, 0.16);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
       overflow: hidden;
+      cursor: pointer;
+      height: 100%;
     }
 
     .vibe-card:hover {
@@ -118,60 +126,79 @@
         margin: 0 auto;
       }
     }
+
     .explore-button {
-  display: inline-block;
-  margin-top: 45px;
-  padding: 14px 32px;
-  background: #e75480;
-  color: white;
-  text-decoration: none;
-  border-radius: 30px;
-  font-size: 17px;
-  box-shadow: 0 6px 18px rgba(231, 84, 128, 0.25);
-  transition: 0.3s;
-}
+      display: inline-block;
+      margin-top: 45px;
+      padding: 14px 32px;
+      background: #e75480;
+      color: white;
+      text-decoration: none;
+      border-radius: 30px;
+      font-size: 17px;
+      box-shadow: 0 6px 18px rgba(231, 84, 128, 0.25);
+      transition: 0.3s;
+    }
 
-.explore-button:hover {
-  background: #d94f78;
-  transform: translateY(-3px);
-}
- .language-switcher {
-  position: fixed;
-  top: 20px;
-  right: 25px;
-  z-index: 1000;
+    .explore-button:hover {
+      background: #d94f78;
+      transform: translateY(-3px);
+    }
 
-  display: flex;
-  align-items: center;
-  gap: 7px;
+    .back-row {
+      margin-top: 30px;
+    }
 
-  font-family: Georgia, "Times New Roman", serif;
-  color: #b85c7a;
+    .back-button {
+      display: inline-block;
+      color: #b85c7a;
+      text-decoration: none;
+      font-size: 15px;
+      transition: 0.25s ease;
+    }
 
-  background: rgba(255, 255, 255, 0.45);
-  padding: 7px 12px;
-  border-radius: 999px;
-  border: 1px solid rgba(184, 92, 122, 0.25);
-  backdrop-filter: blur(8px);
-}
+    .back-button:hover {
+      color: #d94f78;
+      transform: translateX(-3px);
+    }
 
-.language-switcher button {
-  background: transparent;
-  color: #b85c7a;
-  border: none;
-  padding: 2px 4px;
+    .language-switcher {
+      position: fixed;
+      top: 20px;
+      right: 25px;
+      z-index: 1000;
 
-  font-family: inherit;
-  font-size: 13px;
-  box-shadow: none;
-  cursor: pointer;
-}
+      display: flex;
+      align-items: center;
+      gap: 7px;
 
-.language-switcher button:hover {
-  background: transparent;
-  color: #d94f78;
-  transform: none;
-}
+      font-family: Georgia, "Times New Roman", serif;
+      color: #b85c7a;
+
+      background: rgba(255, 255, 255, 0.45);
+      padding: 7px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(184, 92, 122, 0.25);
+      backdrop-filter: blur(8px);
+    }
+
+    .language-switcher button {
+      background: transparent;
+      color: #b85c7a;
+      border: none;
+      padding: 2px 4px;
+
+      font-family: inherit;
+      font-size: 13px;
+      box-shadow: none;
+      cursor: pointer;
+    }
+
+    .language-switcher button:hover {
+      background: transparent;
+      color: #d94f78;
+      transform: none;
+    }
 
     /* Pretty Mind - Basic Content Protection */
     body {
@@ -196,6 +223,7 @@
 </head>
 
 <body>
+
 <div class="language-switcher">
   <button onclick="setLanguage('en')">EN</button>
   <span>·</span>
@@ -203,66 +231,106 @@
   <span>·</span>
   <button onclick="setLanguage('ja')">日本語</button>
 </div>
-  <main class="vibe-page">
 
-<h1 id="vibeTitle">What's your vibe today? ♡</h1>
-<p id="vibeSubtitle" class="subtitle">A little taste of the Pretty Mind universe ✦</p>
+<main class="vibe-page">
 
-    <div class="vibe-cards">
+  <h1 id="vibeTitle">What's your vibe today? ♡</h1>
+  <p id="vibeSubtitle" class="subtitle">A little taste of the Pretty Mind universe ✦</p>
 
+  <div class="vibe-cards">
+
+    <a class="vibe-card-link" href="aesthetic-detail.html?name=Coquette">
       <div class="vibe-card">
         <img src="coquette.png" alt="Coquette aesthetic moodboard">
         <h2 id="coquetteName">Coquette ♡</h2>
-<p id="coquetteDesc">Romantic · Soft · Girly</p>
+        <p id="coquetteDesc">Romantic · Soft · Girly</p>
+
         <div class="tags">
           <span id="coquetteTag1" class="tag">Romantic</span>
-<span id="coquetteTag2" class="tag">Soft</span>
-<span id="coquetteTag3" class="tag">Girly</span>
+          <span id="coquetteTag2" class="tag">Soft</span>
+          <span id="coquetteTag3" class="tag">Girly</span>
         </div>
       </div>
+    </a>
 
+
+    <a class="vibe-card-link" href="aesthetic-detail.html?name=Gyaru">
       <div class="vibe-card">
         <img src="gyaru.png" alt="Gyaru aesthetic moodboard">
         <h2 id="gyaruName">Gyaru ✦</h2>
-<p id="gyaruDesc">Glam · Confident · Bold</p>
+        <p id="gyaruDesc">Glam · Confident · Bold</p>
+
         <div class="tags">
           <span id="gyaruTag1" class="tag">Glam</span>
-<span id="gyaruTag2" class="tag">Confident</span>
-<span id="gyaruTag3" class="tag">Bold</span>
+          <span id="gyaruTag2" class="tag">Confident</span>
+          <span id="gyaruTag3" class="tag">Bold</span>
         </div>
       </div>
+    </a>
 
+
+    <a class="vibe-card-link" href="aesthetic-detail.html?name=Clean%20Girl">
       <div class="vibe-card">
         <img src="clean-girl.png" alt="Clean Girl aesthetic moodboard">
         <<h2 id="cleanGirlName">Clean Girl ♡</h2>
-<p id="cleanGirlDesc">Minimal · Natural · Fresh</p>
+        <p id="cleanGirlDesc">Minimal · Natural · Fresh</p>
+
         <div class="tags">
           <span id="cleanGirlTag1" class="tag">Minimal</span>
-<span id="cleanGirlTag2" class="tag">Natural</span>
-<span id="cleanGirlTag3" class="tag">Fresh</span>
+          <span id="cleanGirlTag2" class="tag">Natural</span>
+          <span id="cleanGirlTag3" class="tag">Fresh</span>
         </div>
       </div>
+    </a>
 
+
+    <a class="vibe-card-link" href="aesthetic-detail.html?name=Jirai%20Kei">
       <div class="vibe-card">
         <img src="jirai-kei.png" alt="Jirai Kei aesthetic moodboard">
         <<h2 id="jiraiKeiName">Jirai Kei ✦</h2>
-<p id="jiraiKeiDesc">Dark · Cute · Yami</p>
+        <p id="jiraiKeiDesc">Dark · Cute · Yami</p>
+
         <div class="tags">
           <span id="jiraiKeiTag1" class="tag">Dark</span>
-<span id="jiraiKeiTag2" class="tag">Cute</span>
-<span id="jiraiKeiTag3" class="tag">Yami</span>
+          <span id="jiraiKeiTag2" class="tag">Cute</span>
+          <span id="jiraiKeiTag3" class="tag">Yami</span>
         </div>
       </div>
+    </a>
 
-    </div>
-    <a id="rouletteButton" class="explore-button" href="roulette.html">Spin the Vibe Roulette ♡</a>
-<a id="aestheticsButton" class="explore-button" href="aesthetics.html">Explore all aesthetics ♡</a>
-<a id="studyTimerButton" class="explore-button" href="study.html">Study Timer ⏱️</a>
-  </main>
+  </div>
+
+
+  <a id="rouletteButton" class="explore-button" href="roulette.html">
+    Spin the Vibe Roulette ♡
+  </a>
+
+  <a id="aestheticsButton" class="explore-button" href="aesthetics.html">
+    Explore all aesthetics ♡
+  </a>
+
+  <a id="studyTimerButton" class="explore-button" href="study.html">
+    Study Timer ⏱️
+  </a>
+
+
+  <div class="back-row">
+    <a id="backButton" class="back-button" href="index.html">
+      ← Back to Pretty Mind
+    </a>
+  </div>
+
+</main>
+
+
 <script>
+
 function setLanguage(lang) {
+
   const translations = {
+
     en: {
+
       vibeTitle: "What's your vibe today? ♡",
       vibeSubtitle: "A little taste of the Pretty Mind universe ✦",
 
@@ -277,27 +345,32 @@ function setLanguage(lang) {
 
       jiraiKeiName: "Jirai Kei ✦",
       jiraiKeiDesc: "Dark · Cute · Yami",
-     coquetteTag1: "Romantic",
-coquetteTag2: "Soft",
-coquetteTag3: "Girly",
 
-gyaruTag1: "Glam",
-gyaruTag2: "Confident",
-gyaruTag3: "Bold",
+      coquetteTag1: "Romantic",
+      coquetteTag2: "Soft",
+      coquetteTag3: "Girly",
 
-cleanGirlTag1: "Minimal",
-cleanGirlTag2: "Natural",
-cleanGirlTag3: "Fresh",
+      gyaruTag1: "Glam",
+      gyaruTag2: "Confident",
+      gyaruTag3: "Bold",
 
-jiraiKeiTag1: "Dark",
-jiraiKeiTag2: "Cute",
-jiraiKeiTag3: "Yami",
+      cleanGirlTag1: "Minimal",
+      cleanGirlTag2: "Natural",
+      cleanGirlTag3: "Fresh",
+
+      jiraiKeiTag1: "Dark",
+      jiraiKeiTag2: "Cute",
+      jiraiKeiTag3: "Yami",
+
       rouletteButton: "Spin the Vibe Roulette ♡",
       aestheticsButton: "Explore all aesthetics ♡",
-      studyTimerButton: "Study Timer ⏱️"
+      studyTimerButton: "Study Timer ⏱️",
+      backButton: "← Back to Pretty Mind"
     },
 
+
     ko: {
+
       vibeTitle: "오늘의 무드는 뭐야? ♡",
       vibeSubtitle: "Pretty Mind 세계관을 살짝 만나봐 ✦",
 
@@ -312,27 +385,32 @@ jiraiKeiTag3: "Yami",
 
       jiraiKeiName: "Jirai Kei ✦",
       jiraiKeiDesc: "다크 · 큐트 · 야미",
-coquetteTag1: "로맨틱",
-coquetteTag2: "부드러움",
-coquetteTag3: "소녀스러움",
 
-gyaruTag1: "화려함",
-gyaruTag2: "자신감",
-gyaruTag3: "대담함",
+      coquetteTag1: "로맨틱",
+      coquetteTag2: "부드러움",
+      coquetteTag3: "소녀스러움",
 
-cleanGirlTag1: "미니멀",
-cleanGirlTag2: "자연스러움",
-cleanGirlTag3: "산뜻함",
+      gyaruTag1: "화려함",
+      gyaruTag2: "자신감",
+      gyaruTag3: "대담함",
 
-jiraiKeiTag1: "다크",
-jiraiKeiTag2: "큐트",
-jiraiKeiTag3: "야미",
+      cleanGirlTag1: "미니멀",
+      cleanGirlTag2: "자연스러움",
+      cleanGirlTag3: "산뜻함",
+
+      jiraiKeiTag1: "다크",
+      jiraiKeiTag2: "큐트",
+      jiraiKeiTag3: "야미",
+
       rouletteButton: "Vibe 룰렛 돌리기 ♡",
       aestheticsButton: "모든 추구미 둘러보기 ♡",
-      studyTimerButton: "스터디 타이머 ⏱️"
+      studyTimerButton: "스터디 타이머 ⏱️",
+      backButton: "← Pretty Mind로 돌아가기"
     },
 
+
     ja: {
+
       vibeTitle: "今日のVibeはどれ？ ♡",
       vibeSubtitle: "Pretty Mindの世界を少しだけのぞいてみて ✦",
 
@@ -347,26 +425,31 @@ jiraiKeiTag3: "야미",
 
       jiraiKeiName: "Jirai Kei ✦",
       jiraiKeiDesc: "ダーク · キュート · 病み",
-coquetteTag1: "ロマンティック",
-coquetteTag2: "ソフト",
-coquetteTag3: "ガーリー",
 
-gyaruTag1: "グラム",
-gyaruTag2: "自信",
-gyaruTag3: "大胆",
+      coquetteTag1: "ロマンティック",
+      coquetteTag2: "ソフト",
+      coquetteTag3: "ガーリー",
 
-cleanGirlTag1: "ミニマル",
-cleanGirlTag2: "ナチュラル",
-cleanGirlTag3: "フレッシュ",
+      gyaruTag1: "グラム",
+      gyaruTag2: "自信",
+      gyaruTag3: "大胆",
 
-jiraiKeiTag1: "ダーク",
-jiraiKeiTag2: "キュート",
-jiraiKeiTag3: "病み",
+      cleanGirlTag1: "ミニマル",
+      cleanGirlTag2: "ナチュラル",
+      cleanGirlTag3: "フレッシュ",
+
+      jiraiKeiTag1: "ダーク",
+      jiraiKeiTag2: "キュート",
+      jiraiKeiTag3: "病み",
+
       rouletteButton: "Vibeルーレットを回す ♡",
       aestheticsButton: "すべてのAestheticを見る ♡",
-      studyTimerButton: "スタディタイマー ⏱️"
+      studyTimerButton: "スタディタイマー ⏱️",
+      backButton: "← Pretty Mindに戻る"
     }
+
   };
+
 
   document.getElementById("vibeTitle").textContent =
     translations[lang].vibeTitle;
@@ -397,21 +480,48 @@ jiraiKeiTag3: "病み",
 
   document.getElementById("jiraiKeiDesc").textContent =
     translations[lang].jiraiKeiDesc;
-document.getElementById("coquetteTag1").textContent = translations[lang].coquetteTag1;
-document.getElementById("coquetteTag2").textContent = translations[lang].coquetteTag2;
-document.getElementById("coquetteTag3").textContent = translations[lang].coquetteTag3;
 
-document.getElementById("gyaruTag1").textContent = translations[lang].gyaruTag1;
-document.getElementById("gyaruTag2").textContent = translations[lang].gyaruTag2;
-document.getElementById("gyaruTag3").textContent = translations[lang].gyaruTag3;
 
-document.getElementById("cleanGirlTag1").textContent = translations[lang].cleanGirlTag1;
-document.getElementById("cleanGirlTag2").textContent = translations[lang].cleanGirlTag2;
-document.getElementById("cleanGirlTag3").textContent = translations[lang].cleanGirlTag3;
+  document.getElementById("coquetteTag1").textContent =
+    translations[lang].coquetteTag1;
 
-document.getElementById("jiraiKeiTag1").textContent = translations[lang].jiraiKeiTag1;
-document.getElementById("jiraiKeiTag2").textContent = translations[lang].jiraiKeiTag2;
-document.getElementById("jiraiKeiTag3").textContent = translations[lang].jiraiKeiTag3;
+  document.getElementById("coquetteTag2").textContent =
+    translations[lang].coquetteTag2;
+
+  document.getElementById("coquetteTag3").textContent =
+    translations[lang].coquetteTag3;
+
+
+  document.getElementById("gyaruTag1").textContent =
+    translations[lang].gyaruTag1;
+
+  document.getElementById("gyaruTag2").textContent =
+    translations[lang].gyaruTag2;
+
+  document.getElementById("gyaruTag3").textContent =
+    translations[lang].gyaruTag3;
+
+
+  document.getElementById("cleanGirlTag1").textContent =
+    translations[lang].cleanGirlTag1;
+
+  document.getElementById("cleanGirlTag2").textContent =
+    translations[lang].cleanGirlTag2;
+
+  document.getElementById("cleanGirlTag3").textContent =
+    translations[lang].cleanGirlTag3;
+
+
+  document.getElementById("jiraiKeiTag1").textContent =
+    translations[lang].jiraiKeiTag1;
+
+  document.getElementById("jiraiKeiTag2").textContent =
+    translations[lang].jiraiKeiTag2;
+
+  document.getElementById("jiraiKeiTag3").textContent =
+    translations[lang].jiraiKeiTag3;
+
+
   document.getElementById("rouletteButton").textContent =
     translations[lang].rouletteButton;
 
@@ -421,8 +531,13 @@ document.getElementById("jiraiKeiTag3").textContent = translations[lang].jiraiKe
   document.getElementById("studyTimerButton").textContent =
     translations[lang].studyTimerButton;
 
+  document.getElementById("backButton").textContent =
+    translations[lang].backButton;
+
+
   localStorage.setItem("prettyMindLanguage", lang);
 }
+
 
 const savedLanguage =
   localStorage.getItem("prettyMindLanguage") || "en";
@@ -430,11 +545,13 @@ const savedLanguage =
 setLanguage(savedLanguage);
 
 
+
 /* =========================================
    Pretty Mind - Basic Content Protection
    ========================================= */
 
 function isEditableElement(element) {
+
   return (
     element &&
     (
@@ -444,45 +561,67 @@ function isEditableElement(element) {
       element.isContentEditable
     )
   );
+
 }
 
+
 /* Disable right-click except inside editable fields */
+
 document.addEventListener("contextmenu", function(event) {
+
   if (!isEditableElement(event.target)) {
     event.preventDefault();
   }
+
 });
 
+
 /* Prevent image dragging */
+
 document.addEventListener("dragstart", function(event) {
+
   if (event.target.tagName === "IMG") {
     event.preventDefault();
   }
+
 });
+
 
 /* Prevent ordinary copying outside editable fields */
+
 document.addEventListener("copy", function(event) {
+
   if (!isEditableElement(event.target)) {
     event.preventDefault();
   }
+
 });
+
 
 /* Prevent cut outside editable fields */
+
 document.addEventListener("cut", function(event) {
+
   if (!isEditableElement(event.target)) {
     event.preventDefault();
   }
+
 });
 
+
 /* Block simple Save Page shortcut */
+
 document.addEventListener("keydown", function(event) {
+
   const key = event.key.toLowerCase();
 
   if ((event.ctrlKey || event.metaKey) && key === "s") {
     event.preventDefault();
   }
+
 });
 
 </script>
+
 </body>
 </html>
