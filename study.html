@@ -640,6 +640,12 @@
         padding: 20px 15px;
       }
     }
+
+    /* Pretty Mind - Basic Content Protection */
+    body { -webkit-user-select:none; user-select:none; }
+    input, textarea, select, [contenteditable="true"] { -webkit-user-select:text; user-select:text; }
+    img { -webkit-user-drag:none; user-drag:none; }
+
   </style>
 </head>
 
@@ -2212,7 +2218,16 @@
 
     updateLanguage();
 
-  </script>
+  
+/* Pretty Mind - Basic Content Protection */
+function isEditableElement(e){return e&&(e.tagName==="INPUT"||e.tagName==="TEXTAREA"||e.tagName==="SELECT"||e.isContentEditable);}
+document.addEventListener("contextmenu",e=>{if(!isEditableElement(e.target))e.preventDefault();});
+document.addEventListener("dragstart",e=>{if(e.target.tagName==="IMG")e.preventDefault();});
+document.addEventListener("copy",e=>{if(!isEditableElement(e.target))e.preventDefault();});
+document.addEventListener("cut",e=>{if(!isEditableElement(e.target))e.preventDefault();});
+document.addEventListener("keydown",e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="s")e.preventDefault();});
+
+</script>
 
 </body>
 </html>
