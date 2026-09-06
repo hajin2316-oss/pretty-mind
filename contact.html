@@ -174,6 +174,25 @@
         font-size: 0.95rem;
       }
     }
+
+    /* Pretty Mind - Basic Content Protection */
+    body {
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    input,
+    textarea,
+    select,
+    [contenteditable="true"] {
+      -webkit-user-select: text;
+      user-select: text;
+    }
+
+    img {
+      -webkit-user-drag: none;
+      user-drag: none;
+    }
   </style>
 </head>
 
@@ -313,6 +332,51 @@
       localStorage.getItem("prettyMindLanguage") || "en";
 
     setLanguage(savedLanguage);
+
+    /* Pretty Mind - Basic Content Protection */
+    function isEditableElement(element) {
+      return (
+        element &&
+        (
+          element.tagName === "INPUT" ||
+          element.tagName === "TEXTAREA" ||
+          element.tagName === "SELECT" ||
+          element.isContentEditable
+        )
+      );
+    }
+
+    document.addEventListener("contextmenu", function(event) {
+      if (!isEditableElement(event.target)) {
+        event.preventDefault();
+      }
+    });
+
+    document.addEventListener("dragstart", function(event) {
+      if (event.target.tagName === "IMG") {
+        event.preventDefault();
+      }
+    });
+
+    document.addEventListener("copy", function(event) {
+      if (!isEditableElement(event.target)) {
+        event.preventDefault();
+      }
+    });
+
+    document.addEventListener("cut", function(event) {
+      if (!isEditableElement(event.target)) {
+        event.preventDefault();
+      }
+    });
+
+    document.addEventListener("keydown", function(event) {
+      const key = event.key.toLowerCase();
+
+      if ((event.ctrlKey || event.metaKey) && key === "s") {
+        event.preventDefault();
+      }
+    });
   </script>
 
 </body>
