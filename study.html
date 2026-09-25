@@ -990,6 +990,7 @@
 
         <div class="break-setting">
           <div id="breakSettingTitle" class="break-setting-title">Break time</div>
+          <div id="breakSelectedValue" style="margin:-2px 0 10px; font-size:12px; opacity:.78;">Selected: 5 min</div>
 
           <div class="break-preset-buttons">
             <button class="break-preset active" type="button" data-break-minutes="5">5</button>
@@ -1616,6 +1617,7 @@
       document.getElementById("breakMinutesLabel").textContent = t.min;
       document.getElementById("setBreakButton").textContent = t.set;
       document.getElementById("breakBadge").textContent = t.breakBadge;
+      if (typeof updateBreakSelectedValue === "function") updateBreakSelectedValue();
 
 
       document.getElementById(
@@ -2274,6 +2276,26 @@
        BREAK TIME SETTINGS
     ====================================== */
 
+    function updateBreakSelectedValue() {
+      const el = document.getElementById("breakSelectedValue");
+      if (!el) return;
+
+      const lang = getLanguage();
+      const hours = Math.floor(selectedBreakMinutes / 60);
+      const minutes = selectedBreakMinutes % 60;
+      let value = "";
+
+      if (lang === "ko") {
+        value = "설정됨: " + (hours ? hours + "시간 " : "") + (minutes ? minutes + "분" : "");
+      } else if (lang === "ja") {
+        value = "設定済み: " + (hours ? hours + "時間 " : "") + (minutes ? minutes + "分" : "");
+      } else {
+        value = "Selected: " + (hours ? hours + " hr " : "") + (minutes ? minutes + " min" : "");
+      }
+
+      el.textContent = value.trim();
+    }
+
     function setBreakTime(minutes) {
       const parsed = Number(minutes);
       if (!Number.isFinite(parsed) || parsed <= 0) return;
@@ -2291,6 +2313,8 @@
           Number(button.dataset.breakMinutes) === selectedBreakMinutes
         );
       });
+
+      updateBreakSelectedValue();
 
       if (timerState === "breaking" || timerState === "breakPaused") {
         clearInterval(timerInterval);
@@ -2328,6 +2352,13 @@
       hoursInput.value = hours;
       minutesInput.value = minutes;
       setBreakTime((hours * 60) + minutes);
+
+      const setButton = document.getElementById("setBreakButton");
+      const originalText = setButton.textContent;
+      setButton.textContent = "✓ " + originalText;
+      setTimeout(() => {
+        setButton.textContent = translations[getLanguage()].set;
+      }, 900);
     });
 
 
