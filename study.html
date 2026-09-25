@@ -396,6 +396,87 @@
     }
 
     /* =========================
+       BREAK TIMER
+    ========================== */
+
+    .break-setting {
+      margin-top: 18px;
+      padding-top: 17px;
+      border-top: 1px solid rgba(231,84,128,0.13);
+    }
+
+    .break-setting-title {
+      margin-bottom: 10px;
+      font-size: 13px;
+    }
+
+    .break-preset-buttons {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .break-preset {
+      padding: 7px 11px;
+      border-radius: 999px;
+      border: 1px solid rgba(231,84,128,0.17);
+      background: rgba(255,255,255,0.7);
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    .break-preset:hover,
+    .break-preset.active {
+      color: white;
+      background: var(--pink);
+    }
+
+    .break-custom-time {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 10px;
+    }
+
+    .break-custom-time input {
+      width: 70px;
+      padding: 8px;
+      border-radius: 12px;
+      border: 1px solid rgba(231,84,128,0.2);
+      outline: none;
+      text-align: center;
+      color: var(--text);
+      background: rgba(255,255,255,0.8);
+    }
+
+    .break-custom-time button {
+      padding: 8px 11px;
+      border: 0;
+      border-radius: 12px;
+      background: #f5d6e1;
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    .break-badge {
+      display: none;
+      margin: 0 auto 10px;
+      width: fit-content;
+      padding: 5px 11px;
+      border-radius: 999px;
+      background: rgba(231,84,128,0.12);
+      color: var(--deep-pink);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .3px;
+    }
+
+    .room-shell.breaking .break-badge { display: block; }
+
+    /* =========================
        LOWER CONTROLS
     ========================== */
 
@@ -768,6 +849,8 @@
 
       <div class="timer-panel">
 
+        <div id="breakBadge" class="break-badge">☕ Break Time</div>
+
         <div
           id="currentCharacter"
           class="current-character"
@@ -903,6 +986,24 @@
 
           </div>
 
+        </div>
+
+        <div class="break-setting">
+          <div id="breakSettingTitle" class="break-setting-title">Break time</div>
+
+          <div class="break-preset-buttons">
+            <button class="break-preset active" type="button" data-break-minutes="5">5</button>
+            <button class="break-preset" type="button" data-break-minutes="10">10</button>
+            <button class="break-preset" type="button" data-break-minutes="15">15</button>
+          </div>
+
+          <div class="break-custom-time">
+            <input id="breakHours" type="number" min="0" max="5" value="0" aria-label="Custom break hours">
+            <span id="breakHoursLabel">hour</span>
+            <input id="breakMinutes" type="number" min="0" max="59" value="5" aria-label="Custom break minutes">
+            <span id="breakMinutesLabel">min</span>
+            <button id="setBreakButton" type="button">Set</button>
+          </div>
         </div>
 
       </div>
@@ -1062,6 +1163,24 @@
         finished:
           "You did it! Study session complete ♡",
 
+        breakReady:
+          "Break time ♡ Relax for a little while.",
+
+        breaking:
+          "Rest, stretch, and recharge ♡",
+
+        breakPaused:
+          "Break paused ♡",
+
+        breakFinished:
+          "Break complete! Ready for another study session? ♡",
+
+        breakTime:
+          "Break time",
+
+        breakBadge:
+          "☕ Break Time",
+
         start:
           "▶ Start",
 
@@ -1124,6 +1243,24 @@
 
         finished:
           "해냈다! 공부 완료 ♡",
+
+        breakReady:
+          "휴식 시간 ♡ 잠깐 편하게 쉬어봐.",
+
+        breaking:
+          "푹 쉬고, 스트레칭하고, 다시 충전하자 ♡",
+
+        breakPaused:
+          "휴식 일시정지 ♡",
+
+        breakFinished:
+          "휴식 끝! 다시 공부할 준비됐어? ♡",
+
+        breakTime:
+          "휴식 시간",
+
+        breakBadge:
+          "☕ 휴식 시간",
 
         start:
           "▶ 시작",
@@ -1188,6 +1325,24 @@
         finished:
           "できた！勉強セッション完了 ♡",
 
+        breakReady:
+          "休憩タイム ♡ 少しゆっくり休もう。",
+
+        breaking:
+          "ゆっくり休んで、ストレッチして、リフレッシュしよう ♡",
+
+        breakPaused:
+          "休憩を一時停止 ♡",
+
+        breakFinished:
+          "休憩終了！また勉強する準備はできた？ ♡",
+
+        breakTime:
+          "休憩時間",
+
+        breakBadge:
+          "☕ 休憩タイム",
+
         start:
           "▶ スタート",
 
@@ -1251,6 +1406,8 @@
         baseImage: "coquette-study-character-side.png",
         handWriteImage: "coquette-study-hand-write.png",
         finishImage: "coquette-study-finish.png",
+        breakFrame1: "coquette-break-frame-1.png",
+        breakFrame2: "coquette-break-frame-2.png",
         position: { left: "1%", bottom: "0%", width: "58%", height: "95%" }
       },
 
@@ -1261,6 +1418,8 @@
         baseImage: "clean-girl-study-character-side.png",
         handWriteImage: "clean-girl-study-hand-write.png",
         finishImage: "gyaru-study-finish.png",
+        breakFrame1: "clean-girl-break-frame-1.png",
+        breakFrame2: "clean-girl-break-frame-2.png",
         position: { left: "1%", bottom: "0%", width: "58%", height: "95%" }
       },
 
@@ -1271,6 +1430,8 @@
         baseImage: "gyaru-study-character-side.png",
         handWriteImage: "gyaru-study-hand-write-fixed.png",
         finishImage: "clean-girl-study-finish.png",
+        breakFrame1: "gyaru-break-frame-1.png",
+        breakFrame2: "gyaru-break-frame-2.png",
         position: { left: "1%", bottom: "0%", width: "60%", height: "96%" }
       }
 
@@ -1295,6 +1456,13 @@
     let endTimestamp = null;
 
     let timerState = "ready";
+
+    let selectedBreakMinutes = 5;
+    let breakTotalSeconds = selectedBreakMinutes * 60;
+    let breakRemainingSeconds = breakTotalSeconds;
+    let breakAnimationTimeout = null;
+    let breakFrame = 1;
+    let autoBreakTimeout = null;
 
     let currentSound = "off";
 
@@ -1443,6 +1611,12 @@
         "setTimeButton"
       ).textContent = t.set;
 
+      document.getElementById("breakSettingTitle").textContent = t.breakTime;
+      document.getElementById("breakHoursLabel").textContent = t.hour;
+      document.getElementById("breakMinutesLabel").textContent = t.min;
+      document.getElementById("setBreakButton").textContent = t.set;
+      document.getElementById("breakBadge").textContent = t.breakBadge;
+
 
       document.getElementById(
         "characterTitle"
@@ -1535,9 +1709,11 @@
     function clearCharacterAnimationTimers() {
       clearTimeout(writingAnimationTimeout);
       clearTimeout(finishReturnTimeout);
+      clearTimeout(breakAnimationTimeout);
 
       writingAnimationTimeout = null;
       finishReturnTimeout = null;
+      breakAnimationTimeout = null;
 
       hideWritingOverlay();
     }
@@ -1612,12 +1788,41 @@
       }, 2800);
     }
 
+
+    function showBreakFrame(frameNumber = 1) {
+      clearCharacterAnimationTimers();
+      const character = characters[currentCharacter];
+      const src = frameNumber === 2 ? character.breakFrame2 : character.breakFrame1;
+      if (!src) { showBaseCharacter(); return; }
+      characterImage.src = src;
+      characterImage.style.display = "block";
+      characterPlaceholder.style.display = "none";
+      breakFrame = frameNumber;
+    }
+
+    function scheduleBreakAnimation() {
+      if (timerState !== "breaking") return;
+      breakAnimationTimeout = setTimeout(() => {
+        if (timerState !== "breaking") return;
+        showBreakFrame(breakFrame === 1 ? 2 : 1);
+        scheduleBreakAnimation();
+      }, 1800);
+    }
+
+    function startBreakAnimation() {
+      clearCharacterAnimationTimers();
+      showBreakFrame(1);
+      scheduleBreakAnimation();
+    }
+
     function preloadCharacterFrames() {
       Object.values(characters).forEach(character => {
         [
           character.baseImage,
           character.handWriteImage,
-          character.finishImage
+          character.finishImage,
+          character.breakFrame1,
+          character.breakFrame2
         ].forEach(src => {
           if (!src) return;
           const image = new Image();
@@ -1633,9 +1838,13 @@
 
     function updateTimerDisplay() {
 
-      const hours = Math.floor(remainingSeconds / 3600);
-      const minutes = Math.floor((remainingSeconds % 3600) / 60);
-      const seconds = remainingSeconds % 60;
+      const displaySeconds = (timerState === "breaking" || timerState === "breakPaused")
+        ? breakRemainingSeconds
+        : remainingSeconds;
+
+      const hours = Math.floor(displaySeconds / 3600);
+      const minutes = Math.floor((displaySeconds % 3600) / 60);
+      const seconds = displaySeconds % 60;
 
       if (hours > 0) {
         timerDisplay.textContent =
@@ -1656,7 +1865,19 @@
         translations[getLanguage()];
 
 
-      if (timerState === "studying") {
+      if (timerState === "breaking") {
+        timerMessage.textContent = t.breaking;
+      }
+
+      else if (timerState === "breakPaused") {
+        timerMessage.textContent = t.breakPaused;
+      }
+
+      else if (timerState === "breakFinished") {
+        timerMessage.textContent = t.breakFinished;
+      }
+
+      else if (timerState === "studying") {
 
         timerMessage.textContent =
           t.studying;
@@ -1693,40 +1914,48 @@
 
     function syncRunningTimer() {
 
-      if (timerState !== "studying" || !endTimestamp) {
-        return;
+      if ((timerState !== "studying" && timerState !== "breaking") || !endTimestamp) return;
+
+      const millisecondsLeft = endTimestamp - Date.now();
+      const secondsLeft = Math.max(0, Math.ceil(millisecondsLeft / 1000));
+
+      if (timerState === "breaking") {
+        breakRemainingSeconds = secondsLeft;
+      } else {
+        remainingSeconds = secondsLeft;
       }
-
-      const millisecondsLeft =
-        endTimestamp - Date.now();
-
-      remainingSeconds = Math.max(
-        0,
-        Math.ceil(millisecondsLeft / 1000)
-      );
 
       updateTimerDisplay();
 
-      if (remainingSeconds <= 0) {
-        finishTimer();
+      if (secondsLeft <= 0) {
+        if (timerState === "breaking") finishBreak();
+        else finishTimer();
       }
-
     }
 
 
     function startTimer() {
 
-      if (
-        timerState === "studying" ||
-        remainingSeconds <= 0
-      ) {
+      if (timerState === "studying" || timerState === "breaking") return;
+
+      if (timerState === "breakPaused") {
+        if (breakRemainingSeconds <= 0) return;
+        timerState = "breaking";
+        endTimestamp = Date.now() + (breakRemainingSeconds * 1000);
+        roomShell.classList.add("breaking");
+        startBreakAnimation();
+        updateTimerMessage();
+        syncRunningTimer();
+        clearInterval(timerInterval);
+        timerInterval = setInterval(syncRunningTimer, 250);
         return;
       }
 
+      if (remainingSeconds <= 0 || timerState === "finished") return;
+
       timerState = "studying";
 
-      endTimestamp =
-        Date.now() + (remainingSeconds * 1000);
+      endTimestamp = Date.now() + (remainingSeconds * 1000);
 
       roomShell.classList.add(
         "studying"
@@ -1751,33 +1980,27 @@
 
     function pauseTimer() {
 
-      if (timerState !== "studying") {
-        return;
-      }
+      if (timerState !== "studying" && timerState !== "breaking") return;
 
+      const wasBreaking = timerState === "breaking";
       syncRunningTimer();
-
-      clearInterval(
-        timerInterval
-      );
-
+      clearInterval(timerInterval);
       timerInterval = null;
       endTimestamp = null;
 
-      if (remainingSeconds <= 0) {
-        return;
+      if ((wasBreaking ? breakRemainingSeconds : remainingSeconds) <= 0) return;
+
+      if (wasBreaking) {
+        timerState = "breakPaused";
+        clearCharacterAnimationTimers();
+        showBreakFrame(breakFrame);
+      } else {
+        timerState = "paused";
+        roomShell.classList.remove("studying");
+        stopCharacterAnimation(true);
       }
 
-      timerState = "paused";
-
-      roomShell.classList.remove(
-        "studying"
-      );
-
-      stopCharacterAnimation(true);
-
       updateTimerMessage();
-
     }
 
 
@@ -1789,15 +2012,18 @@
 
       timerInterval = null;
       endTimestamp = null;
+      clearTimeout(autoBreakTimeout);
+      autoBreakTimeout = null;
 
-      remainingSeconds =
-        totalSeconds;
+      remainingSeconds = totalSeconds;
+      breakRemainingSeconds = breakTotalSeconds;
 
       timerState = "ready";
 
       roomShell.classList.remove(
         "studying",
-        "finished"
+        "finished",
+        "breaking"
       );
 
       stopCharacterAnimation(true);
@@ -1836,6 +2062,61 @@
       completionAudio.currentTime = 0;
       completionAudio.play().catch(() => {});
 
+      clearTimeout(autoBreakTimeout);
+      autoBreakTimeout = setTimeout(() => {
+        if (timerState === "finished") startBreak();
+      }, 2800);
+
+    }
+
+
+    function startBreak() {
+      clearInterval(timerInterval);
+      clearTimeout(autoBreakTimeout);
+      autoBreakTimeout = null;
+
+      breakRemainingSeconds = breakTotalSeconds;
+      timerState = "breaking";
+      endTimestamp = Date.now() + (breakRemainingSeconds * 1000);
+
+      roomShell.classList.remove("studying", "finished");
+      roomShell.classList.add("breaking");
+
+      startBreakAnimation();
+      updateTimerDisplay();
+      updateTimerMessage();
+      syncRunningTimer();
+
+      timerInterval = setInterval(syncRunningTimer, 250);
+    }
+
+
+    function finishBreak() {
+      clearInterval(timerInterval);
+      timerInterval = null;
+      endTimestamp = null;
+      breakRemainingSeconds = 0;
+      timerState = "breakFinished";
+
+      roomShell.classList.remove("breaking");
+      clearCharacterAnimationTimers();
+      showBaseCharacter();
+
+      updateTimerDisplay();
+      updateTimerMessage();
+
+      completionAudio.currentTime = 0;
+      completionAudio.play().catch(() => {});
+
+      setTimeout(() => {
+        if (timerState !== "breakFinished") return;
+        remainingSeconds = totalSeconds;
+        breakRemainingSeconds = breakTotalSeconds;
+        timerState = "ready";
+        updateTimerDisplay();
+        updateTimerMessage();
+        showBaseCharacter();
+      }, 2800);
     }
 
 
@@ -1899,11 +2180,14 @@
       clearInterval(timerInterval);
       timerInterval = null;
       endTimestamp = null;
+      clearTimeout(autoBreakTimeout);
+      autoBreakTimeout = null;
       timerState = "ready";
 
       roomShell.classList.remove(
         "studying",
-        "finished"
+        "finished",
+        "breaking"
       );
 
       stopCharacterAnimation(true);
@@ -1984,6 +2268,67 @@
 
       }
     );
+
+
+    /* =====================================
+       BREAK TIME SETTINGS
+    ====================================== */
+
+    function setBreakTime(minutes) {
+      const parsed = Number(minutes);
+      if (!Number.isFinite(parsed) || parsed <= 0) return;
+
+      selectedBreakMinutes = Math.min(300, Math.floor(parsed));
+      breakTotalSeconds = selectedBreakMinutes * 60;
+      breakRemainingSeconds = breakTotalSeconds;
+
+      document.getElementById("breakHours").value = Math.floor(selectedBreakMinutes / 60);
+      document.getElementById("breakMinutes").value = selectedBreakMinutes % 60;
+
+      document.querySelectorAll(".break-preset").forEach(button => {
+        button.classList.toggle(
+          "active",
+          Number(button.dataset.breakMinutes) === selectedBreakMinutes
+        );
+      });
+
+      if (timerState === "breaking" || timerState === "breakPaused") {
+        clearInterval(timerInterval);
+        timerInterval = null;
+        endTimestamp = null;
+        timerState = "breakPaused";
+        showBreakFrame(1);
+        updateTimerDisplay();
+        updateTimerMessage();
+      }
+    }
+
+    document.querySelectorAll(".break-preset").forEach(button => {
+      button.addEventListener("click", () => {
+        setBreakTime(button.dataset.breakMinutes);
+      });
+    });
+
+    document.getElementById("setBreakButton").addEventListener("click", () => {
+      const hoursInput = document.getElementById("breakHours");
+      const minutesInput = document.getElementById("breakMinutes");
+
+      let hours = Math.floor(Number(hoursInput.value));
+      let minutes = Math.floor(Number(minutesInput.value));
+
+      if (!Number.isFinite(hours)) hours = 0;
+      if (!Number.isFinite(minutes)) minutes = 0;
+
+      hours = Math.max(0, Math.min(5, hours));
+      minutes = Math.max(0, Math.min(59, minutes));
+
+      if (hours === 5) minutes = 0;
+      if (hours === 0 && minutes === 0) minutes = 1;
+
+      hoursInput.value = hours;
+      minutesInput.value = minutes;
+      setBreakTime((hours * 60) + minutes);
+    });
 
 
     /* =====================================
@@ -2069,6 +2414,11 @@
 
       if (timerState === "studying") {
         startCharacterAnimation();
+      }
+
+      else if (timerState === "breaking" || timerState === "breakPaused") {
+        if (timerState === "breaking") startBreakAnimation();
+        else showBreakFrame(breakFrame);
       }
 
       else if (timerState === "finished") {
