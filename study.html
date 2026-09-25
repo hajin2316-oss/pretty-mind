@@ -1005,6 +1005,12 @@
             <span id="breakMinutesLabel">min</span>
             <button id="setBreakButton" type="button">Set</button>
           </div>
+
+          <div class="break-timer-buttons" style="display:flex;justify-content:center;flex-wrap:wrap;gap:9px;margin-top:14px;">
+            <button id="breakStartButton" class="main-button start-button" type="button">▶ Break Start</button>
+            <button id="breakPauseButton" class="main-button pause-button" type="button">Ⅱ Pause</button>
+            <button id="breakResetButton" class="main-button reset-button" type="button">↻ Reset</button>
+          </div>
         </div>
 
       </div>
@@ -1182,6 +1188,15 @@
         breakBadge:
           "☕ Break Time",
 
+        breakStart:
+          "▶ Break Start",
+
+        breakPause:
+          "Ⅱ Pause",
+
+        breakReset:
+          "↻ Reset",
+
         start:
           "▶ Start",
 
@@ -1263,6 +1278,15 @@
         breakBadge:
           "☕ 휴식 시간",
 
+        breakStart:
+          "▶ 휴식 시작",
+
+        breakPause:
+          "Ⅱ 일시정지",
+
+        breakReset:
+          "↻ 리셋",
+
         start:
           "▶ 시작",
 
@@ -1343,6 +1367,15 @@
 
         breakBadge:
           "☕ 休憩タイム",
+
+        breakStart:
+          "▶ 休憩スタート",
+
+        breakPause:
+          "Ⅱ 一時停止",
+
+        breakReset:
+          "↻ リセット",
 
         start:
           "▶ スタート",
@@ -1461,9 +1494,12 @@
     let selectedBreakMinutes = 5;
     let breakTotalSeconds = selectedBreakMinutes * 60;
     let breakRemainingSeconds = breakTotalSeconds;
+    let breakTimerInterval = null;
+    let breakEndTimestamp = null;
+    let breakState = "ready";
+    let activeTimerMode = "study";
     let breakAnimationTimeout = null;
     let breakFrame = 1;
-    let autoBreakTimeout = null;
 
     let currentSound = "off";
 
@@ -1616,6 +1652,9 @@
       document.getElementById("breakHoursLabel").textContent = t.hour;
       document.getElementById("breakMinutesLabel").textContent = t.min;
       document.getElementById("setBreakButton").textContent = t.set;
+      document.getElementById("breakStartButton").textContent = t.breakStart;
+      document.getElementById("breakPauseButton").textContent = t.breakPause;
+      document.getElementById("breakResetButton").textContent = t.breakReset;
       document.getElementById("breakBadge").textContent = t.breakBadge;
       if (typeof updateBreakSelectedValue === "function") updateBreakSelectedValue();
 
@@ -1835,251 +1874,134 @@
 
 
     /* =====================================
-       TIMER DISPLAY
+       INDEPENDENT STUDY + BREAK TIMERS
     ====================================== */
 
-    function updateTimerDisplay() {
-
-      const displaySeconds = (timerState === "breaking" || timerState === "breakPaused")
-        ? breakRemainingSeconds
-        : remainingSeconds;
-
-      const hours = Math.floor(displaySeconds / 3600);
-      const minutes = Math.floor((displaySeconds % 3600) / 60);
-      const seconds = displaySeconds % 60;
-
-      if (hours > 0) {
-        timerDisplay.textContent =
-          String(hours).padStart(2, "0") + ":"
-          + String(minutes).padStart(2, "0") + ":"
-          + String(seconds).padStart(2, "0");
-      } else {
-        timerDisplay.textContent =
-          String(minutes).padStart(2, "0") + ":"
-          + String(seconds).padStart(2, "0");
-      }
-
-    }
-
-    function updateTimerMessage() {
-
-      const t =
-        translations[getLanguage()];
-
-
-      if (timerState === "breaking") {
-        timerMessage.textContent = t.breaking;
-      }
-
-      else if (timerState === "breakPaused") {
-        timerMessage.textContent = t.breakPaused;
-      }
-
-      else if (timerState === "breakFinished") {
-        timerMessage.textContent = t.breakFinished;
-      }
-
-      else if (timerState === "studying") {
-
-        timerMessage.textContent =
-          t.studying;
-
-      }
-
-      else if (timerState === "paused") {
-
-        timerMessage.textContent =
-          t.paused;
-
-      }
-
-      else if (timerState === "finished") {
-
-        timerMessage.textContent =
-          t.finished;
-
-      }
-
-      else {
-
-        timerMessage.textContent =
-          t.ready;
-
-      }
-
-    }
-
-
-    /* =====================================
-       TIMER
-    ====================================== */
-
-    function syncRunningTimer() {
-
-      if ((timerState !== "studying" && timerState !== "breaking") || !endTimestamp) return;
+    function syncStudyTimer() {
+      if (timerState !== "studying" || !endTimestamp) return;
 
       const millisecondsLeft = endTimestamp - Date.now();
-      const secondsLeft = Math.max(0, Math.ceil(millisecondsLeft / 1000));
+      remainingSeconds = Math.max(0, Math.ceil(millisecondsLeft / 1000));
 
-      if (timerState === "breaking") {
-        breakRemainingSeconds = secondsLeft;
-      } else {
-        remainingSeconds = secondsLeft;
-      }
+      if (activeTimerMode === "study") updateTimerDisplay();
 
-      updateTimerDisplay();
-
-      if (secondsLeft <= 0) {
-        if (timerState === "breaking") finishBreak();
-        else finishTimer();
-      }
+      if (remainingSeconds <= 0) finishTimer();
     }
 
 
     function startTimer() {
-
-      if (timerState === "studying" || timerState === "breaking") return;
-
-      if (timerState === "breakPaused") {
-        if (breakRemainingSeconds <= 0) return;
-        timerState = "breaking";
-        endTimestamp = Date.now() + (breakRemainingSeconds * 1000);
-        roomShell.classList.add("breaking");
-        startBreakAnimation();
-        updateTimerMessage();
-        syncRunningTimer();
-        clearInterval(timerInterval);
-        timerInterval = setInterval(syncRunningTimer, 250);
-        return;
-      }
-
+      if (timerState === "studying") return;
       if (remainingSeconds <= 0 || timerState === "finished") return;
 
-      timerState = "studying";
+      // If a break is currently running, pause it first.
+      if (breakState === "running") pauseBreak();
 
+      activeTimerMode = "study";
+      timerState = "studying";
       endTimestamp = Date.now() + (remainingSeconds * 1000);
 
-      roomShell.classList.add(
-        "studying"
-      );
-
-      roomShell.classList.remove(
-        "finished"
-      );
+      roomShell.classList.remove("breaking", "finished");
+      roomShell.classList.add("studying");
 
       startCharacterAnimation();
-
+      updateTimerDisplay();
       updateTimerMessage();
-      syncRunningTimer();
 
       clearInterval(timerInterval);
-
-      timerInterval =
-        setInterval(syncRunningTimer, 250);
-
+      timerInterval = setInterval(syncStudyTimer, 250);
     }
 
 
     function pauseTimer() {
+      if (timerState !== "studying") return;
 
-      if (timerState !== "studying" && timerState !== "breaking") return;
-
-      const wasBreaking = timerState === "breaking";
-      syncRunningTimer();
+      syncStudyTimer();
       clearInterval(timerInterval);
       timerInterval = null;
       endTimestamp = null;
 
-      if ((wasBreaking ? breakRemainingSeconds : remainingSeconds) <= 0) return;
+      if (remainingSeconds <= 0) return;
 
-      if (wasBreaking) {
-        timerState = "breakPaused";
-        clearCharacterAnimationTimers();
-        showBreakFrame(breakFrame);
-      } else {
-        timerState = "paused";
-        roomShell.classList.remove("studying");
-        stopCharacterAnimation(true);
-      }
+      timerState = "paused";
+      activeTimerMode = "study";
+      roomShell.classList.remove("studying");
+      stopCharacterAnimation(true);
 
+      updateTimerDisplay();
       updateTimerMessage();
     }
 
 
     function resetTimer() {
-
-      clearInterval(
-        timerInterval
-      );
-
+      clearInterval(timerInterval);
       timerInterval = null;
       endTimestamp = null;
-      clearTimeout(autoBreakTimeout);
-      autoBreakTimeout = null;
 
       remainingSeconds = totalSeconds;
-      breakRemainingSeconds = breakTotalSeconds;
-
       timerState = "ready";
+      activeTimerMode = "study";
 
-      roomShell.classList.remove(
-        "studying",
-        "finished",
-        "breaking"
-      );
-
-      stopCharacterAnimation(true);
+      roomShell.classList.remove("studying", "finished");
+      if (breakState !== "running" && breakState !== "paused") {
+        roomShell.classList.remove("breaking");
+        stopCharacterAnimation(true);
+      }
 
       updateTimerDisplay();
       updateTimerMessage();
-
     }
 
 
     function finishTimer() {
-
-      clearInterval(
-        timerInterval
-      );
-
+      clearInterval(timerInterval);
       timerInterval = null;
       endTimestamp = null;
 
       remainingSeconds = 0;
       timerState = "finished";
+      activeTimerMode = "study";
 
-      roomShell.classList.remove(
-        "studying"
-      );
-
-      roomShell.classList.add(
-        "finished"
-      );
+      roomShell.classList.remove("studying");
+      roomShell.classList.add("finished");
 
       showFinishFrame();
-
       updateTimerDisplay();
       updateTimerMessage();
 
       completionAudio.currentTime = 0;
       completionAudio.play().catch(() => {});
 
-      clearTimeout(autoBreakTimeout);
-      autoBreakTimeout = setTimeout(() => {
-        if (timerState === "finished") startBreak();
-      }, 2800);
+      // IMPORTANT: Break does NOT start automatically.
+    }
 
+
+    function syncBreakTimer() {
+      if (breakState !== "running" || !breakEndTimestamp) return;
+
+      const millisecondsLeft = breakEndTimestamp - Date.now();
+      breakRemainingSeconds = Math.max(0, Math.ceil(millisecondsLeft / 1000));
+
+      if (activeTimerMode === "break") updateTimerDisplay();
+
+      if (breakRemainingSeconds <= 0) finishBreak();
     }
 
 
     function startBreak() {
-      clearInterval(timerInterval);
-      clearTimeout(autoBreakTimeout);
-      autoBreakTimeout = null;
+      if (breakState === "running") return;
 
-      breakRemainingSeconds = breakTotalSeconds;
-      timerState = "breaking";
-      endTimestamp = Date.now() + (breakRemainingSeconds * 1000);
+      // Break Timer is independent. If Study is running, preserve its
+      // remaining time by pausing it rather than discarding it.
+      if (timerState === "studying") pauseTimer();
+
+      if (breakState === "finished" || breakRemainingSeconds <= 0) {
+        breakRemainingSeconds = breakTotalSeconds;
+        breakState = "ready";
+      }
+
+      activeTimerMode = "break";
+      breakState = "running";
+      breakEndTimestamp = Date.now() + (breakRemainingSeconds * 1000);
 
       roomShell.classList.remove("studying", "finished");
       roomShell.classList.add("breaking");
@@ -2087,18 +2009,60 @@
       startBreakAnimation();
       updateTimerDisplay();
       updateTimerMessage();
-      syncRunningTimer();
 
-      timerInterval = setInterval(syncRunningTimer, 250);
+      clearInterval(breakTimerInterval);
+      breakTimerInterval = setInterval(syncBreakTimer, 250);
+    }
+
+
+    function pauseBreak() {
+      if (breakState !== "running") return;
+
+      syncBreakTimer();
+      clearInterval(breakTimerInterval);
+      breakTimerInterval = null;
+      breakEndTimestamp = null;
+
+      if (breakRemainingSeconds <= 0) return;
+
+      breakState = "paused";
+      activeTimerMode = "break";
+      clearCharacterAnimationTimers();
+      showBreakFrame(breakFrame);
+
+      updateTimerDisplay();
+      updateTimerMessage();
+    }
+
+
+    function resetBreak() {
+      clearInterval(breakTimerInterval);
+      breakTimerInterval = null;
+      breakEndTimestamp = null;
+
+      breakRemainingSeconds = breakTotalSeconds;
+      breakState = "ready";
+      activeTimerMode = "break";
+
+      roomShell.classList.remove("breaking");
+
+      // If Study is still paused/ready/finished, show the normal character.
+      if (timerState === "finished") showFinishFrame();
+      else showBaseCharacter();
+
+      updateTimerDisplay();
+      updateTimerMessage();
     }
 
 
     function finishBreak() {
-      clearInterval(timerInterval);
-      timerInterval = null;
-      endTimestamp = null;
+      clearInterval(breakTimerInterval);
+      breakTimerInterval = null;
+      breakEndTimestamp = null;
+
       breakRemainingSeconds = 0;
-      timerState = "breakFinished";
+      breakState = "finished";
+      activeTimerMode = "break";
 
       roomShell.classList.remove("breaking");
       clearCharacterAnimationTimers();
@@ -2110,57 +2074,31 @@
       completionAudio.currentTime = 0;
       completionAudio.play().catch(() => {});
 
-      setTimeout(() => {
-        if (timerState !== "breakFinished") return;
-        remainingSeconds = totalSeconds;
-        breakRemainingSeconds = breakTotalSeconds;
-        timerState = "ready";
-        updateTimerDisplay();
-        updateTimerMessage();
-        showBaseCharacter();
-      }, 2800);
+      // IMPORTANT: Study does NOT start automatically.
     }
 
 
-    // 브라우저가 백그라운드 탭의 interval을 늦춰도,
-    // 다시 돌아오는 순간 실제 시각을 기준으로 즉시 보정한다.
-    document.addEventListener(
-      "visibilitychange",
-      () => {
-        if (!document.hidden) {
-          syncRunningTimer();
-        }
+    // Keep both independent timers accurate after switching tabs.
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden) {
+        syncStudyTimer();
+        syncBreakTimer();
       }
-    );
+    });
 
-    window.addEventListener(
-      "focus",
-      syncRunningTimer
-    );
-
-
-    document.getElementById(
-      "startButton"
-    ).addEventListener(
-      "click",
-      startTimer
-    );
+    window.addEventListener("focus", () => {
+      syncStudyTimer();
+      syncBreakTimer();
+    });
 
 
-    document.getElementById(
-      "pauseButton"
-    ).addEventListener(
-      "click",
-      pauseTimer
-    );
+    document.getElementById("startButton").addEventListener("click", startTimer);
+    document.getElementById("pauseButton").addEventListener("click", pauseTimer);
+    document.getElementById("resetButton").addEventListener("click", resetTimer);
 
-
-    document.getElementById(
-      "resetButton"
-    ).addEventListener(
-      "click",
-      resetTimer
-    );
+    document.getElementById("breakStartButton").addEventListener("click", startBreak);
+    document.getElementById("breakPauseButton").addEventListener("click", pauseBreak);
+    document.getElementById("breakResetButton").addEventListener("click", resetBreak);
 
 
     /* =====================================
@@ -2178,12 +2116,11 @@
       selectedMinutes = Math.min(1440, Math.floor(parsed));
       totalSeconds = selectedMinutes * 60;
       remainingSeconds = totalSeconds;
+      activeTimerMode = "study";
 
       clearInterval(timerInterval);
       timerInterval = null;
       endTimestamp = null;
-      clearTimeout(autoBreakTimeout);
-      autoBreakTimeout = null;
       timerState = "ready";
 
       roomShell.classList.remove(
@@ -2303,6 +2240,7 @@
       selectedBreakMinutes = Math.min(300, Math.floor(parsed));
       breakTotalSeconds = selectedBreakMinutes * 60;
       breakRemainingSeconds = breakTotalSeconds;
+      activeTimerMode = "break";
 
       document.getElementById("breakHours").value = Math.floor(selectedBreakMinutes / 60);
       document.getElementById("breakMinutes").value = selectedBreakMinutes % 60;
@@ -2316,12 +2254,14 @@
 
       updateBreakSelectedValue();
 
-      if (timerState === "breaking" || timerState === "breakPaused") {
-        clearInterval(timerInterval);
-        timerInterval = null;
-        endTimestamp = null;
-        timerState = "breakPaused";
-        showBreakFrame(1);
+      if (breakState === "running" || breakState === "paused") {
+        clearInterval(breakTimerInterval);
+        breakTimerInterval = null;
+        breakEndTimestamp = null;
+        breakState = "ready";
+      }
+
+      if (activeTimerMode === "break") {
         updateTimerDisplay();
         updateTimerMessage();
       }
@@ -2447,8 +2387,8 @@
         startCharacterAnimation();
       }
 
-      else if (timerState === "breaking" || timerState === "breakPaused") {
-        if (timerState === "breaking") startBreakAnimation();
+      else if (activeTimerMode === "break" && (breakState === "running" || breakState === "paused")) {
+        if (breakState === "running") startBreakAnimation();
         else showBreakFrame(breakFrame);
       }
 
